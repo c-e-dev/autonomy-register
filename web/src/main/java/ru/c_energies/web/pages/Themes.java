@@ -3,6 +3,7 @@ package ru.c_energies.web.pages;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import ru.c_energies.web.models.themes.ThemeTable;
 
 import java.util.ArrayList;
@@ -20,5 +21,10 @@ public class Themes {
         }};
         model.addAttribute("listThemes", listThemes);
         return "pages/themes";
+    }
+
+    @GetMapping(value = "/document/themes/{id}")
+    public String fullThemeById(Model model, @PathVariable("id") String id){
+        return "pages/themeById";
     }
 }

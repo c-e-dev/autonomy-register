@@ -125,13 +125,13 @@
             </p>
           </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item"> <a href="document/themes" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
+              <li class="nav-item"> <a href="/document/themes" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
                 <p>Темы</p>
               </a> </li>
-              <li class="nav-item"> <a href="document/appeals" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+              <li class="nav-item"> <a href="/document/appeals" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                 <p>Обращения</p>
               </a> </li>
-              <li class="nav-item"> <a href="document/secured_party" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+              <li class="nav-item"> <a href="/document/secured-party" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                 <p>Обеспеченный интерес</p>
               </a> </li>
             </ul>
