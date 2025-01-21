@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 public class Themes {
     @GetMapping(value = "/document/themes")
-    public String themes(Model model) throws SQLException {
+    public String themes(Model model) throws SQLException{
         Query q = new Query(new SqliteDataSource(), "select * from themes");
         List<ThemeRow> list = new ThemesTable(q.exec()).list();
         model.addAttribute("list", list);
@@ -23,7 +23,10 @@ public class Themes {
     }
 
     @GetMapping(value = "/document/themes/{id}")
-    public String fullThemeById(Model model, @PathVariable("id") String id){
+    public String fullThemeById(Model model, @PathVariable("id") String id) throws SQLException{
+        Query q = new Query(new SqliteDataSource(), String.format("select * from themes where id = %d", Integer.parseInt(id)));
+        List<ThemeRow> list = new ThemesTable(q.exec()).list();
+        model.addAttribute("theme", list.get(0));
         return "pages/themeById";
     }
 }
