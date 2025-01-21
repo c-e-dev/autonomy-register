@@ -1,7 +1,7 @@
 @import java.util.List
-@import ru.c_energies.web.models.appeals.AppealsTable
+@import ru.c_energies.web.models.appeals.AppealRow
 
-@param List<AppealsTable> list
+@param List<AppealRow> list
 
 @template.layout.main(content = @`
     <div class="app-content-header"> <!--begin::Container-->
@@ -27,7 +27,10 @@
           <div class="col-md-6">
             <div class="card mb-4">
               <div class="card-header">
-                <h3 class="card-title">Обращения</h3>
+
+                  <!--<ol class="breadcrumb float-sm-end">-->
+                <button type="button" class="btn btn-create" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Создать</button>
+                  <!--</ol>-->
               </div> <!-- /.card-header -->
               <div class="card-body">
                 <table class="table table-bordered">
@@ -37,15 +40,17 @@
                     <th>Тема</th>
                     <th>Внутренний номер</th>
                     <th>Номер отправления (РПО)</th>
+                    <th>Дата создания</th>
                   </tr>
                   </thead>
                   <tbody>
-                  @for(AppealsTable at : list)
+                  @for(AppealRow at : list)
                     <tr class="align-middle">
-                      <td>${at.number()}.</td>
+                      <td>${at.id()}.</td>
                       <td>${at.title()}</td>
                       <td>${at.internalNumber()}</td>
                       <td>${at.registerTrackNumber()}</td>
+                      <td>${at.createDate()}</td>
                     </tr>
                   @endfor
                   </tbody>

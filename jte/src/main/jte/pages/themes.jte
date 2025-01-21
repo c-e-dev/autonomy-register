@@ -1,7 +1,7 @@
 @import java.util.List
-@import ru.c_energies.web.models.themes.ThemeTable
+@import ru.c_energies.web.models.themes.ThemeRow
 
-@param List<ThemeTable> listThemes
+@param List<ThemeRow> list
 
 @template.layout.main(content = @`
     <div class="app-content-header"> <!--begin::Container-->
@@ -27,7 +27,7 @@
           <div class="col-md-6">
             <div class="card mb-4">
               <div class="card-header">
-                <h3 class="card-title">Темы обращений</h3>
+                <button type="button" class="btn btn-create" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Создать</button>
               </div> <!-- /.card-header -->
               <div class="card-body">
                 <table class="table table-bordered">
@@ -35,19 +35,16 @@
                   <tr>
                     <th style="width: 10px">#</th>
                     <th>Тема</th>
-                    <th>Progress</th>
+                    <th>Дата создания</th>
                     <th style="width: 40px">Label</th>
                   </tr>
                   </thead>
                   <tbody>
-                  @for(ThemeTable tt : listThemes)
+                  @for(ThemeRow tt : list)
                     <tr class="align-middle">
-                      <td><a href="/document/themes/${tt.number()}">${tt.number()}.</a></td>
+                      <td><a href="/document/themes/${tt.id()}">${tt.id()}.</a></td>
                       <td>${tt.title()}</td>
-                      <td>
-                        <div class="progress progress-xs">
-                          <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                        </div>
+                      <td>${tt.createDate()}
                       </td>
                       <td><span class="badge text-bg-danger">55%</span></td>
                     </tr>

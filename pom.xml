@@ -16,13 +16,14 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>jte</module>
         <module>rest</module>
         <module>web</module>
         <module>databases</module>
-        <module>jte</module>
     </modules>
 
     <properties>
+        <project.jte.dir>${project.basedir}/jte/src/main/jte</project.jte.dir>
         <java.version>17</java.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -60,6 +61,25 @@
                     <target>15</target>
                 </configuration>
             </plugin>
+            <!--<plugin>
+                <groupId>gg.jte</groupId>
+                <artifactId>jte-maven-plugin</artifactId>
+                <version>3.1.16</version>
+                <configuration>
+                    <sourceDirectory>${project.basedir}/jte/src/main/jte</sourceDirectory>
+                    <targetDirectory>${project.build.directory}/jte-classes</targetDirectory>
+                    <contentType>Html</contentType>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>jte-generate</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
         </plugins>
     </build>
 
