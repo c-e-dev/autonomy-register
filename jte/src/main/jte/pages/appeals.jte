@@ -37,19 +37,19 @@
                   <thead>
                   <tr>
                     <th style="width: 10px">#</th>
-                    <th>Тема</th>
-                    <th>Внутренний номер</th>
                     <th>Номер отправления (РПО)</th>
+                    <th>Внутренний номер</th>
+                    <th>Тема</th>
                     <th>Дата создания</th>
                   </tr>
                   </thead>
                   <tbody>
                   @for(AppealRow at : list)
                     <tr class="align-middle">
-                      <td>${at.id()}.</td>
-                      <td>${at.title()}</td>
+                      <td><a href="/document/appeals/${at.id()}">${at.id()}.</a></td>
+                      <td><a href="/document/appeals/${at.id()}">${at.registerTrackNumber()}</a></td>
                       <td>${at.internalNumber()}</td>
-                      <td>${at.registerTrackNumber()}</td>
+                      <td>${at.title()}</td>
                       <td>${at.createDate()}</td>
                     </tr>
                   @endfor

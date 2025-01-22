@@ -58,20 +58,26 @@
                             <thead>
                             <tr>
                                 <th style="width: 10px">#</th>
-                                <th>Номер отправления (РПО)</th>
-                                <th>Обращение</th>
-                                <th>Дата создания</th>
-                                <th style="width: 40px">Label</th>
+                                <th style="width: 200px">Номер отправления</th>
+                                <th>Название</th>
+                                <th style="width: 150px">Дата создания</th>
+                                <th style="width: 150px">Срок исполнения</th>
+                                <th style="width: 40px">Ответили?</th>
+                                <th>Отправленные документы</th>
+                                <th>Полученные документы</th>
                             </tr>
                             </thead>
                             <tbody>
                             @for(AppealRow lar : listAppeals)
                             <tr class="align-middle">
                                 <td><a href="/document/appeals/${lar.id()}">${lar.id()}.</a></td>
-                                <td>${lar.registerTrackNumber()}</td>
+                                <td><a href="/document/appeals/${lar.id()}">${lar.registerTrackNumber()}</a></td>
                                 <td>${lar.title()}</td>
                                 <td>${lar.createDate()}</td>
-                                <td><span class="badge text-bg-danger">55%</span></td>
+                                <td>${lar.dueDate()}</td>
+                                <td class="text-bg-info">${lar.answered()}</td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             @endfor
                             </tbody>

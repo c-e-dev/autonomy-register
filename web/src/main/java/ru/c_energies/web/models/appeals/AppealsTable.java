@@ -1,7 +1,11 @@
 package ru.c_energies.web.models.appeals;
 
+import ru.c_energies.web.convert.DateFormat;
+import ru.c_energies.web.convert.DigitsToYesNo;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +23,10 @@ public class AppealsTable{
                             resultSet.getString("title"),
                             resultSet.getString("internal_number"),
                             resultSet.getString("register_track_number"),
-                            Instant.ofEpochSecond(Long.parseLong(String.valueOf(resultSet.getInt("create_date"))))
-                                    .toString())
+                            new DateFormat(resultSet.getInt("create_date")).convert(),
+                            new DateFormat(resultSet.getInt("due_date")).convert(),
+                            new DigitsToYesNo(resultSet.getInt("answered")).value()
+                    )
             );
         }
         return list;

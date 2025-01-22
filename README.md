@@ -37,6 +37,7 @@ internal_number    | TEXT | Внутренний номер документа
 register_track_number | TEXT | Почтовый номер отправления 
 create_date               | INTEGER  | Дата создания записи. В unixtime
 due_date               | INTEGER  | Срок исполнения 
+answered               | INTEGER  | Ответили или нет. Возможные значения 0 (false) и 1 (true)
 
 ## Таблица themes
 Решаемые темы
@@ -48,6 +49,7 @@ title                | TEXT                                     | Заголов
 create_date               | INTEGER  | Дата создания записи. В unixtime
 decision_date               | INTEGER  | Дата решения темы
 decision_status               | INTEGER  | Статус решения темы
+description               | TEXT  | Описание темы
 
 ## Таблица themes_link_appeals
 Связанные обращения (отправления) с темами

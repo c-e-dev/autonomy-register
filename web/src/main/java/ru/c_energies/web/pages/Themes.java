@@ -33,6 +33,6 @@ public class Themes {
         List<AppealRow> listAppeal = new AppealsTable(q2.exec()).list();
         model.addAttribute("theme", list.get(0));
         model.addAttribute("listAppeals", listAppeal);
-        return "pages/themeById";
+        return "pages/theme";
     }
 }
