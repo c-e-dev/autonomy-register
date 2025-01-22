@@ -1,6 +1,10 @@
+@import java.util.List
+
 @import ru.c_energies.web.models.appeals.AppealRow
+@import ru.c_energies.web.models.files.FileRow
 
 @param AppealRow appeal
+@param List<FileRow> listFiles
 
 @template.layout.main(content = @`
 <div class="app-content-header"> <!--begin::Container-->

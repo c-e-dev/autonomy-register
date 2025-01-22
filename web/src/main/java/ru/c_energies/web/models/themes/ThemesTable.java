@@ -1,5 +1,7 @@
 package ru.c_energies.web.models.themes;
 
+import ru.c_energies.web.convert.DateFormat;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -17,8 +19,8 @@ public class ThemesTable {
             list.add(
                     new ThemeRow(resultSet.getInt("id"),
                             resultSet.getString("title"),
-                            Instant.ofEpochSecond(Long.parseLong(String.valueOf(resultSet.getInt("create_date"))))
-                                    .toString())
+                            new DateFormat(resultSet.getInt("create_date")).convert()
+                    )
             );
         }
         return list;

@@ -24,6 +24,8 @@ http://localhost:8080/index.html - разрабатываемое приложе
 
 https://jte.gg/spring-boot-starter-2/ - шаблонизатор
 
+https://www.sqlitetutorial.net/sqlite-java/jdbc-read-write-blob/ - туториалы по SQLite
+
 ----------------
 # Структура БД
 ## Таблица appeals
@@ -66,7 +68,10 @@ appeal_id               | INTEGER  | ID отправления из таблиц
 -----------------------|------------------------------------------|-----------------
 id                | INTEGER  PRIMARY KEY("id" AUTOINCREMENT) | Sequence
 name               | TEXT                                     | Название файла
-content               | BLOB                                  | Содержимое файла
+content               | BLOB                                     | Содержимое файла
+extension               | TEXT                                     | Расширение файла
+size               | INTEGER                                     | Размер файла в байтах
+create_date               | INTEGER                                     | Время добавления файла
 
 ## Таблица files_appeal
 Связь файлов с отправлениями
