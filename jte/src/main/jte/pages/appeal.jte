@@ -33,61 +33,82 @@
                         <button type="button" class="btn btn-create" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Редактировать</button>
                     </div> <!-- /.card-header -->
                     <div class="card-body">
-                        <table class="table">
-                            <tr>
-                                <th style="width:15%">Номер отправления:</th><td style="width:35%">${appeal.registerTrackNumber()}</td>
-                                <th style="width:15%">Дата создания:</th><td style="width:35%">${appeal.createDate()}</td>
-                            </tr>
-                            <tr>
-                                <th>Срок исполнения:</th><td>${appeal.dueDate()}</td>
-                                <th>Получен ответ:</th><td class="text-bg-info">${appeal.answered()}</td>
-                            </tr>
-                        </table>
+                        <div class="card-header">Сводная информация</div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tr>
+                                    <th style="width:15%">Номер отправления:</th><td style="width:35%">${appeal.registerTrackNumber()}</td>
+                                    <th style="width:15%">Дата создания:</th><td style="width:35%">${appeal.createDate()}</td>
+                                </tr>
+                                <tr>
+                                    <th>Срок исполнения:</th><td>${appeal.dueDate()}</td>
+                                    <th>Получен ответ:</th><td class="text-bg-info">${appeal.answered()}</td>
+                                </tr>
+                            </table>
+                        </div>
                         <div class="card card-primary card-outline mb-4"> <!--begin::Header-->
                             <div class="card-header">
                                 <div class="card-title">Файлы</div>
+                                <button type="button" class="btn btn-create" data-bs-toggle="modal" data-bs-target="#addFile" style="margin-left: 10px; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Добавить</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="addFile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" style="max-width:1000px">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Добавить файл</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <label for="validationCustom04" class="form-label">Категория файла</label>
+                                                <select class="form-select" id="validationCustom04" required>
+                                                    <option selected disabled value="">Выберите...</option>
+                                                    <option>Отправленные</option>
+                                                    <option>Ответы</option>
+                                                </select>
+                                                <div class="input-group mb-3" style="margin-top: 10px;">
+                                                    <label class="input-group-text" for="inputGroupFile01">Путь до файла</label>
+                                                    <input type="file" class="form-control" id="inputGroupFile01">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                <button type="button" class="btn btn-primary">Загрузить</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div> <!--end::Header--> <!--begin::Body-->
                             <div class="card-body">
                                 <div class="accordion" id="accordionExample">
                                     <div class="accordion-item">
                                         <h2 class="accordion-header"> <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                             Отправленные файлы
-                                            @for(FileRow fr : listFiles)
-                                                ${fr.name()} ,
-                                            @endfor
                                         </button> </h2>
                                         <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                                             <div class="card-body">
                                             <div class="product-file-type">
+
                                                 <ul class="list-group list-group-horizontal">
-                                                    <li class="media mb-3 list-group-item">
-                                                        <span class="mr-3 align-self-center img-icon primary-rgba text-primary">.doc</span>
+                                                    @for(FileRow fr : listFiles)
+                                                        <a href="#" class="list-group-item list-group-item-action">
+                                                        <span class="mr-3 align-self-center img-icon primary-rgba text-primary">.${fr.extension()}</span>
                                                         <div class="media-body">
-                                                            <h10 class="font-16 mb-1">Marketing Guidelines<i class="feather icon-download-cloud float-right"></i></h10>
-                                                            <p>.doc, 5.3 MB</p>
+                                                            <h10 class="font-16 mb-1">${fr.name()}<i class="feather icon-download-cloud float-right"></i>
+                                                                .${fr.extension()},
+                                                                @if(fr.size() > 0 && fr.size() < 1024)
+                                                                    ${fr.size()} B
+                                                                @endif
+                                                                @if(fr.size() > 1024 && fr.size() < (1024*1024))
+                                                                    ${fr.size() / 1024} KB
+                                                                @endif
+                                                                @if(fr.size() > (1024*1024))
+                                                                    ${fr.size() / (1024*1024)} MB
+                                                                @endif
+                                                            </h10>
                                                         </div>
-                                                    </li>
-                                                    <li class="media mb-3 list-group-item">
-                                                        <span class="mr-3 align-self-center img-icon success-rgba text-success">.xls</span>
-                                                        <div class="media-body">
-                                                            <h10 class="font-16 mb-1">Complete Product Sheet<i class="feather icon-download-cloud float-right"></i></h10>
-                                                            <p>.xls, 2.5 MB</p>
-                                                        </div>
-                                                    </li>
-                                                    <li class="media mb-3 list-group-item">
-                                                        <span class="mr-3 align-self-center img-icon danger-rgba text-danger">.pdf</span>
-                                                        <div class="media-body">
-                                                            <h10 class="font-16 mb-1">Annual Sales Report 2018-19<i class="feather icon-download-cloud float-right"></i></h10>
-                                                            <p>.pdf, 10.5 MB</p>
-                                                        </div>
-                                                    </li>
-                                                    <li class="media mb-3 list-group-item">
-                                                        <span class="mr-3 align-self-center img-icon info-rgba text-info">.zip</span>
-                                                        <div class="media-body">
-                                                            <h10 class="font-16 mb-1">Brand Photography<i class="feather icon-download-cloud float-right"></i></h10>
-                                                            <p>.zip, 53.2 MB</p>
-                                                        </div>
-                                                    </li>
+                                                        </a>
+                                                    @endfor
                                                 </ul>
                                             </div>
                                             </div>
