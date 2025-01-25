@@ -16,8 +16,9 @@ public class FilesTable {
             list.add(new FileRow(
                     resultSet.getString("name"),
                     resultSet.getString("extension"),
-                    resultSet.getInt("size"),
-                    resultSet.getInt("create_date")
+                    resultSet.getLong("size"),
+                    resultSet.getInt("create_date"),
+                    resultSet.getString("content_type")
             ));
         }
         return list;

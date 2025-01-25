@@ -5,21 +5,26 @@
 package ru.c_energies.web.pages;
 
 import javafx.collections.transformation.FilteredList;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.c_energies.databases.Query;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
 import ru.c_energies.web.models.appeals.AppealRow;
 import ru.c_energies.web.models.appeals.AppealsTable;
 import ru.c_energies.web.models.files.FileRow;
+import ru.c_energies.web.models.files.FilesCreate;
 import ru.c_energies.web.models.files.FilesTable;
 import ru.c_energies.web.models.themes.ThemeRow;
 import ru.c_energies.web.models.themes.ThemesTable;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class Files {
@@ -66,5 +71,22 @@ public class Files {
     public String downloadFile(Model model, @PathVariable("id") String id) throws SQLException {
 
         return "";
+    }
+
+    /**
+     * Загрузка файла на сервер по идентификатору appeal
+     */
+    @PostMapping(value = "/files/{id}/upload", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<Object> uploadFile(Model model, @PathVariable("id") String id, @RequestPart MultipartFile fileContent) throws SQLException, IOException {
+        Query q = new Query(new SqliteDataSource(), String.format("select * from appeals where id = %d", Integer.parseInt(id)));
+        FileRow fileRow = new FileRow(
+                fileContent.getOriginalFilename(),
+                ".odt",
+                fileContent.getSize(),
+                175654689,
+                fileContent.getContentType()
+        );
+        new FilesCreate(Long.parseLong(id), fileRow).insert().update(fileContent.getBytes());
+        return ResponseEntity.ok().build();
     }
 }

@@ -2,9 +2,11 @@
 
 @import ru.c_energies.web.models.appeals.AppealRow
 @import ru.c_energies.web.models.files.FileRow
+@import ru.c_energies.web.pages.FilesForm
 
 @param AppealRow appeal
 @param List<FileRow> listFiles
+@param FilesForm ff
 
 @template.layout.main(content = @`
 <div class="app-content-header"> <!--begin::Container-->
@@ -58,22 +60,24 @@
                                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Добавить файл</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <div class="modal-body">
-                                                <label for="validationCustom04" class="form-label">Категория файла</label>
-                                                <select class="form-select" id="validationCustom04" required>
-                                                    <option selected disabled value="">Выберите...</option>
-                                                    <option>Отправленные</option>
-                                                    <option>Ответы</option>
-                                                </select>
-                                                <div class="input-group mb-3" style="margin-top: 10px;">
-                                                    <label class="input-group-text" for="inputGroupFile01">Путь до файла</label>
-                                                    <input type="file" class="form-control" id="inputGroupFile01">
+                                            <form onsubmit="return false;" action="/files/${appeal.id()}/upload" method="POST" enctype="multipart/form-data" id="fileType">
+                                                <div class="modal-body">
+                                                    <label for="validationCustom04" class="form-label">Категория файла</label>
+                                                    <select class="form-select" id="validationCustom04" required name="fileCategory" id="fileCategory">
+                                                        <option selected disabled value="">Выберите категорию</option>
+                                                        <option value="sended">Отправленные</option>
+                                                        <option value="answers">Ответы</option>
+                                                    </select>
+                                                    <div class="input-group mb-3" style="margin-top: 10px;">
+                                                        <label class="input-group-text" for="inputGroupFile01">Путь до файла</label>
+                                                        <input type="file" class="form-control" id="inputGroupFile01" name="fileContent">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                                <button type="button" class="btn btn-primary">Загрузить</button>
-                                            </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" id="closeForm" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                    <button type="button" class="btn btn-primary" onclick="handleSubmit()">Загрузить</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
