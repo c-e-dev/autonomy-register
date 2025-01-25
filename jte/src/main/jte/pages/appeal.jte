@@ -124,15 +124,31 @@
                                             Ответы
                                         </button> </h2>
                                         <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body"> <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin
-                                                adds the appropriate classes that we use to style
-                                                each element. These classes control the overall
-                                                appearance, as well as the showing and hiding via
-                                                CSS transitions. You can modify any of this with
-                                                custom CSS or overriding our default variables. It's
-                                                also worth noting that just about any HTML can go
-                                                within the <code>.accordion-body</code>, though the
-                                                transition does limit overflow.
+                                            <div class="card-body">
+                                                <div class="product-file-type">
+
+                                                    <ul class="list-group list-group-horizontal">
+                                                        @for(FileRow fr : listFileAnswered)
+                                                        <a href="#" class="list-group-item list-group-item-action">
+                                                            <span class="mr-3 align-self-center img-icon primary-rgba text-primary">.${fr.extension()}</span>
+                                                            <div class="media-body">
+                                                                <h10 class="font-16 mb-1">${fr.name()}<i class="feather icon-download-cloud float-right"></i>
+                                                                    .${fr.extension()},
+                                                                    @if(fr.size() > 0 && fr.size() < 1024)
+                                                                    ${fr.size()} B
+                                                                    @endif
+                                                                    @if(fr.size() > 1024 && fr.size() < (1024*1024))
+                                                                    ${fr.size() / 1024} KB
+                                                                    @endif
+                                                                    @if(fr.size() > (1024*1024))
+                                                                    ${fr.size() / (1024*1024)} MB
+                                                                    @endif
+                                                                </h10>
+                                                            </div>
+                                                        </a>
+                                                        @endfor
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
