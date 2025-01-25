@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.c_energies.databases.Query;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
+import ru.c_energies.web.convert.FileNameAndExtension;
 import ru.c_energies.web.models.appeals.AppealRow;
 import ru.c_energies.web.models.appeals.AppealsTable;
 import ru.c_energies.web.models.files.FileRow;
@@ -23,6 +24,8 @@ import ru.c_energies.web.models.themes.ThemesTable;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Map;
 
@@ -48,11 +51,25 @@ public class Files {
         model.addAttribute("listFiles", list);
         return "pages/appeal";
     }
-    public List<FileRow> listFiles(@PathVariable("id") String id) throws SQLException {
+    public List<FileRow> listFilesSended(@PathVariable("id") String id) throws SQLException {
         String sql = String.format("""
-                select f.name, f.content, f.extension, f."size", f.create_date from appeals a
-                join files_appeal fa on fa.appeal_id = a.id\s
-                join files f on f.id = fa.file_id\s
+                select f.name, f.content, f.extension, f."size", f.create_date, f.content_type, fa.appeal_type_id from appeals a
+                join files_appeal fa on fa.appeal_id = a.id
+                join files f on f.id = fa.file_id
+                join appeal_type at2 on at2."type" = fa.appeal_type_id and at2."type" = 0 
+                where a.id = %d
+                """, Integer.parseInt(id));
+        Query q = new Query(new SqliteDataSource(), sql);
+        List<FileRow> list = new FilesTable(q.exec()).list();
+        return list;
+    }
+
+    public List<FileRow> listFilesAnswered(@PathVariable("id") String id) throws SQLException {
+        String sql = String.format("""
+                select f.name, f.content, f.extension, f."size", f.create_date, f.content_type, fa.appeal_type_id from appeals a
+                join files_appeal fa on fa.appeal_id = a.id
+                join files f on f.id = fa.file_id
+                join appeal_type at2 on at2."type" = fa.appeal_type_id and at2."type" = 1
                 where a.id = %d
                 """, Integer.parseInt(id));
         Query q = new Query(new SqliteDataSource(), sql);
@@ -77,14 +94,16 @@ public class Files {
      * Загрузка файла на сервер по идентификатору appeal
      */
     @PostMapping(value = "/files/{id}/upload", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<Object> uploadFile(Model model, @PathVariable("id") String id, @RequestPart MultipartFile fileContent) throws SQLException, IOException {
-        Query q = new Query(new SqliteDataSource(), String.format("select * from appeals where id = %d", Integer.parseInt(id)));
+    public ResponseEntity<Object> uploadFile(Model model, @PathVariable("id") String id, @RequestPart MultipartFile fileContent, @RequestPart String fileCategory) throws SQLException, IOException {
+        FileNameAndExtension fileNameAndExtension = new FileNameAndExtension(fileContent.getOriginalFilename());
+        int currentTime = (int)Instant.now().getEpochSecond();
         FileRow fileRow = new FileRow(
-                fileContent.getOriginalFilename(),
-                ".odt",
+                fileNameAndExtension.name(),
+                fileNameAndExtension.extension(),
                 fileContent.getSize(),
-                175654689,
-                fileContent.getContentType()
+                currentTime,
+                fileContent.getContentType(),
+                Integer.parseInt(fileCategory)
         );
         new FilesCreate(Long.parseLong(id), fileRow).insert().update(fileContent.getBytes());
         return ResponseEntity.ok().build();

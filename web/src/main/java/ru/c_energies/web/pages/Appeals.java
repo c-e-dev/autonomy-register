@@ -27,9 +27,11 @@ public class Appeals {
     public String fullAppealById(Model model, @PathVariable("id") String id) throws SQLException {
         Query q = new Query(new SqliteDataSource(), String.format("select * from appeals where id = %d", Integer.parseInt(id)));
         List<AppealRow> list = new AppealsTable(q.exec()).list();
-        List<FileRow> listFileRow = new Files().listFiles(id);
+        List<FileRow> listFileRow = new Files().listFilesSended(id);
+        List<FileRow> listFilesAnswered = new Files().listFilesAnswered(id);
         model.addAttribute("appeal", list.get(0));
         model.addAttribute("listFiles", listFileRow);
+        model.addAttribute("listFileAnswered", listFilesAnswered);
         return "pages/appeal";
     }
 }

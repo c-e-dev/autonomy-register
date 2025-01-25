@@ -17,6 +17,9 @@ public class FilesCreate {
                 UPDATE files
                 SET content=? WHERE id=?            
             """;
+    private final String INSERT_FILES_APPEAL = """
+                INSERT INTO files_appeal (appeal_id, file_id, appeal_type_id) VALUES(%d, %d, %d)  RETURNING rowid
+            """;
     private long id; //Идентификатор вставленной записи
     private long appealId;
     private final FileRow fileRow;
@@ -36,6 +39,7 @@ public class FilesCreate {
         while(resultSet.next()){
             this.id = resultSet.getInt("id");
         }
+        new Query(new SqliteDataSource(), String.format(this.INSERT_FILES_APPEAL, this.appealId, this.id, this.fileRow.appealType())).insert();
         return this;
     }
     public void update(byte[] content){

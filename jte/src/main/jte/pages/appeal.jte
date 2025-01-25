@@ -6,6 +6,7 @@
 
 @param AppealRow appeal
 @param List<FileRow> listFiles
+@param List<FileRow> listFileAnswered
 @param FilesForm ff
 
 @template.layout.main(content = @`
@@ -65,8 +66,8 @@
                                                     <label for="validationCustom04" class="form-label">Категория файла</label>
                                                     <select class="form-select" id="validationCustom04" required name="fileCategory" id="fileCategory">
                                                         <option selected disabled value="">Выберите категорию</option>
-                                                        <option value="sended">Отправленные</option>
-                                                        <option value="answers">Ответы</option>
+                                                        <option value="0">Отправленные</option>
+                                                        <option value="1">Ответы</option>
                                                     </select>
                                                     <div class="input-group mb-3" style="margin-top: 10px;">
                                                         <label class="input-group-text" for="inputGroupFile01">Путь до файла</label>

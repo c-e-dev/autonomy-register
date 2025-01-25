@@ -18,7 +18,8 @@ public class FilesTable {
                     resultSet.getString("extension"),
                     resultSet.getLong("size"),
                     resultSet.getInt("create_date"),
-                    resultSet.getString("content_type")
+                    resultSet.getString("content_type"),
+                    resultSet.getInt("appeal_type_id")
             ));
         }
         return list;

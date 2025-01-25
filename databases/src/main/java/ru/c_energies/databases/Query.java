@@ -29,6 +29,19 @@ public class Query {
         }
         return null;
     }
+    public void insert(){
+        PreparedStatement p;
+        ResultSet rs;
+        try {
+            p = this.datasource.session().prepareStatement(this.query); //"SELECT SYSDATE FROM dual"
+            rs = p.executeQuery();
+            while(rs.next()){
+
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
     public int update(){
         PreparedStatement p;
         ResultSet rs;
