@@ -1,6 +1,6 @@
 @import java.util.List
 
-@import ru.c_energies.web.models.appeals.AppealRow
+@import ru.c_energies.databases.entity.appeals.AppealRow
 @import ru.c_energies.web.models.files.FileRow
 @import ru.c_energies.web.pages.FilesForm
 
@@ -33,7 +33,35 @@
             <div class="col-md-6">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <button type="button" class="btn btn-create" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Редактировать</button>
+                        <button type="button" class="btn btn-create" data-bs-toggle="modal" data-bs-target="#appealEdit"  style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Редактировать</button>
+                        <div class="modal fade" id="appealEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="max-width:1000px">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel2">Редактирование</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form onsubmit="return false;" action="/document/appeals/${appeal.id()}" method="POST" enctype="application/x-www-form-urlencoded" id="editAppeal">
+                                        <div class="modal-body">
+                                            <label class="form-label">Номер отправления</label>
+                                            <input type="text" class="form-control" id="inputText01" name="registerTrackNumber" value="${appeal.registerTrackNumber()}">
+                                            <label class="form-label">Срок исполнения</label>
+                                            <input type="datetime-local" class="form-control" id="inputText02" name="dueDate" value="${appeal.dueDate()}">
+                                            <label class="form-label" for="getAnsweredable">Получен ответ</label>
+                                            <select class="form-select" id="getAnsweredable" required name="getAnsweredable">
+                                                <option selected disabled value="">Выберите</option>
+                                                <option value="0">Нет</option>
+                                                <option value="1">Да</option>
+                                            </select>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" id="closeFormEditAppeal" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                            <button type="button" class="btn btn-primary" onclick="handleSubmitEditAppeal()">Сохранить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div> <!-- /.card-header -->
                     <div class="card-body">
                         <div class="card-header">Сводная информация</div>

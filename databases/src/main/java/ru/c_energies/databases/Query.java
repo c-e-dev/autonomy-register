@@ -42,17 +42,14 @@ public class Query {
             throwables.printStackTrace();
         }
     }
-    public int update(){
+    public void update(){
         PreparedStatement p;
-        ResultSet rs;
         try {
             p = this.datasource.session().prepareStatement(this.query); //"SELECT SYSDATE FROM dual"
-            int num = p.executeUpdate();
-            return num;
+            p.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return 0;
     }
     public int updateBlob(int id, byte[] content){
         PreparedStatement p;

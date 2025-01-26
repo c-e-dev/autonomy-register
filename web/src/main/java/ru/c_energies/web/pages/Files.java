@@ -4,7 +4,6 @@
 
 package ru.c_energies.web.pages;
 
-import javafx.collections.transformation.FilteredList;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,20 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.c_energies.databases.Query;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
 import ru.c_energies.web.convert.FileNameAndExtension;
-import ru.c_energies.web.models.appeals.AppealRow;
-import ru.c_energies.web.models.appeals.AppealsTable;
 import ru.c_energies.web.models.files.FileRow;
 import ru.c_energies.web.models.files.FilesCreate;
 import ru.c_energies.web.models.files.FilesTable;
-import ru.c_energies.web.models.themes.ThemeRow;
-import ru.c_energies.web.models.themes.ThemesTable;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.Instant;
-import java.time.ZoneId;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class Files {

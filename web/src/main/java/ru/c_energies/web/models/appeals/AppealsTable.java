@@ -1,12 +1,11 @@
 package ru.c_energies.web.models.appeals;
 
+import ru.c_energies.databases.entity.appeals.AppealRow;
 import ru.c_energies.web.convert.DateFormat;
 import ru.c_energies.web.convert.DigitsToYesNo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 

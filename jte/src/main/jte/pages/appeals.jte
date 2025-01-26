@@ -1,5 +1,5 @@
 @import java.util.List
-@import ru.c_energies.web.models.appeals.AppealRow
+@import ru.c_energies.databases.entity.appeals.AppealRow
 
 @param List<AppealRow> list
 

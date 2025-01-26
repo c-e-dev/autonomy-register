@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.c_energies.databases.Query;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
-import ru.c_energies.web.models.appeals.AppealRow;
+import ru.c_energies.databases.entity.appeals.AppealRow;
 import ru.c_energies.web.models.appeals.AppealsTable;
 import ru.c_energies.web.models.themes.ThemeRow;
 import ru.c_energies.web.models.themes.ThemesTable;

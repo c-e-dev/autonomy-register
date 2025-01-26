@@ -22,3 +22,20 @@ function handleSubmit() {
     document.getElementById('closeForm').click();
     console.log('Отправка!')
 }
+
+function handleSubmitEditAppeal() {
+    //event.preventDefault();
+    const form = document.getElementById('editAppeal');
+    //const form = "/files/3/upload";
+    const url = new URL(form.action);
+    const formData = new FormData(form);
+
+    const fetchOptions = {
+        method: form.method,
+        body: formData,
+    };
+    fetch(url, fetchOptions);
+  // Any JS that could fail goes here
+    document.getElementById('closeFormEditAppeal').click();
+    console.log('Отправка!')
+}
