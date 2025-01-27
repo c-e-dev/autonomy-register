@@ -63,10 +63,12 @@
                                                 <h1 class="modal-title fs-5" id="exampleModalLabel2">Создать обращение к теме</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-                                            <form onsubmit="return false;" action="/document/appeals/" method="POST" enctype="application/x-www-form-urlencoded" id="editAppeal">
+                                            <form onsubmit="return false;" action="/document/appeals" method="POST" enctype="application/x-www-form-urlencoded" id="createAppeal">
                                                 <div class="modal-body">
+                                                    <label class="form-label">Тема</label>
+                                                    <input type="text" required class="form-control" id="themeId" name="themeId" value="${theme.id()}" readonly>
                                                     <label class="form-label">Тема обращения</label>
-                                                    <input type="text" requred class="form-control" id="titleAppeal" name="title" value="">
+                                                    <input type="text" required class="form-control" id="titleAppeal" name="title" value="">
                                                     <label class="form-label">Номер отправления</label>
                                                     <input type="text" class="form-control" id="registerTrackNumber" name="registerTrackNumber" value="">
                                                     <label class="form-label">Срок исполнения</label>

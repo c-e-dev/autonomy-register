@@ -1,7 +1,7 @@
 @import java.util.List
 
 @import ru.c_energies.databases.entity.appeals.AppealRow
-@import ru.c_energies.web.models.files.FileRow
+@import ru.c_energies.databases.entity.files.FileRow
 @import ru.c_energies.web.pages.FilesForm
 
 @param AppealRow appeal

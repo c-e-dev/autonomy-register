@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import ru.c_energies.databases.Query;
 import ru.c_energies.databases.entity.appeals.AppealChanges;
+import ru.c_energies.databases.entity.appeals.AppealCreate;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
 import ru.c_energies.databases.entity.appeals.AppealRow;
 import ru.c_energies.web.models.appeals.AppealsTable;
-import ru.c_energies.web.models.files.FileRow;
+import ru.c_energies.databases.entity.files.FileRow;
 
 import java.sql.SQLException;
-import java.time.Instant;
 import java.util.List;
 
 @Controller
@@ -29,6 +29,22 @@ public class Appeals {
         return "pages/appeals";
     }
 
+    @PostMapping(value = "/document/appeals", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<Object> createAppeal(Model model, @RequestPart String themeId, @RequestPart String title, @RequestPart String registerTrackNumber,
+                                               @RequestPart String dueDate, @RequestPart String getAnsweredable) throws SQLException {
+        AppealRow appealRowNewTemp = new AppealRow(0, title, "", registerTrackNumber, "", dueDate+":00Z", getAnsweredable);
+        AppealCreate appealCreate = new AppealCreate(Integer.parseInt(themeId), appealRowNewTemp);
+        appealCreate.insert();
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * Получаем содержимое обращения
+     * @param model
+     * @param id
+     * @return
+     * @throws SQLException
+     */
     @GetMapping(value = "/document/appeals/{id}")
     public String fullAppealById(Model model, @PathVariable("id") String id) throws SQLException {
         Query q = new Query(new SqliteDataSource(), String.format("select * from appeals where id = %d", Integer.parseInt(id)));

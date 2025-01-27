@@ -1,5 +1,7 @@
 package ru.c_energies.web.models.files;
 
+import ru.c_energies.databases.entity.files.FileRow;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
