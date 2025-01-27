@@ -4,6 +4,10 @@
 
 package ru.c_energies.web.pages;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,13 +15,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.c_energies.databases.Query;
+import ru.c_energies.databases.entity.files.FileContent;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
 import ru.c_energies.web.convert.FileNameAndExtension;
 import ru.c_energies.databases.entity.files.FileRow;
 import ru.c_energies.databases.entity.files.FilesCreate;
 import ru.c_energies.web.models.files.FilesTable;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.List;
@@ -34,7 +41,7 @@ public class Files {
     @GetMapping(value = "/files/appeal/{id}")
     public String listFilesByAppeal(Model model, @PathVariable("id") String id) throws SQLException {
         String sql = String.format("""
-                select f.name, f.content, f.extension, f."size", f.create_date from appeals a
+                select f.id, f.name, f.content, f.extension, f."size", f.create_date from appeals a
                 join files_appeal fa on fa.appeal_id = a.id\s
                 join files f on f.id = fa.file_id\s
                 where a.id = %d
@@ -46,7 +53,7 @@ public class Files {
     }
     public List<FileRow> listFilesSended(@PathVariable("id") String id) throws SQLException {
         String sql = String.format("""
-                select f.name, f.content, f.extension, f."size", f.create_date, f.content_type, fa.appeal_type_id from appeals a
+                select f.id, f.name, f.content, f.extension, f."size", f.create_date, f.content_type, fa.appeal_type_id from appeals a
                 join files_appeal fa on fa.appeal_id = a.id
                 join files f on f.id = fa.file_id
                 join appeal_type at2 on at2."type" = fa.appeal_type_id and at2."type" = 0 
@@ -59,7 +66,7 @@ public class Files {
 
     public List<FileRow> listFilesAnswered(@PathVariable("id") String id) throws SQLException {
         String sql = String.format("""
-                select f.name, f.content, f.extension, f."size", f.create_date, f.content_type, fa.appeal_type_id from appeals a
+                select f.id, f.name, f.content, f.extension, f."size", f.create_date, f.content_type, fa.appeal_type_id from appeals a
                 join files_appeal fa on fa.appeal_id = a.id
                 join files f on f.id = fa.file_id
                 join appeal_type at2 on at2."type" = fa.appeal_type_id and at2."type" = 1
@@ -78,9 +85,26 @@ public class Files {
      * @throws SQLException
      */
     @GetMapping(value = "/files/{id}")
-    public String downloadFile(Model model, @PathVariable("id") String id) throws SQLException {
-
-        return "";
+    public ResponseEntity<Resource> downloadFile(Model model, @PathVariable("id") String id) throws SQLException, IOException {
+        ByteArrayResource resource = new ByteArrayResource(new FileContent(Integer.parseInt(id)).upload());
+        //TODO сделать отдельную единицу Row
+        String sql = String.format("""
+                select f.id, f.name, f.content, f.extension, f."size", f.create_date, f.content_type, fa.appeal_type_id from appeals a
+                join files_appeal fa on fa.appeal_id = a.id
+                join files f on f.id = fa.file_id 
+                join appeal_type at2 on at2."type" = fa.appeal_type_id 
+                where f.id = %d
+                """, Integer.parseInt(id));
+        Query q = new Query(new SqliteDataSource(), sql);
+        FileRow fileRow = new FilesTable(q.exec()).list().get(0);
+        return ResponseEntity.ok()
+                .contentType(MediaType.valueOf(fileRow.contentType()))
+                .contentLength(resource.contentLength())
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        ContentDisposition.attachment()
+                                .filename(fileRow.name())
+                                .build().toString())
+                .body(resource);
     }
 
     /**
@@ -91,6 +115,7 @@ public class Files {
         FileNameAndExtension fileNameAndExtension = new FileNameAndExtension(fileContent.getOriginalFilename());
         int currentTime = (int)Instant.now().getEpochSecond();
         FileRow fileRow = new FileRow(
+                0,
                 fileNameAndExtension.name(),
                 fileNameAndExtension.extension(),
                 fileContent.getSize(),

@@ -65,4 +65,26 @@ public class Query {
         }
         return 0;
     }
+
+    public byte[] content(){
+        PreparedStatement p;
+        ResultSet rs;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        try {
+            p = this.datasource.session().prepareStatement(this.query); //"SELECT SYSDATE FROM dual"
+            rs = p.executeQuery();
+              while(rs.next()){
+                InputStream input = rs.getBinaryStream("content");
+                byte[] buffer = new byte[1024];
+                while (input.read(buffer) > 0) {
+                    out.write(buffer);
+                }
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return out.toByteArray();
+    }
 }

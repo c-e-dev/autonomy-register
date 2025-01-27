@@ -16,6 +16,7 @@ public class FilesTable {
         List<FileRow> list = new ArrayList<>();
         while(resultSet.next()){
             list.add(new FileRow(
+                    resultSet.getInt("id"),
                     resultSet.getString("name"),
                     resultSet.getString("extension"),
                     resultSet.getLong("size"),

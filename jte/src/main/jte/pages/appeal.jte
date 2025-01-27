@@ -124,7 +124,7 @@
 
                                                 <ul class="list-group list-group-horizontal">
                                                     @for(FileRow fr : listFiles)
-                                                        <a href="#" class="list-group-item list-group-item-action">
+                                                        <a href="/files/${fr.id()}" class="list-group-item list-group-item-action">
                                                         <span class="mr-3 align-self-center img-icon primary-rgba text-primary">.${fr.extension()}</span>
                                                         <div class="media-body">
                                                             <h10 class="font-16 mb-1">${fr.name()}<i class="feather icon-download-cloud float-right"></i>
@@ -157,7 +157,7 @@
 
                                                     <ul class="list-group list-group-horizontal">
                                                         @for(FileRow fr : listFileAnswered)
-                                                        <a href="#" class="list-group-item list-group-item-action">
+                                                        <a href="/files/${fr.id()}" class="list-group-item list-group-item-action">
                                                             <span class="mr-3 align-self-center img-icon primary-rgba text-primary">.${fr.extension()}</span>
                                                             <div class="media-body">
                                                                 <h10 class="font-16 mb-1">${fr.name()}<i class="feather icon-download-cloud float-right"></i>
