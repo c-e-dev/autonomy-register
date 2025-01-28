@@ -14,10 +14,6 @@ https://habr.com/ru/articles/321552/ - spring boot + react
 
 https://github.com/ColorlibHQ/AdminLTE/releases - admin panel
 
-export NVM_DIR="$HOME/.config/nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 -----------
 http://localhost:8080/demo/dist/pages/index.html - демо приложение, с возможными плюшками
 http://localhost:8080/index.html - разрабатываемое приложение
@@ -25,7 +21,15 @@ http://localhost:8080/index.html - разрабатываемое приложе
 https://jte.gg/spring-boot-starter-2/ - шаблонизатор
 
 https://www.sqlitetutorial.net/sqlite-java/jdbc-read-write-blob/ - туториалы по SQLite
+----------------
+# Для разработки и запуска в прод
+Для разработки и поднятия приложения в ИДЕ используем настройки типа Application, с указанием главного класса + System.getenv("SPRING_ENV") != prod
 
+При запуске уже как в проде используем в ИДЕ готовую жарку через тип JAR Application + System.getenv("SPRING_ENV") = prod
+Запуск в bash
+`
+/opt/java/jdk-17.0.6-full/bin/java -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:59059,suspend=y,server=n -DSPRING_ENV=prod -Dfile.encoding=UTF-8 -jar /<path to jar>/web-1.0-SNAPSHOT.jar
+`
 ----------------
 # Структура БД
 ## Таблица appeals

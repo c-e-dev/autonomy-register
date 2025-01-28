@@ -12,6 +12,7 @@
 
     <artifactId>web</artifactId>
     <packaging>jar</packaging>
+    <version>${parent.version}</version>
 
     <dependencies>
         <dependency>
@@ -60,10 +61,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
@@ -76,8 +73,8 @@
                 <artifactId>jte-maven-plugin</artifactId>
                 <version>3.1.16</version>
                 <configuration>
-                    <sourceDirectory>${project.basedir}/../jte/src/main/jte</sourceDirectory>
-                    <targetDirectory>${project.build.directory}/jte-classes</targetDirectory>
+                    <sourceDirectory>${project.basedir}/src/main/resources/jte</sourceDirectory>
+                    <targetDirectory>${project.basedir}/target/jte-classes</targetDirectory>
                     <contentType>Html</contentType>
                 </configuration>
                 <executions>
@@ -86,6 +83,22 @@
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                    <mainClass>ru.c_energies.web.Main</mainClass>
+                    <!--<outputDirectory>${basedir}/../commons</outputDirectory>-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
                         </goals>
                     </execution>
                 </executions>
