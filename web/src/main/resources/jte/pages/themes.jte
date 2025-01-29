@@ -43,7 +43,7 @@
                   @for(ThemeRow tt : list)
                     <tr class="align-middle">
                       <td><a href="/document/themes/${tt.id()}">${tt.id()}.</a></td>
-                      <td>${tt.title()}</td>
+                      <td><a href="/document/themes/${tt.id()}">${tt.title()}</a></td>
                       <td>${tt.createDate()}
                       </td>
                       <td><span class="badge text-bg-danger">55%</span></td>
