@@ -1,5 +1,5 @@
 @import java.util.List
-@import ru.c_energies.web.models.themes.ThemeRow
+@import ru.c_energies.databases.entity.themes.ThemeRow
 
 @param List<ThemeRow> list
 

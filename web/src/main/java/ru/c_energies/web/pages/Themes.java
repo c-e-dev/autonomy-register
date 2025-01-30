@@ -1,14 +1,19 @@
 package ru.c_energies.web.pages;
 
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import ru.c_energies.databases.Query;
+import ru.c_energies.databases.entity.themes.ThemeChange;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
 import ru.c_energies.databases.entity.appeals.AppealRow;
+import ru.c_energies.web.convert.AnsweredVariable;
 import ru.c_energies.web.models.appeals.AppealsTable;
-import ru.c_energies.web.models.themes.ThemeRow;
+import ru.c_energies.databases.entity.themes.ThemeRow;
 import ru.c_energies.web.models.themes.ThemesTable;
 
 import java.sql.SQLException;
@@ -31,8 +36,25 @@ public class Themes {
         Query q2 = new Query(new SqliteDataSource(),
                 String.format("select * from appeals where id in (select appeal_id from themes_link_appeals where theme_id = %d)", Integer.parseInt(id)));
         List<AppealRow> listAppeal = new AppealsTable(q2.exec()).list();
+        int decisionStatus = new AnsweredVariable(0).reverse(list.get(0).decisionStatus());
         model.addAttribute("theme", list.get(0));
         model.addAttribute("listAppeals", listAppeal);
+        model.addAttribute("decisionStatus", decisionStatus);
         return "pages/theme";
+    }
+
+    @PostMapping(value = "/document/themes/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<Object> editTheme(@PathVariable("id") String id, String title, String description,
+                                            String decisionDate, String decisionStatus) throws SQLException{
+        ThemeRow themeRow = new ThemeRow(
+                Integer.parseInt(id),
+                title,
+                "",
+                decisionDate+":00Z",
+                decisionStatus,
+                description
+        );
+        new ThemeChange(themeRow).update();
+        return ResponseEntity.ok().build();
     }
 }

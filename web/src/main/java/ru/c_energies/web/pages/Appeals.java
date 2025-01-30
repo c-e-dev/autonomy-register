@@ -13,6 +13,7 @@ import ru.c_energies.databases.entity.appeals.AppealChanges;
 import ru.c_energies.databases.entity.appeals.AppealCreate;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
 import ru.c_energies.databases.entity.appeals.AppealRow;
+import ru.c_energies.web.convert.DigitsToYesNo;
 import ru.c_energies.web.models.appeals.AppealsTable;
 import ru.c_energies.databases.entity.files.FileRow;
 
@@ -52,6 +53,7 @@ public class Appeals {
         List<FileRow> listFileRow = new Files().listFilesSended(id);
         List<FileRow> listFilesAnswered = new Files().listFilesAnswered(id);
         model.addAttribute("appeal", list.get(0));
+        model.addAttribute("answered", new DigitsToYesNo(0).reverse(list.get(0).answered()));
         model.addAttribute("listFiles", listFileRow);
         model.addAttribute("listFileAnswered", listFilesAnswered);
         return "pages/appeal";

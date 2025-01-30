@@ -42,6 +42,24 @@ function handleSubmitEditAppeal() {
     console.log('Отправка!')
 }
 
+function handleSubmit(formId) {
+    //event.preventDefault();
+    const form = document.getElementById(formId);
+    //const form = "/files/3/upload";
+    const url = new URL(form.action);
+    const formData = new FormData(form);
+
+    const fetchOptions = {
+        method: form.method,
+        body: formData,
+    };
+    fetch(url, fetchOptions);
+  // Any JS that could fail goes here
+    form.reset();
+    document.getElementById('closeForm').click();
+    console.log('Отправка!')
+}
+
 function handleSubmitCreateAppeal() {
     //event.preventDefault();
     const form = document.getElementById('createAppeal');

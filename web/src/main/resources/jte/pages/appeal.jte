@@ -8,6 +8,7 @@
 @param List<FileRow> listFiles
 @param List<FileRow> listFileAnswered
 @param FilesForm ff
+@param Integer answered
 
 @template.layout.main(content = @`
 <div class="app-content-header"> <!--begin::Container-->
@@ -33,7 +34,7 @@
             <div class="col-md-6">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <button type="button" class="btn btn-create" data-bs-toggle="modal" data-bs-target="#appealEdit"  style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Редактировать</button>
+                        <button type="button" class="btn btn-create" data-bs-toggle="modal" data-bs-target="#appealEdit" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Редактировать</button>
                         <div class="modal fade" id="appealEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" style="max-width:1000px">
                                 <div class="modal-content">
@@ -48,10 +49,13 @@
                                             <label class="form-label">Срок исполнения</label>
                                             <input type="datetime-local" class="form-control" id="inputText02" name="dueDate" value="${appeal.dueDate()}">
                                             <label class="form-label" for="getAnsweredable">Получен ответ</label>
-                                            <select class="form-select" id="getAnsweredable" required name="getAnsweredable">
-                                                <option selected disabled value="">Выберите</option>
-                                                <option value="0">Нет</option>
-                                                <option value="1">Да</option>
+                                            <select class="form-select" id="getAnsweredable" required autocomplete="off" name="getAnsweredable">
+                                                @if(answered == 0)
+                                                <option selected disabled value="">Выберите</option>@else<option disabled value="">Выберите</option>@endif
+                                                @if(answered == 1)
+                                                <option selected value="1">Нет</option>@else<option value="1">Нет</option>@endif
+                                                @if(answered == 2)
+                                                <option selected value="2">Да</option>@else<option value="2">Да</option>@endif
                                             </select>
                                         </div>
                                         <div class="modal-footer">

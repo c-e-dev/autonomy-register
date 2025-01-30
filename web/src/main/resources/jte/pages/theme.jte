@@ -1,9 +1,10 @@
 @import java.util.List
-@import ru.c_energies.web.models.themes.ThemeRow
+@import ru.c_energies.databases.entity.themes.ThemeRow
 @import ru.c_energies.databases.entity.appeals.AppealRow
 
 @param List<AppealRow> listAppeals
 @param ThemeRow theme
+@param Integer decisionStatus
 
 @template.layout.main(content = @`
 <div class="app-content-header"> <!--begin::Container-->
@@ -29,27 +30,55 @@
             <div class="col-md-6">
                 <div class="card mb-4">
                     <div class="card-header">
-                        <button type="button" class="btn btn-create" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Редактировать</button>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#themeEdit" class="btn btn-create" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Редактировать</button>
+                        <div class="modal fade" id="themeEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="max-width:1000px">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="themeModalLabel2">Редактирование</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form onsubmit="return false;" action="/document/themes/${theme.id()}" method="POST" enctype="application/x-www-form-urlencoded" id="editTheme">
+                                        <div class="modal-body">
+                                            <label class="form-label">Тема</label>
+                                            <input type="text" class="form-control" id="inputTheme01" name="title" value="${theme.title()}">
+                                            <label class="form-label">Описание</label>
+                                            <input type="text" class="form-control" id="inputTheme02" name="description" value="${theme.description()}">
+                                            <label class="form-label">Дата решения:</label>
+                                            <input type="datetime-local" class="form-control" id="inputText02" name="decisionDate" value="${theme.decisionDate()}">
+                                            <label class="form-label" for="decisionStatus">Решено:</label>
+                                            <select class="form-select" id="decisionStatus" required autocomplete="off" name="decisionStatus">
+                                                @if(decisionStatus == 0)
+                                                <option selected disabled value="">Выберите</option>@else <option disabled value="">Выберите</option> @endif
+                                                @if(decisionStatus == 1)
+                                                <option value="1" selected>Не решено</option>@else <option value="1">Не решено</option> @endif
+                                                @if(decisionStatus == 2)
+                                                <option value="2" selected>Решено</option>@else <option value="2">Решено</option> @endif
+                                                @if(decisionStatus == 3)
+                                                <option value="3" selected>Отложено</option>@else<option value="3">Отложено</option>@endif
+                                            </select>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" id="closeForm" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                            <button type="button" class="btn btn-primary" onclick="handleSubmit('editTheme')">Сохранить</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div> <!-- /.card-header -->
                     <div class="card-body">
                         <div class="card-header">Сводная информация</div>
                         <div class="card-body">
                         <table class="table">
                             <tr>
-                                <th style="width:15%">Описание:</th><td style="width:35%">Вот посвящено тому и тому. ПУсть всем сделают хорошо, особенно вон тем</td>
-                                <th style="width:15%">Дата создания:</th><td style="width:35%">2024-05-23 12:05</td>
+                                <th style="width:15%">Описание:</th><td style="width:35%"><textarea class="form-control" id="exampleFormControlTextarea1" rows="5" readonly>${theme.description()}</textarea></td>
+                                <th style="width:15%">Дата создания:</th><td style="width:35%">${theme.createDate()}</td>
                             </tr>
                             <tr>
                                 <th>Решено:</th>
-                                <td>
-                                <!--<select class="form-select form-select mb-3" aria-label="Large select example">
-                                    <option selected>Выберите</option>
-                                    <option value="1">Не решено</option>
-                                    <option value="2">Решено</option>
-                                    <option value="3">Отложено</option>
-                                </select>-->
-                                </td>
-                                <th>Дата решения:</th><td>2024-07-23 09:05</td>
+                                <td>${theme.decisionStatus()}</td>
+                                <th>Дата решения:</th><td>${theme.decisionDate()}</td>
                             </tr>
                         </table>
                         <div class="card mb-4">
