@@ -47,7 +47,7 @@
                                             <label class="form-label">Номер отправления</label>
                                             <input type="text" class="form-control" id="inputText01" name="registerTrackNumber" value="${appeal.registerTrackNumber()}">
                                             <label class="form-label">Срок исполнения</label>
-                                            <input type="datetime-local" class="form-control" id="inputText02" name="dueDate" value="${appeal.dueDate()}">
+                                            <input type="datetime-local" min="2020-01-01T00:00" class="form-control" id="inputText02" name="dueDate" value="${appeal.dueDate()}">
                                             <label class="form-label" for="getAnsweredable">Получен ответ</label>
                                             <select class="form-select" id="getAnsweredable" required autocomplete="off" name="getAnsweredable">
                                                 @if(answered == 0)
@@ -59,8 +59,8 @@
                                             </select>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" id="closeFormEditAppeal" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                            <button type="button" class="btn btn-primary" onclick="handleSubmitEditAppeal()">Сохранить</button>
+                                            <button type="button" id="closeForm_editAppeal" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                            <button type="button" class="btn btn-primary" onclick="handleSubmit('editAppeal')">Сохранить</button>
                                         </div>
                                     </form>
                                 </div>
@@ -107,8 +107,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" id="closeForm" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                                    <button type="button" class="btn btn-primary" onclick="handleSubmit()">Загрузить</button>
+                                                    <button type="button" id="closeForm_fileType" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                    <button type="button" class="btn btn-primary" onclick="handleSubmit('fileType')">Загрузить</button>
                                                 </div>
                                             </form>
                                         </div>

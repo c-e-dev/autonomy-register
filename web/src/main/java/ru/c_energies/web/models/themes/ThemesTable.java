@@ -1,7 +1,7 @@
 package ru.c_energies.web.models.themes;
 
 import ru.c_energies.databases.entity.themes.ThemeRow;
-import ru.c_energies.web.convert.AnsweredVariable;
+import ru.c_energies.web.convert.ThemeStatuses;
 import ru.c_energies.web.convert.DateFormat;
 
 import java.sql.ResultSet;
@@ -22,7 +22,7 @@ public class ThemesTable {
                             resultSet.getString("title"),
                             new DateFormat(resultSet.getInt("create_date")).convert(),
                             new DateFormat(resultSet.getInt("decision_date")).convert(),
-                            new AnsweredVariable(resultSet.getInt("decision_status")).value(),
+                            new ThemeStatuses(resultSet.getInt("decision_status")).value(),
                             resultSet.getString("description")
                     )
             );

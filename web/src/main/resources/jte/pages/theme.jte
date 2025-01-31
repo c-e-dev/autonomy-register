@@ -42,10 +42,10 @@
                                         <div class="modal-body">
                                             <label class="form-label">Тема</label>
                                             <input type="text" class="form-control" id="inputTheme01" name="title" value="${theme.title()}">
-                                            <label class="form-label">Описание</label>
-                                            <input type="text" class="form-control" id="inputTheme02" name="description" value="${theme.description()}">
+                                            <label class="form-label" for="exampleFormControlTextarea2">Описание</label>
+                                            <textarea class="form-control" id="exampleFormControlTextarea2" rows="5" name="description">${theme.description()}</textarea>
                                             <label class="form-label">Дата решения:</label>
-                                            <input type="datetime-local" class="form-control" id="inputText02" name="decisionDate" value="${theme.decisionDate()}">
+                                            <input type="datetime-local" min="2020-01-01T00:00" class="form-control" id="inputText02" name="decisionDate" value="${theme.decisionDate()}">
                                             <label class="form-label" for="decisionStatus">Решено:</label>
                                             <select class="form-select" id="decisionStatus" required autocomplete="off" name="decisionStatus">
                                                 @if(decisionStatus == 0)
@@ -56,10 +56,12 @@
                                                 <option value="2" selected>Решено</option>@else <option value="2">Решено</option> @endif
                                                 @if(decisionStatus == 3)
                                                 <option value="3" selected>Отложено</option>@else<option value="3">Отложено</option>@endif
+                                                @if(decisionStatus == 4)
+                                                <option value="4" selected>В работе</option>@else<option value="4">В работе</option>@endif
                                             </select>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" id="closeForm" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                            <button type="button" id="closeForm_editTheme" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                                             <button type="button" class="btn btn-primary" onclick="handleSubmit('editTheme')">Сохранить</button>
                                         </div>
                                     </form>
@@ -72,11 +74,11 @@
                         <div class="card-body">
                         <table class="table">
                             <tr>
-                                <th style="width:15%">Описание:</th><td style="width:35%"><textarea class="form-control" id="exampleFormControlTextarea1" rows="5" readonly>${theme.description()}</textarea></td>
+                                <th style="width:15%">Описание:</th><td style="width:35%">${theme.description()}</td>
                                 <th style="width:15%">Дата создания:</th><td style="width:35%">${theme.createDate()}</td>
                             </tr>
                             <tr>
-                                <th>Решено:</th>
+                                <th>Статус:</th>
                                 <td>${theme.decisionStatus()}</td>
                                 <th>Дата решения:</th><td>${theme.decisionDate()}</td>
                             </tr>
@@ -101,7 +103,7 @@
                                                     <label class="form-label">Номер отправления</label>
                                                     <input type="text" class="form-control" id="registerTrackNumber" name="registerTrackNumber" value="">
                                                     <label class="form-label">Срок исполнения</label>
-                                                    <input type="datetime-local" class="form-control" id="dueDate" name="dueDate" value="">
+                                                    <input type="datetime-local" min="2020-01-01T00:00" class="form-control" id="dueDate" name="dueDate" value="2020-01-01T00:00">
                                                     <label class="form-label" for="getAnsweredable">Получен ответ</label>
                                                     <select class="form-select" id="getAnsweredable" required name="getAnsweredable">
                                                         <option selected disabled value="">Выберите</option>
@@ -110,8 +112,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" id="closeFormCreateAppeal" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                                    <button type="button" class="btn btn-primary" onclick="handleSubmitCreateAppeal()">Сохранить</button>
+                                                    <button type="button" id="closeForm_createAppeal" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                    <button type="button" class="btn btn-primary" onclick="handleSubmit('createAppeal')">Сохранить</button>
                                                 </div>
                                             </form>
                                         </div>

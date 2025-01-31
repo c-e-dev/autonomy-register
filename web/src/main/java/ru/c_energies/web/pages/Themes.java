@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.c_energies.databases.Query;
 import ru.c_energies.databases.entity.themes.ThemeChange;
+import ru.c_energies.databases.entity.themes.ThemeCreate;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
 import ru.c_energies.databases.entity.appeals.AppealRow;
-import ru.c_energies.web.convert.AnsweredVariable;
+import ru.c_energies.web.convert.ThemeStatuses;
 import ru.c_energies.web.models.appeals.AppealsTable;
 import ru.c_energies.databases.entity.themes.ThemeRow;
 import ru.c_energies.web.models.themes.ThemesTable;
@@ -29,6 +30,21 @@ public class Themes {
         return "pages/themes";
     }
 
+    @PostMapping(value = "/document/themes", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<Object> createTheme(String title, String description,
+                                            String decisionDate, String decisionStatus) throws SQLException{
+        ThemeRow themeRow = new ThemeRow(
+                0,
+                title,
+                "",
+                decisionDate+":00Z",
+                decisionStatus,
+                description
+        );
+        new ThemeCreate(themeRow).insert();
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping(value = "/document/themes/{id}")
     public String fullThemeById(Model model, @PathVariable("id") String id) throws SQLException{
         Query q = new Query(new SqliteDataSource(), String.format("select * from themes where id = %d", Integer.parseInt(id)));
@@ -36,7 +52,7 @@ public class Themes {
         Query q2 = new Query(new SqliteDataSource(),
                 String.format("select * from appeals where id in (select appeal_id from themes_link_appeals where theme_id = %d)", Integer.parseInt(id)));
         List<AppealRow> listAppeal = new AppealsTable(q2.exec()).list();
-        int decisionStatus = new AnsweredVariable(0).reverse(list.get(0).decisionStatus());
+        int decisionStatus = new ThemeStatuses(0).reverse(list.get(0).decisionStatus());
         model.addAttribute("theme", list.get(0));
         model.addAttribute("listAppeals", listAppeal);
         model.addAttribute("decisionStatus", decisionStatus);

@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="/css/adminlte.css"><!--end::Required Plugin(AdminLTE)--><!-- apexcharts -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts@3.37.1/dist/apexcharts.css" integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0=" crossorigin="anonymous">
   <script src="/js/jquery-3.7.1.min.js"></script>
-  <script src="/js/upload.js"></script>
+  <script src="/js/webCustom.js"></script>
 </head>
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary"> <!--begin::App Wrapper-->
@@ -115,17 +115,14 @@
     <div class="sidebar-wrapper">
       <nav class="mt-2"> <!--begin::Sidebar Menu-->
         <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
-          <li class="nav-item menu-open"> <a href="/" class="nav-link active"> <i class="nav-icon bi bi-palette"></i>
+          <li class="nav-item"> <a href="/" class="nav-link"> <i class="nav-icon bi bi-palette"></i>
             <p>Главная</p>
           </a> </li>
-          <li class="nav-item "> <a href="#" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
-            <p>
-              Документы
-              <i class="nav-arrow bi bi-chevron-right"></i>
-            </p>
+          <li class="nav-item"> <a href="#documents" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+            <p>Документы<i class="nav-arrow bi bi-chevron-right"></i></p>
           </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item"> <a href="/document/themes" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
+              <li class="nav-item" > <a id="theme" href="/document/themes" class="nav-link" aria-current="true" aria-selected="true"> <i class="nav-icon bi bi-circle"></i>
                 <p>Темы</p>
               </a> </li>
               <li class="nav-item"> <a href="/document/appeals" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
@@ -190,6 +187,22 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha256-whL0tQWoY1Ku1iskqPFvmZ+CHsvmRWx/PIoEvIeWh4I=" crossorigin="anonymous"></script> <!--end::Required Plugin(popperjs for Bootstrap 5)--><!--begin::Required Plugin(Bootstrap 5)-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha256-YMa+wAM6QkVyz999odX7lPRxkoYAan8suedu4k2Zur8=" crossorigin="anonymous"></script> <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
 <script src="/js/adminlte.js"></script> <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
+
+<!-- sidebar -->
+<script>
+  $(function($){
+      var storage = localStorage.getItem('nav');
+      if (storage && storage !== "#") {
+          $('.nav a[href="' + storage + '"]').tab('show');
+      }
+      console.log("storage = ", storage);
+      $('ul.nav li').on('click', function() {
+          var id = $(this).find('a').attr('href');
+          console.log("id = ", id);
+          localStorage.setItem('nav', id);
+      });
+  });
+</script>
 <script>
   const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";
   const Default = {
