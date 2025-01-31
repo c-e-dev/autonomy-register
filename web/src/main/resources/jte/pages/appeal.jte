@@ -76,6 +76,10 @@
                                     <th style="width:15%">Дата создания:</th><td style="width:35%">${appeal.createDate()}</td>
                                 </tr>
                                 <tr>
+                                    <th style="width:15%">Кому:</th><td style="width:35%">Такая-то организация, лицо</td>
+                                    <th style="width:15%">Адрес:</th><td style="width:35%">Адрес юрлица</td>
+                                </tr>
+                                <tr>
                                     <th>Срок исполнения:</th><td>${appeal.dueDate()}</td>
                                     <th>Получен ответ:</th><td class="text-bg-info">${appeal.answered()}</td>
                                 </tr>
