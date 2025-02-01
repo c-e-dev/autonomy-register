@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class DigitsToYesNo {
     private final Map<Integer, String> mapDigits = new HashMap<>(){{
+        put(0, "Нет");
         put(1, "Нет");
         put(2, "Да");
     }};

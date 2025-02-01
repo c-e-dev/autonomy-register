@@ -91,7 +91,7 @@
                                     <div class="modal-dialog" style="max-width:1000px">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel2">Создать обращение к теме</h1>
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel2">Создать обращение к теме "${theme.title()}"</h1>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <form onsubmit="return false;" action="/document/appeals" method="POST" enctype="application/x-www-form-urlencoded" id="createAppeal">
@@ -104,6 +104,13 @@
                                                     <input type="text" class="form-control" id="inputRecipient" name="recipient" value="">
                                                     <label class="form-label">Куда</label>
                                                     <input type="text" class="form-control" id="inputAddress" name="address" value="">
+                                                    <label class="form-label">Live Куда</label>
+                                                    <select class="form-select" data-live-search="true">
+                                                        <option >Hot Dog, Fries and a Soda</option>
+                                                        <option>Burger, Shake and a Smile</option>
+                                                        <option >Sugar, Spice and all things nice</option>
+                                                    </select>
+
                                                     <label class="form-label">Номер отправления</label>
                                                     <input type="text" class="form-control" id="registerTrackNumber" name="registerTrackNumber" value="">
                                                     <label class="form-label">Срок исполнения</label>

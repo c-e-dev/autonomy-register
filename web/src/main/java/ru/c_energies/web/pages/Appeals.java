@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import ru.c_energies.databases.Query;
 import ru.c_energies.databases.entity.addresses.AddressCreate;
+import ru.c_energies.databases.entity.addresses.AddressDublicateSearch;
+import ru.c_energies.databases.entity.addresses.AddressRow;
+import ru.c_energies.databases.entity.addresses.AddressTable;
 import ru.c_energies.databases.entity.appeals.AppealAddress;
 import ru.c_energies.databases.entity.appeals.AppealChanges;
 import ru.c_energies.databases.entity.appeals.AppealCreate;
@@ -40,8 +43,14 @@ public class Appeals {
         AppealRow appealRowNewTemp = new AppealRow(0, title, "", registerTrackNumber, "", dueDate+":00Z", getAnsweredable);
         AppealCreate appealCreate = new AppealCreate(Integer.parseInt(themeId), appealRowNewTemp);
         appealCreate.insert();
-        AddressCreate addressCreate = new AddressCreate(recipient, address).insert();
-        new AppealAddress(appealCreate.id()).address(addressCreate.id());
+        AddressDublicateSearch addressDublicateSearch = new AddressDublicateSearch(recipient, address);
+        AddressCreate addressCreate = new AddressCreate(recipient, address);
+        if(!addressDublicateSearch.foundable()){
+            addressCreate.insert();
+            new AppealAddress(appealCreate.id()).address(addressCreate.id());
+        }else {
+            new AppealAddress(appealCreate.id()).address(addressDublicateSearch.id());
+        }
         return ResponseEntity.ok().build();
     }
 
@@ -58,10 +67,12 @@ public class Appeals {
         List<AppealRow> list = new AppealsTable(q.exec()).list();
         List<FileRow> listFileRow = new Files().listFilesSended(id);
         List<FileRow> listFilesAnswered = new Files().listFilesAnswered(id);
+        AddressRow addressRow = new AppealAddress(Integer.parseInt(id)).address();
         model.addAttribute("appeal", list.get(0));
         model.addAttribute("answered", new DigitsToYesNo(0).reverse(list.get(0).answered()));
         model.addAttribute("listFiles", listFileRow);
         model.addAttribute("listFileAnswered", listFilesAnswered);
+        model.addAttribute("address", addressRow);
         return "pages/appeal";
     }
 

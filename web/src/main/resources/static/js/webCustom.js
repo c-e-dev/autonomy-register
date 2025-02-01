@@ -24,3 +24,6 @@ function handleSubmit(formId) {
 /** jQuery
 $('form[name=myForm]').trigger('reset');
 */
+
+
+

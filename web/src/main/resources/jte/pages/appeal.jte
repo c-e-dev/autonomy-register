@@ -3,12 +3,14 @@
 @import ru.c_energies.databases.entity.appeals.AppealRow
 @import ru.c_energies.databases.entity.files.FileRow
 @import ru.c_energies.web.pages.FilesForm
+@import ru.c_energies.databases.entity.addresses.AddressRow
 
 @param AppealRow appeal
 @param List<FileRow> listFiles
 @param List<FileRow> listFileAnswered
 @param FilesForm ff
 @param Integer answered
+@param AddressRow address
 
 @template.layout.main(content = @`
 <div class="app-content-header"> <!--begin::Container-->
@@ -76,8 +78,8 @@
                                     <th style="width:15%">Дата создания:</th><td style="width:35%">${appeal.createDate()}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width:15%">Кому:</th><td style="width:35%">Такая-то организация, лицо</td>
-                                    <th style="width:15%">Адрес:</th><td style="width:35%">Адрес юрлица</td>
+                                    <th style="width:15%">Кому:</th><td style="width:35%">${address.recipient()}</td>
+                                    <th style="width:15%">Адрес:</th><td style="width:35%">${address.address()}</td>
                                 </tr>
                                 <tr>
                                     <th>Срок исполнения:</th><td>${appeal.dueDate()}</td>
