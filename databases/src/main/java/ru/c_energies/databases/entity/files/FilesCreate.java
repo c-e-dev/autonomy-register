@@ -18,7 +18,7 @@ public class FilesCreate {
                 SET content=? WHERE id=?            
             """;
     private final String INSERT_FILES_APPEAL = """
-                INSERT INTO files_appeal (appeal_id, file_id, appeal_type_id) VALUES(%d, %d, %d)  RETURNING rowid
+                INSERT INTO files_appeal (appeal_id, file_id, appeal_type_id) VALUES(%d, %d, %d) RETURNING rowid
             """;
     private long id; //Идентификатор вставленной записи
     private long appealId;

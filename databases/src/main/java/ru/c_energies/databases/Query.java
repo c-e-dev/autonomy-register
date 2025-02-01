@@ -29,11 +29,15 @@ public class Query {
         }
         return null;
     }
+
+    /**
+     * Вставка строки в таблицу по запросу. В запросе INSERT должно быть обязательно прописано RETURNING rowid
+     */
     public void insert(){
         PreparedStatement p;
         ResultSet rs;
         try {
-            p = this.datasource.session().prepareStatement(this.query); //"SELECT SYSDATE FROM dual"
+            p = this.datasource.session().prepareStatement(this.query);
             rs = p.executeQuery();
             while(rs.next()){
 
@@ -45,7 +49,7 @@ public class Query {
     public void update(){
         PreparedStatement p;
         try {
-            p = this.datasource.session().prepareStatement(this.query); //"SELECT SYSDATE FROM dual"
+            p = this.datasource.session().prepareStatement(this.query);
             p.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

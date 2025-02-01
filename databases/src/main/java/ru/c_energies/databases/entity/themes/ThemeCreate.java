@@ -39,4 +39,9 @@ public class ThemeCreate implements Create<ThemeCreate> {
     public void update() {
 
     }
+
+    @Override
+    public int id() {
+        return this.id;
+    }
 }

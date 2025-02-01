@@ -1,8 +1,8 @@
 package ru.c_energies.web.models.themes;
 
 import ru.c_energies.databases.entity.themes.ThemeRow;
-import ru.c_energies.web.convert.ThemeStatuses;
-import ru.c_energies.web.convert.DateFormat;
+import ru.c_energies.utils.converters.DateFormat;
+import ru.c_energies.utils.converters.ThemeStatuses;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

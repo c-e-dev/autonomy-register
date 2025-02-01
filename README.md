@@ -117,6 +117,7 @@ id                | INTEGER  PRIMARY KEY("id" AUTOINCREMENT) | Sequence
 recipient                | TEXT | Получатель (поле кому)
 address                | TEXT | Адрес получателя (поле куда)
 actually                | INTEGER | Актуален адрес? Значения Нет (0), да (1). По умолчанию 1
+Чтобы не было повторных записей recipient и address должны строго быть одинаковыми.
 
 ## Таблица appeal_address
 Связь обращений с адресами получателей

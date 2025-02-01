@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import ru.c_energies.databases.Query;
+import ru.c_energies.databases.entity.addresses.AddressCreate;
+import ru.c_energies.databases.entity.appeals.AppealAddress;
 import ru.c_energies.databases.entity.appeals.AppealChanges;
 import ru.c_energies.databases.entity.appeals.AppealCreate;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
 import ru.c_energies.databases.entity.appeals.AppealRow;
-import ru.c_energies.web.convert.DigitsToYesNo;
+import ru.c_energies.utils.converters.DigitsToYesNo;
 import ru.c_energies.web.models.appeals.AppealsTable;
 import ru.c_energies.databases.entity.files.FileRow;
 
@@ -32,10 +34,14 @@ public class Appeals {
 
     @PostMapping(value = "/document/appeals", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<Object> createAppeal(Model model, @RequestPart String themeId, @RequestPart String title, @RequestPart String registerTrackNumber,
-                                               @RequestPart String dueDate, @RequestPart String getAnsweredable) throws SQLException {
+                                               @RequestPart String dueDate, @RequestPart String getAnsweredable,
+                                               @RequestPart String recipient, @RequestPart String address
+                                               ) throws SQLException {
         AppealRow appealRowNewTemp = new AppealRow(0, title, "", registerTrackNumber, "", dueDate+":00Z", getAnsweredable);
         AppealCreate appealCreate = new AppealCreate(Integer.parseInt(themeId), appealRowNewTemp);
         appealCreate.insert();
+        AddressCreate addressCreate = new AddressCreate(recipient, address).insert();
+        new AppealAddress(appealCreate.id()).address(addressCreate.id());
         return ResponseEntity.ok().build();
     }
 

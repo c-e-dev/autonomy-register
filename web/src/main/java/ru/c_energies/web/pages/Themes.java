@@ -12,7 +12,7 @@ import ru.c_energies.databases.entity.themes.ThemeChange;
 import ru.c_energies.databases.entity.themes.ThemeCreate;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
 import ru.c_energies.databases.entity.appeals.AppealRow;
-import ru.c_energies.web.convert.ThemeStatuses;
+import ru.c_energies.utils.converters.ThemeStatuses;
 import ru.c_energies.web.models.appeals.AppealsTable;
 import ru.c_energies.databases.entity.themes.ThemeRow;
 import ru.c_energies.web.models.themes.ThemesTable;

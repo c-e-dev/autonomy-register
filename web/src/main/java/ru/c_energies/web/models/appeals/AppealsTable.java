@@ -1,8 +1,8 @@
 package ru.c_energies.web.models.appeals;
 
 import ru.c_energies.databases.entity.appeals.AppealRow;
-import ru.c_energies.web.convert.DateFormat;
-import ru.c_energies.web.convert.DigitsToYesNo;
+import ru.c_energies.utils.converters.DateFormat;
+import ru.c_energies.utils.converters.DigitsToYesNo;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

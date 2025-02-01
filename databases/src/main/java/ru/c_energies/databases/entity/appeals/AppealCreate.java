@@ -46,4 +46,10 @@ public class AppealCreate implements Create<AppealCreate> {
     public void update() {
 
     }
+
+    @Override
+    public int id() {
+        return this.id;
+    }
+
 }

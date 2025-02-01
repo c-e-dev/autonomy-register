@@ -19,6 +19,7 @@
         <module>rest</module>
         <module>web</module>
         <module>databases</module>
+        <module>utils</module>
     </modules>
 
     <properties>

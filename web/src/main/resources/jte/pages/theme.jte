@@ -100,6 +100,10 @@
                                                     <input type="text" required class="form-control" id="themeId" name="themeId" value="${theme.id()}" readonly>
                                                     <label class="form-label">Тема обращения</label>
                                                     <input type="text" required class="form-control" id="titleAppeal" name="title" value="">
+                                                    <label class="form-label">Кому</label>
+                                                    <input type="text" class="form-control" id="inputRecipient" name="recipient" value="">
+                                                    <label class="form-label">Куда</label>
+                                                    <input type="text" class="form-control" id="inputAddress" name="address" value="">
                                                     <label class="form-label">Номер отправления</label>
                                                     <input type="text" class="form-control" id="registerTrackNumber" name="registerTrackNumber" value="">
                                                     <label class="form-label">Срок исполнения</label>

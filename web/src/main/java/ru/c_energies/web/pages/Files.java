@@ -17,14 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.c_energies.databases.Query;
 import ru.c_energies.databases.entity.files.FileContent;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
-import ru.c_energies.web.convert.FileNameAndExtension;
+
 import ru.c_energies.databases.entity.files.FileRow;
 import ru.c_energies.databases.entity.files.FilesCreate;
+import ru.c_energies.utils.converters.FileNameAndExtension;
 import ru.c_energies.web.models.files.FilesTable;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.List;
