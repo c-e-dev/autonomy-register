@@ -46,9 +46,10 @@
                           <label class="form-label" for="decisionStatus">Решено:</label>
                           <select class="form-select" id="decisionStatus" required autocomplete="off" name="decisionStatus">
                             <option disabled value="">Выберите</option>
-                            <option selected value="1">Не решено</option>
+                            <option value="1">Не решено</option>
                             <option value="2">Решено</option>
                             <option value="3">Отложено</option>
+                            <option selected value="4">В работе</option>
                           </select>
                         </div>
                         <div class="modal-footer">
