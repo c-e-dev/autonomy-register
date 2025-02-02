@@ -32,7 +32,7 @@
                   <div class="modal-dialog" style="max-width:1000px">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="themeModalLabel2">Редактирование</h1>
+                        <h1 class="modal-title fs-5" id="themeModalLabel2">Создание темы</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <form onsubmit="return false;" action="/document/themes" method="POST" enctype="application/x-www-form-urlencoded" id="createTheme">
@@ -42,11 +42,11 @@
                           <label class="form-label">Описание</label>
                           <input type="text" class="form-control" id="inputTheme02" name="description" value="">
                           <label class="form-label">Дата решения:</label>
-                          <input type="datetime-local" min="2020-01-01T00:00" class="form-control" id="inputText02" name="decisionDate" value="2020-01-01T00:00">
+                          <input type="datetime-local" min="2030-01-01T00:00" class="form-control" id="inputText02" name="decisionDate" value="2020-01-01T00:00">
                           <label class="form-label" for="decisionStatus">Решено:</label>
                           <select class="form-select" id="decisionStatus" required autocomplete="off" name="decisionStatus">
-                            <option selected disabled value="">Выберите</option>
-                            <option value="1">Не решено</option>
+                            <option disabled value="">Выберите</option>
+                            <option selected value="1">Не решено</option>
                             <option value="2">Решено</option>
                             <option value="3">Отложено</option>
                           </select>

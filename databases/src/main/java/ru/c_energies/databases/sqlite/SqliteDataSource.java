@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Base64;
 
 /**
  * Создание коннекта к БД Oracle
@@ -22,7 +21,11 @@ public class SqliteDataSource implements Source<Connection> {
             String profile = System.getenv("SPRING_ENV");
             if ("prod".equals(profile)) {
                 String SQL_PATH = System.getenv("SQL_PATH");
-                conn = DriverManager.getConnection("jdbc:sqlite:"+SQL_PATH+"reestr.db");
+                if(SQL_PATH == null){
+                    conn = DriverManager.getConnection("jdbc:sqlite:reestr.db");
+                }else{
+                    conn = DriverManager.getConnection("jdbc:sqlite:" + SQL_PATH + "reestr.db");
+                }
             }else {
                 conn = DriverManager.getConnection("jdbc:sqlite:/media/adan/D/Develop/Git/personal-creditor-s-register/reestr_dev.db");
             }
