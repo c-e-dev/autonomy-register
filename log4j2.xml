@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="off">
+    <Properties>
+        <Property name="basePath">logs/</Property>
+    </Properties>
+
+    <Appenders>
+        <RollingFile name="fileLogger" fileName="${basePath}/applications.log" filePattern="${basePath}/applications.log.%d{yyyyMMdd_HHmmss}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="50 MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+            <DirectWriteRolloverStrategy maxFiles="10"/>
+        </RollingFile>
+
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+        </Console>
+
+    </Appenders>
+    <Loggers>
+        <Logger name="ru.c_energies" level="trace" additivity="false">
+            <appender-ref ref="fileLogger" level="trace" />
+            <appender-ref ref="console" level="trace" />
+        </Logger>
+        <logger name="org.apache">
+            <appender-ref ref="fileLogger" level="DEBUG" />
+            <appender-ref ref="console" level="debug" />
+        </logger>
+        <logger name="org.springframework" additivity="false">
+            <appender-ref ref="fileLogger" level="DEBUG" />
+            <appender-ref ref="console" level="debug" />
+        </logger>
+        <Root level="debug" additivity="false">
+            <appender-ref ref="fileLogger" />
+            <appender-ref ref="console" level="debug" />
+        </Root>
+    </Loggers>
+
+</Configuration>

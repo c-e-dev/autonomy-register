@@ -19,7 +19,13 @@ public class SqliteDataSource implements Source<Connection> {
         LOG.info("Initialization Oracle Connection start");
 
         try{
-            conn = DriverManager.getConnection("jdbc:sqlite:/media/adan/D/Develop/Git/personal-creditor-s-register/reestr.db");
+            String profile = System.getenv("SPRING_ENV");
+            if ("prod".equals(profile)) {
+                String SQL_PATH = System.getenv("SQL_PATH");
+                conn = DriverManager.getConnection("jdbc:sqlite:"+SQL_PATH+"reestr.db");
+            }else {
+                conn = DriverManager.getConnection("jdbc:sqlite:/media/adan/D/Develop/Git/personal-creditor-s-register/reestr_dev.db");
+            }
             if (conn != null) {
                 LOG.info("Connected to the database!");
             } else {

@@ -34,6 +34,12 @@ https://pandao.github.io/editor.md/en.html - оформление markdown
 ```bash
 /opt/java/jdk-17.0.6-full/bin/java -agentlib:jdwp=transport=dt_socket,address=127.0.0.1:59059,suspend=y,server=n -DSPRING_ENV=prod -Dfile.encoding=UTF-8 -jar /<path to jar>/web-1.0-SNAPSHOT.jar
 ```
+Зачистка данных в таблице
+```
+DELETE FROM <table>;
+UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = '<table>';
+vacuum;
+```
 
 ----------------
 # Структура БД
