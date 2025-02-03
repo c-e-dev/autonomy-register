@@ -22,9 +22,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Simple Tables
-                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Обращение</li>
                 </ol>
             </div>
         </div> <!--end::Row-->
@@ -84,6 +82,10 @@
                                 <tr>
                                     <th>Срок исполнения:</th><td>${appeal.dueDate()}</td>
                                     <th>Получен ответ:</th><td class="text-bg-info">${appeal.answered()}</td>
+                                </tr>
+                                <tr>
+                                    <th>Сопровождающие документы:</th><td></td>
+                                    <th></th><td></td>
                                 </tr>
                             </table>
                         </div>

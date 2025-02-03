@@ -33,8 +33,11 @@ public class AppealAddress {
             addressId = resultSet.getInt("address_id");
         }
         String sql = String.format("select * from addresses where id = %d", addressId);
-        AddressRow addressRow = new AddressTable(sql).list().get(0);
-        return addressRow;
+        List<AddressRow> addressRows = new AddressTable(sql).list();
+        if(addressRows.size() > 0) {
+            return new AddressTable(sql).list().get(0);
+        }
+        return new AddressRow(0, "", "", 0);
     }
 
     /**

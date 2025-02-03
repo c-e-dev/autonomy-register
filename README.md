@@ -26,6 +26,10 @@ https://jte.gg/spring-boot-starter-2/ - шаблонизатор
 https://www.sqlitetutorial.net/sqlite-java/jdbc-read-write-blob/ - туториалы по SQLite
 
 https://pandao.github.io/editor.md/en.html - оформление markdown
+
+Сжатие pdf
+gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -sOutputFile=out.pdf \[614017\,\ г.\ Пермь\,\ ул.\ Куфонина\,\ д.\ 19\,\ кв.\ 9\].pdf
+
 # Для разработки и запуска в прод
 Для разработки и поднятия приложения в ИДЕ используем настройки типа Application, с указанием главного класса + System.getenv("SPRING_ENV") != prod
 

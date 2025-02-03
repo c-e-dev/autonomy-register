@@ -15,10 +15,9 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">
-                        Simple Tables
-                    </li>
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/document/themes">Темы обращений</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><a href="">Тема</a></li>
                 </ol>
             </div>
         </div> <!--end::Row-->
@@ -45,7 +44,7 @@
                                             <label class="form-label" for="exampleFormControlTextarea2">Описание</label>
                                             <textarea class="form-control" id="exampleFormControlTextarea2" rows="5" name="description">${theme.description()}</textarea>
                                             <label class="form-label">Дата решения:</label>
-                                            <input type="datetime-local" min="2020-01-01T00:00" class="form-control" id="inputText02" name="decisionDate" value="${theme.decisionDate()}">
+                                            <input type="datetime-local" min="2025-01-01T00:00" class="form-control" id="inputText02" name="decisionDate" value="${theme.decisionDate()}">
                                             <label class="form-label" for="decisionStatus">Решено:</label>
                                             <select class="form-select" id="decisionStatus" required autocomplete="off" name="decisionStatus">
                                                 @if(decisionStatus == 0)
@@ -114,7 +113,7 @@
                                                     <label class="form-label">Номер отправления</label>
                                                     <input type="text" class="form-control" id="registerTrackNumber" name="registerTrackNumber" value="">
                                                     <label class="form-label">Срок исполнения</label>
-                                                    <input type="datetime-local" min="2020-01-01T00:00" class="form-control" id="dueDate" name="dueDate" value="2020-01-01T00:00">
+                                                    <input type="datetime-local" min="2025-01-01T00:00" class="form-control" id="dueDate" name="dueDate" value="2020-01-01T00:00">
                                                     <label class="form-label" for="getAnsweredable">Получен ответ</label>
                                                     <select class="form-select" id="getAnsweredable" required name="getAnsweredable">
                                                         <option selected disabled value="">Выберите</option>
@@ -137,11 +136,10 @@
                                             <th style="width: 10px">#</th>
                                             <th style="width: 200px">Номер отправления</th>
                                             <th>Название</th>
+                                            <th>Кому</th>
                                             <th style="width: 150px">Дата создания</th>
                                             <th style="width: 150px">Срок исполнения</th>
                                             <th style="width: 40px">Ответили?</th>
-                                            <th>Отправленные документы</th>
-                                            <th>Полученные документы</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -150,11 +148,10 @@
                                             <td><a href="/document/appeals/${lar.id()}">${lar.id()}.</a></td>
                                             <td><a href="/document/appeals/${lar.id()}">${lar.registerTrackNumber()}</a></td>
                                             <td>${lar.title()}</td>
+                                            <td></td>
                                             <td>${lar.createDate()}</td>
                                             <td>${lar.dueDate()}</td>
                                             <td class="text-bg-info">${lar.answered()}</td>
-                                            <td></td>
-                                            <td></td>
                                         </tr>
                                         @endfor
                                         </tbody>
