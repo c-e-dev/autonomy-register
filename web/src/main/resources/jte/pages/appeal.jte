@@ -4,10 +4,12 @@
 @import ru.c_energies.databases.entity.files.FileRow
 @import ru.c_energies.web.pages.FilesForm
 @import ru.c_energies.databases.entity.addresses.AddressRow
+@import ru.c_energies.databases.entity.labels.LabelRow
 
 @param AppealRow appeal
 @param List<FileRow> listFiles
 @param List<FileRow> listFileAnswered
+@param List<LabelRow> labels
 @param FilesForm ff
 @param Integer answered
 @param AddressRow address
@@ -84,7 +86,44 @@
                                     <th>Получен ответ:</th><td class="text-bg-info">${appeal.answered()}</td>
                                 </tr>
                                 <tr>
-                                    <th>Сопровождающие документы:</th><td></td>
+                                    <th>Сопровождающие документы:</th><td>
+                                    @for(LabelRow label : labels)
+                                    <span class="badge text-bg-primary">${label.name()}</span>
+                                    @endfor
+
+                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tagModal" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                                        Добавить названия
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="tagModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5">Теги по сопровождающим документам</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form class="row g-3">
+                                                        <div class="col-md-4">
+                                                            <input class="form-control form-control-sm" type="text" id="inputTags" name="tagName" >
+                                                            <input hidden="true" class="form-control form-control-sm" type="text" id="inputAppeal" name="appealId" value="${appeal.id()}" >
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <button type="button" id="tagCreate" class="btn btn-primary" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-body" id="draftTags">@for(LabelRow label : labels)
+                                                    <span class="badge text-bg-primary">${label.name()}</span>
+                                                    @endfor</div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </td>
                                     <th></th><td></td>
                                 </tr>
                             </table>

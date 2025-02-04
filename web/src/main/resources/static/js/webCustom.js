@@ -24,6 +24,29 @@ function handleSubmit(formId) {
 /** jQuery
 $('form[name=myForm]').trigger('reset');
 */
+$('button#tagCreate').on('click', function() {
+          var tagName = $("input[type=text][name=tagName]").val();
+          var appealId = $("input[type=text][name=appealId]").val();
+          console.log("tagName = ", tagName);
+          $("div#draftTags").append('<span class="badge text-bg-primary">'+tagName+'</span>');
+          $('input[type=text][name=tagName]').val('');
+          createTag(appealId, tagName);
+});
 
+function createTag(appealId, tagName) {
+    const url = new URL(window.location.origin +"/labels/create");
+    const formData = new FormData();
+    formData.append("appealId", appealId);
+    formData.append("tagName", tagName);
 
+    const fetchOptions = {
+        method: "POST",
+        body: formData,
+    };
+    fetch(url, fetchOptions);
+  // Any JS that could fail goes here
+    //form.reset();
+    //document.getElementById('closeForm_'+formId).click();
+    console.log('Отправка!');
+}
 

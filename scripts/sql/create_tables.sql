@@ -52,3 +52,9 @@ CREATE TABLE appeal_address (
 	appeal_id INTEGER,
 	address_id INTEGER
 );
+
+CREATE TABLE labels (
+	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	name TEXT,
+	appeal_id INTEGER
+);

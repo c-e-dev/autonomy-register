@@ -12,10 +12,11 @@ import ru.c_energies.databases.Query;
 import ru.c_energies.databases.entity.addresses.AddressCreate;
 import ru.c_energies.databases.entity.addresses.AddressDublicateSearch;
 import ru.c_energies.databases.entity.addresses.AddressRow;
-import ru.c_energies.databases.entity.addresses.AddressTable;
 import ru.c_energies.databases.entity.appeals.AppealAddress;
 import ru.c_energies.databases.entity.appeals.AppealChanges;
 import ru.c_energies.databases.entity.appeals.AppealCreate;
+import ru.c_energies.databases.entity.labels.LabelRow;
+import ru.c_energies.databases.entity.labels.LabelTable;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
 import ru.c_energies.databases.entity.appeals.AppealRow;
 import ru.c_energies.utils.converters.DigitsToYesNo;
@@ -63,16 +64,19 @@ public class Appeals {
      */
     @GetMapping(value = "/document/appeals/{id}")
     public String fullAppealById(Model model, @PathVariable("id") String id) throws SQLException {
-        Query q = new Query(new SqliteDataSource(), String.format("select * from appeals where id = %d", Integer.parseInt(id)));
+        int ID = Integer.parseInt(id);
+        Query q = new Query(new SqliteDataSource(), String.format("select * from appeals where id = %d", ID));
         List<AppealRow> list = new AppealsTable(q.exec()).list();
         List<FileRow> listFileRow = new Files().listFilesSended(id);
         List<FileRow> listFilesAnswered = new Files().listFilesAnswered(id);
-        AddressRow addressRow = new AppealAddress(Integer.parseInt(id)).address();
+        AddressRow addressRow = new AppealAddress(ID).address();
+        List<LabelRow> labelRows = new LabelTable(ID).list();
         model.addAttribute("appeal", list.get(0));
         model.addAttribute("answered", new DigitsToYesNo(0).reverse(list.get(0).answered()));
         model.addAttribute("listFiles", listFileRow);
         model.addAttribute("listFileAnswered", listFilesAnswered);
         model.addAttribute("address", addressRow);
+        model.addAttribute("labels", labelRows);
         return "pages/appeal";
     }
 

@@ -27,6 +27,8 @@ https://www.sqlitetutorial.net/sqlite-java/jdbc-read-write-blob/ - тутори�
 
 https://pandao.github.io/editor.md/en.html - оформление markdown
 
+https://github.com/lekoala/bootstrap5-tags - теги(метки)
+
 Сжатие pdf
 gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -sOutputFile=out.pdf \[614017\,\ г.\ Пермь\,\ ул.\ Куфонина\,\ д.\ 19\,\ кв.\ 9\].pdf
 
