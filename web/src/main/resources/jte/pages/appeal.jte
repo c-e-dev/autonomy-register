@@ -86,9 +86,12 @@
                                     <th>Получен ответ:</th><td class="text-bg-info">${appeal.answered()}</td>
                                 </tr>
                                 <tr>
-                                    <th>Сопровождающие документы:</th><td>
+                                    <th>Сопровождающие документы:</th><td id="listTags">
                                     @for(LabelRow label : labels)
-                                    <span class="badge text-bg-primary">${label.name()}</span>
+                                    <span class="badge text-bg-primary" id="tagAppealId${label.id()}">${label.name()}
+                                        <span><a style="color: rgb(250, 251, 238); text-decoration: none;" href="#" title="Удалить" onclick="return deleteTag(${label.id()})">x</a>
+                                        </span>
+                                    </span>
                                     @endfor
 
                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tagModal" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
