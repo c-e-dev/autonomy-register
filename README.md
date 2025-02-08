@@ -11,27 +11,6 @@ bootstrap
 # Описание
 Web-приложение для учета отправки, приема документа и учета переписок со структурами по различным темам
 
-https://www.jcabi.com/
-
-https://habr.com/ru/articles/321552/ - spring boot + react
-
-https://github.com/ColorlibHQ/AdminLTE/releases - admin panel
-
------------
-http://localhost:8080/demo/dist/pages/index.html - демо приложение, с возможными плюшками
-http://localhost:8080/index.html - разрабатываемое приложение
-
-https://jte.gg/spring-boot-starter-2/ - шаблонизатор
-
-https://www.sqlitetutorial.net/sqlite-java/jdbc-read-write-blob/ - туториалы по SQLite
-
-https://pandao.github.io/editor.md/en.html - оформление markdown
-
-https://github.com/lekoala/bootstrap5-tags - теги(метки)
-
-Сжатие pdf
-gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -sOutputFile=out.pdf \[614017\,\ г.\ Пермь\,\ ул.\ Куфонина\,\ д.\ 19\,\ кв.\ 9\].pdf
-
 # Для разработки и запуска в прод
 Для разработки и поднятия приложения в ИДЕ используем настройки типа Application, с указанием главного класса + System.getenv("SPRING_ENV") != prod
 
@@ -159,17 +138,5 @@ address_id                | INTEGER | Идентификатор адрес из
 Тут находятся ваши право требования, или как еще называют обеспеченный интерес обесченной стороны (secured party)
 Могут иметь потенциальный связки с Темой, а так уже абсолютные, которые уже начали пользоваться
 
-# Запрос доработок и Донаты
-## Донаты
-При желании помочь автору данного приложения можно перечислить любую сумму на https://www.tbank.ru/rm/bezrukikh.andrey3/Mwtnx84860/
-либо по QR-коду
-
-## Запрос доработок
-Правила и условия:
-1. Касается добавления нового функционала
-2. Вами прорабатывает техническое задание на доработку(чем подробнее, тем лучше)
-3. Техническое задание отправляется на andreiiko2@rambler.ru с темой письма - Доработка Autonomy Register
-4. Стоимость доработки от 1000 рублей
-5. Денежные средства перечисляются на такой-то счет, с указанием в комментарии перевода вашего email
-
-В случае
+# Контакты
+Для связи, инструкции, пожеланий можно связаться по телеграмм-чату: https://t.me/+IGuM-OrriSw4NGEy
