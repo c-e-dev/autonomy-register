@@ -53,6 +53,9 @@ public class Themes {
     public String fullThemeById(Model model, @PathVariable("id") String id) throws SQLException{
         Query q = new Query(new SqliteDataSource(), String.format("select * from themes where id = %d", Integer.parseInt(id)));
         List<ThemeRow> list = new ThemesTable(q.exec()).list();
+        if(list.size() == 0){
+            return "pages/themeNotFound";
+        }
         Query q2 = new Query(new SqliteDataSource(),
                 String.format("select * from appeals where id in (select appeal_id from themes_link_appeals where theme_id = %d)", Integer.parseInt(id)));
         List<AppealRow> listAppeal = new AppealsTable(q2.exec()).list();

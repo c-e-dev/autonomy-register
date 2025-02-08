@@ -68,6 +68,9 @@ public class Appeals {
         int ID = Integer.parseInt(id);
         Query q = new Query(new SqliteDataSource(), String.format("select * from appeals where id = %d", ID));
         List<AppealRow> list = new AppealsTable(q.exec()).list();
+        if(list.size() == 0){
+            return "pages/appealNotFound";
+        }
         List<FileRow> listFileRow = new Files().listFilesSended(id);
         List<FileRow> listFilesAnswered = new Files().listFilesAnswered(id);
         AddressRow addressRow = new AppealAddress(ID).address();
