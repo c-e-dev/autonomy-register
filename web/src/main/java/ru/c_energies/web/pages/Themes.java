@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.c_energies.databases.Query;
+import ru.c_energies.databases.entity.addresses.AddressRow;
+import ru.c_energies.databases.entity.appeals.AppealAddress;
 import ru.c_energies.databases.entity.themes.ThemeChange;
 import ru.c_energies.databases.entity.themes.ThemeCreate;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
@@ -18,7 +20,9 @@ import ru.c_energies.databases.entity.themes.ThemeRow;
 import ru.c_energies.web.models.themes.ThemesTable;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class Themes {
@@ -53,8 +57,13 @@ public class Themes {
                 String.format("select * from appeals where id in (select appeal_id from themes_link_appeals where theme_id = %d)", Integer.parseInt(id)));
         List<AppealRow> listAppeal = new AppealsTable(q2.exec()).list();
         int decisionStatus = new ThemeStatuses(0).reverse(list.get(0).decisionStatus());
+        Map<Integer, AddressRow> addressRowMap = new HashMap<>();
+        for(AppealRow appealRow : listAppeal){
+            addressRowMap.put(appealRow.id(), new AppealAddress(appealRow.id()).address());
+        }
         model.addAttribute("theme", list.get(0));
         model.addAttribute("listAppeals", listAppeal);
+        model.addAttribute("addressRowMap", addressRowMap);
         model.addAttribute("decisionStatus", decisionStatus);
         return "pages/theme";
     }

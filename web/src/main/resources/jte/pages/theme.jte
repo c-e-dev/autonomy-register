@@ -1,10 +1,13 @@
 @import java.util.List
+@import java.util.Map
 @import ru.c_energies.databases.entity.themes.ThemeRow
 @import ru.c_energies.databases.entity.appeals.AppealRow
+@import ru.c_energies.databases.entity.addresses.AddressRow
 
 @param List<AppealRow> listAppeals
 @param ThemeRow theme
 @param Integer decisionStatus
+@param Map<Integer, AddressRow> addressRowMap
 
 @template.layout.main(content = @`
 <div class="app-content-header"> <!--begin::Container-->
@@ -148,7 +151,7 @@
                                             <td><a href="/document/appeals/${lar.id()}">${lar.id()}.</a></td>
                                             <td><a href="/document/appeals/${lar.id()}">${lar.registerTrackNumber()}</a></td>
                                             <td>${lar.title()}</td>
-                                            <td></td>
+                                            <td>${addressRowMap.get(lar.id()).recipient()}</td>
                                             <td>${lar.createDate()}</td>
                                             <td>${lar.dueDate()}</td>
                                             <td class="text-bg-info">${lar.answered()}</td>
