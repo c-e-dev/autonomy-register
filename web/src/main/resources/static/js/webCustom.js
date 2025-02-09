@@ -10,6 +10,8 @@ function handleSubmit(formId) {
         body: formData,
     };
     fetch(url, fetchOptions);
+    let sdf = $('#' + 'editor').html( tinymce.get('editor').getContent() );
+    console.log("tiny = ", sdf);
   // Any JS that could fail goes here
     form.reset();
     document.getElementById('closeForm_'+formId).click();

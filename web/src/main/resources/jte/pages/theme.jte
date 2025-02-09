@@ -178,7 +178,7 @@
                                                         <label class="form-label">Тема заметки</label>
                                                         <input type="text" required class="form-control"name="title" value="">
                                                         <label class="form-label">Содержание</label>
-                                                        <textarea class="form-control" rows="5" name="content"></textarea>
+                                                        <textarea class="form-control" rows="5" name="content" id="editor"></textarea>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" id="closeForm_createNote" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
@@ -197,7 +197,7 @@
                                                     <h5 class="note-title text-truncate w-75 mb-0" data-noteheading="Book a Ticket for Movie">${noteRow.title()}<i class="point fa fa-circle ml-1 font-10"></i></h5>
                                                     <p class="note-date font-12 text-muted">${noteRow.createDate()}</p>
                                                     <div class="note-content">
-                                                        <p class="note-inner-content text-muted" data-notecontent="${noteRow.content()}">${noteRow.content()}</p>
+                                                        <p class="note-inner-content text-muted" id="noteContent">$unsafe{noteRow.content()}</p>
                                                     </div>
                                                     <div class="d-flex align-items-center">
                                                         <span class="mr-1"><i class="fa fa-star favourite-note"></i></span>
