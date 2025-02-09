@@ -3,11 +3,13 @@
 @import ru.c_energies.databases.entity.themes.ThemeRow
 @import ru.c_energies.databases.entity.appeals.AppealRow
 @import ru.c_energies.databases.entity.addresses.AddressRow
+@import ru.c_energies.databases.entity.notes.NoteRow
 
 @param List<AppealRow> listAppeals
 @param ThemeRow theme
 @param Integer decisionStatus
 @param Map<Integer, AddressRow> addressRowMap
+@param List<NoteRow> noteRows
 
 @template.layout.main(content = @`
 <div class="app-content-header"> <!--begin::Container-->
@@ -86,9 +88,8 @@
                             </tr>
                         </table>
                         <div class="card mb-4">
-                            <div class="card-header">Связанные отправления:</div>
+                            <div class="card-header">Связанные отправления<button type="button" class="btn btn-create" data-bs-toggle="modal" data-bs-target="#createAppealByTheme" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Создать</button></div>
                             <div class="card-body" style="padding: 10px">
-                                <button type="button" class="btn btn-create" data-bs-toggle="modal" data-bs-target="#createAppealByTheme" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Создать</button>
                                 <div class="modal fade" id="createAppealByTheme" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" style="max-width:1000px">
                                         <div class="modal-content">
@@ -162,6 +163,76 @@
                                 </div>
                             </div>
                         </div>
+                            <div class="card mb-4">
+                                <div class="card-header">Заметки <button type="button" class="btn btn-create" data-bs-toggle="modal" data-bs-target="#createNoteTheme" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Создать</button></div>
+                                <div class="card-body" style="padding: 10px">
+                                    <div class="modal fade" id="createNoteTheme" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" style="max-width:1000px">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel2">Создать заметку к теме "${theme.title()}"</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <form onsubmit="return false;" action="/notes/create/themeId/${theme.id()}" method="POST" enctype="application/x-www-form-urlencoded" id="createNote">
+                                                    <div class="modal-body">
+                                                        <label class="form-label">Тема заметки</label>
+                                                        <input type="text" required class="form-control"name="title" value="">
+                                                        <label class="form-label">Содержание</label>
+                                                        <textarea class="form-control" rows="5" name="content"></textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" id="closeForm_createNote" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                        <button type="button" class="btn btn-primary" onclick="handleSubmit('createNote')">Сохранить</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="note-full-container" class="note-has-grid row">
+                                        @for(NoteRow noteRow : noteRows)
+                                            <div class="col-md-4 single-note-item all-category note-important" style="">
+                                                <div class="card card-body">
+                                                    <span class="side-stick"></span>
+                                                    <h5 class="note-title text-truncate w-75 mb-0" data-noteheading="Book a Ticket for Movie">${noteRow.title()}<i class="point fa fa-circle ml-1 font-10"></i></h5>
+                                                    <p class="note-date font-12 text-muted">${noteRow.createDate()}</p>
+                                                    <div class="note-content">
+                                                        <p class="note-inner-content text-muted" data-notecontent="${noteRow.content()}">${noteRow.content()}</p>
+                                                    </div>
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="mr-1"><i class="fa fa-star favourite-note"></i></span>
+                                                        <span class="mr-1"><i class="fa fa-trash remove-note"></i></span>
+                                                        <div class="ml-auto">
+                                                            <div class="category-selector btn-group">
+                                                                <a class="nav-link dropdown-toggle category-dropdown label-group p-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
+                                                                    <div class="category">
+                                                                        <div class="category-business"></div>
+                                                                        <div class="category-social"></div>
+                                                                        <div class="category-important"></div>
+                                                                        <span class="more-options text-dark"><i class="icon-options-vertical"></i></span>
+                                                                    </div>
+                                                                </a>
+                                                                <div class="dropdown-menu dropdown-menu-right category-menu">
+                                                                    <a class="note-business badge-group-item badge-business dropdown-item position-relative category-business text-success" href="javascript:void(0);">
+                                                                        <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i>Business
+                                                                    </a>
+                                                                    <a class="note-social badge-group-item badge-social dropdown-item position-relative category-social text-info" href="javascript:void(0);">
+                                                                        <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i> Social
+                                                                    </a>
+                                                                    <a class="note-important badge-group-item badge-important dropdown-item position-relative category-important text-danger" href="javascript:void(0);">
+                                                                        <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i> Important
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endfor
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div> <!-- /.card-body -->
                 </div> <!-- /.card -->

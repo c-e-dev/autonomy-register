@@ -14,7 +14,7 @@ function handleSubmit(formId) {
     form.reset();
     document.getElementById('closeForm_'+formId).click();
     console.log('Отправка!');
-    setTimeout(
+    setTimeout( //TODO заменить на отдельное обновление элементов вместо перегрузки всей страницы
             function(){
                 window.location.reload();
             }, 3000

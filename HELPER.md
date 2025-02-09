@@ -19,5 +19,7 @@ https://github.com/lekoala/bootstrap5-tags - теги(метки)
 
 https://github.com/groupdocs-editor/GroupDocs.Editor-for-Java-Spring?tab=readme-ov-file
 
+https://www.bootdey.com/snippets/view/notes-dashboard#html - notes заметки
+
 Сжатие pdf
 gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -sOutputFile=out.pdf \[614017\,\ г.\ Пермь\,\ ул.\ Куфонина\,\ д.\ 19\,\ кв.\ 9\].pdf

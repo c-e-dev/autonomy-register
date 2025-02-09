@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.c_energies.databases.Query;
 import ru.c_energies.databases.entity.addresses.AddressRow;
 import ru.c_energies.databases.entity.appeals.AppealAddress;
+import ru.c_energies.databases.entity.notes.NoteRow;
+import ru.c_energies.databases.entity.notes.NoteTable;
 import ru.c_energies.databases.entity.themes.ThemeChange;
 import ru.c_energies.databases.entity.themes.ThemeCreate;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
@@ -51,6 +53,7 @@ public class Themes {
 
     @GetMapping(value = "/document/themes/{id}")
     public String fullThemeById(Model model, @PathVariable("id") String id) throws SQLException{
+        int themeId = Integer.parseInt(id);
         Query q = new Query(new SqliteDataSource(), String.format("select * from themes where id = %d", Integer.parseInt(id)));
         List<ThemeRow> list = new ThemesTable(q.exec()).list();
         if(list.size() == 0){
@@ -64,10 +67,12 @@ public class Themes {
         for(AppealRow appealRow : listAppeal){
             addressRowMap.put(appealRow.id(), new AppealAddress(appealRow.id()).address());
         }
+        List<NoteRow> noteRows = new NoteTable(themeId, 0).list();
         model.addAttribute("theme", list.get(0));
         model.addAttribute("listAppeals", listAppeal);
         model.addAttribute("addressRowMap", addressRowMap);
         model.addAttribute("decisionStatus", decisionStatus);
+        model.addAttribute("noteRows", noteRows);
         return "pages/theme";
     }
 
