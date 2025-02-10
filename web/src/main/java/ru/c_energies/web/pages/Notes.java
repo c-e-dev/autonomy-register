@@ -21,6 +21,12 @@ public class Notes {
         return ResponseEntity.ok().body(response);
     }
 
+    /**
+     * Удаление заметок
+     * @param noteId - порядковый номер заметки
+     * @return
+     * @throws SQLException
+     */
     @DeleteMapping(value = "/notes/{id}/delete")
     public ResponseEntity<Object> delete(@PathVariable(value = "id") String noteId) throws SQLException {
         new NoteDelete(Integer.parseInt(noteId)).delete();
