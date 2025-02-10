@@ -99,14 +99,14 @@
           <li class="nav-item"> <a href="/" class="nav-link"> <i class="nav-icon bi bi-palette"></i>
             <p>Главная</p>
           </a> </li>
-          <li class="nav-item menu-open"> <a href="#documents" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
+          <li class="nav-item"> <a href="#documents" class="nav-link"> <i class="nav-icon bi bi-speedometer"></i>
             <p>Документы<i class="nav-arrow bi bi-chevron-right"></i></p>
           </a>
             <ul class="nav nav-treeview">
-              <li class="nav-item" > <a id="theme" href="/document/themes" class="nav-link" aria-current="true" aria-selected="true"> <i class="nav-icon bi bi-circle"></i>
+              <li class="nav-item" > <a id="theme" href="/document/themes" class="nav-link " aria-current="true" aria-selected="true"> <i class="nav-icon bi bi-circle"></i>
                 <p>Темы</p>
               </a> </li>
-              <li class="nav-item"> <a href="/document/appeals" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+              <li class="nav-item"> <a href="/document/appeals" class="nav-link active" > <i class="nav-icon bi bi-circle"></i>
                 <p>Обращения</p>
               </a> </li>
               <li class="nav-item"> <a href="/document/secured-party" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
@@ -114,7 +114,7 @@
               </a> </li>
             </ul>
           </li>
-          <li class="nav-item menu-open"> <a href="#" class="nav-link"> <i class="nav-icon bi bi-clipboard-fill"></i>
+          <li class="nav-item"> <a href="#notifications" class="nav-link"> <i class="nav-icon bi bi-clipboard-fill"></i>
             <p>
               Оповещения (?)
               <span class="nav-badge badge text-bg-secondary me-3">6</span> <i class="nav-arrow bi bi-chevron-right"></i>
@@ -172,26 +172,6 @@
   });
 </script>
 
-<!-- sidebar -->
-<script>
-  $(function($){
-      var storage = localStorage.getItem('nav');
-      if (storage && storage !== "#") {
-          $('.nav a[href="' + storage + '"]').tab('show');
-      }
-      console.log("storage = ", storage);
-      $('ul.nav li').on('click', function() {
-          var id = $(this).find('a').attr('href');
-          console.log("id = ", id);
-          localStorage.setItem('nav', id);
-      });
-
-      $('span.tags-badge').on('click', function() {
-          //var id = $(this).find('a').attr('href');
-          console.log("id = ", $(this).data('value'));
-      });
-  });
-</script>
 <script>
   const SELECTOR_SIDEBAR_WRAPPER = ".sidebar-wrapper";
   const Default = {
