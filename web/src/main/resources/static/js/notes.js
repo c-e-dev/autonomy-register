@@ -1,8 +1,20 @@
 $(function() {
     function removeNote() {
         $(".remove-note").off('click').on('click', function(event) {
-          event.stopPropagation();
-          $(this).parents('.single-note-item').remove();
+            event.stopPropagation();
+            let noteId = $(this).attr('id')
+            console.log("noteId = ", noteId);
+            let num = noteId.split('note')[1];
+            console.log("num = ", num);
+            const url = new URL(window.location.origin +"/notes/"+num+"/delete");
+            const formData = new FormData();
+            const fetchOptions = {
+                method: "DELETE",
+                body: formData,
+            };
+            console.log('Отправка!');
+            let response = fetch(url, fetchOptions);
+            $(this).parents('.single-note-item').remove();
         })
     }
 

@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.c_energies.databases.entity.notes.NoteCreate;
+import ru.c_energies.databases.entity.notes.NoteDelete;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -20,9 +21,9 @@ public class Notes {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping(value = "/notes/delete")
-    public ResponseEntity<Object> delete(@RequestParam Map<String, String> req) throws SQLException {
-        //new LabelDelete(Integer.parseInt(req.get("id"))).delete();
+    @DeleteMapping(value = "/notes/{id}/delete")
+    public ResponseEntity<Object> delete(@PathVariable(value = "id") String noteId) throws SQLException {
+        new NoteDelete(Integer.parseInt(noteId)).delete();
         return ResponseEntity.ok().build();
     }
 }

@@ -201,7 +201,7 @@
                                                     </div>
                                                     <div class="d-flex align-items-center">
                                                         <span class="mr-1"><i class="fa fa-star favourite-note"></i></span>
-                                                        <span class="mr-1"><i class="fa fa-trash remove-note"></i></span>
+                                                        <span class="mr-1"><i class="fa fa-trash remove-note" id="note${noteRow.id()}"></i></span>
                                                         <div class="ml-auto">
                                                             <div class="category-selector btn-group">
                                                                 <a class="nav-link dropdown-toggle category-dropdown label-group p-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="true">
