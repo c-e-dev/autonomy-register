@@ -11,7 +11,7 @@
     </parent>
 
     <groupId>ru.c_energies</groupId>
-    <artifactId>personal-creditor-register</artifactId>
+    <artifactId>autonomy-register</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
