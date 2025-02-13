@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ru.c_energies.databases.Query;
 import ru.c_energies.databases.entity.files.FileContent;
+import ru.c_energies.databases.entity.files.FileName;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
 
 import ru.c_energies.databases.entity.files.FileRow;
@@ -123,6 +124,15 @@ public class Files {
                 Integer.parseInt(fileCategory)
         );
         new FilesCreate(Long.parseLong(id), fileRow).insert().update(fileContent.getBytes());
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * Изменение имени файла
+     */
+    @PutMapping(value = "/files/{id}/changename", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<Object> changeFileName(@PathVariable("id") String id, @RequestPart String newName) throws SQLException, IOException {
+        new FileName(Integer.parseInt(id), newName).change();
         return ResponseEntity.ok().build();
     }
 }

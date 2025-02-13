@@ -182,27 +182,31 @@
                                         <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                                             <div class="card-body">
                                             <div class="product-file-type">
-
                                                 <ul class="list-group list-group-horizontal">
-                                                    @for(FileRow fr : listFiles)
-                                                        <a href="/files/${fr.id()}" class="list-group-item list-group-item-action">
-                                                        <span class="mr-3 align-self-center img-icon primary-rgba text-primary">.${fr.extension()}</span>
-                                                        <div class="media-body">
-                                                            <h10 class="font-16 mb-1">${fr.name()}<i class="feather icon-download-cloud float-right"></i>
-                                                                .${fr.extension()},
-                                                                @if(fr.size() > 0 && fr.size() < 1024)
-                                                                    ${fr.size()} B
-                                                                @endif
-                                                                @if(fr.size() > 1024 && fr.size() < (1024*1024))
-                                                                    ${fr.size() / 1024} KB
-                                                                @endif
-                                                                @if(fr.size() > (1024*1024))
-                                                                    ${fr.size() / (1024*1024)} MB
-                                                                @endif
-                                                            </h10>
-                                                        </div>
-                                                        </a>
-                                                    @endfor
+                                                @for(FileRow fr : listFiles)
+                                                    <div class="list-group-item list-group-item-action">
+                                                    <div class="media-body">
+                                                        <h10 class="font-16 mb-1">
+                                                            <div style="display: flex;">
+                                                                <div contenteditable="true" class="edit" id="fileName${fr.id()}">${fr.name()}</div>
+                                                                <div><button type="button" style="margin-left: 5px;padding-left: 5px;padding-right: 5px;padding-top: 1px;padding-bottom: 0px;" class="btn btn-create save" id="save${fr.id()}" disabled hidden><p style="margin-bottom: 0px;height: 20px;">V</p></button></div><div>.${fr.extension()},
+                                                            @if(fr.size() > 0 && fr.size() < 1024)
+                                                                ${fr.size()} B
+                                                            @endif
+                                                            @if(fr.size() > 1024 && fr.size() < (1024*1024))
+                                                                ${fr.size() / 1024} KB
+                                                            @endif
+                                                            @if(fr.size() > (1024*1024))
+                                                                ${fr.size() / (1024*1024)} MB
+                                                            @endif
+                                                            </div>
+
+                                                            </div>
+                                                        </h10>
+                                                    </div>
+                                                    <a href="/files/${fr.id()}"><span class="mr-3 align-self-center img-icon primary-rgba text-primary">Скачать</span></a>
+                                                    </div>
+                                                @endfor
                                                 </ul>
                                             </div>
                                             </div>

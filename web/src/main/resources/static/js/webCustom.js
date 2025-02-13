@@ -65,21 +65,6 @@ function deleteTag(labelId){
 
 //<!-- sidebar -->
 $(function($){
-     /** var storage = localStorage.getItem('nav');
-      if (storage && storage !== "#") {
-          $('.nav a[href="' + storage + '"]').tab('show');
-      }
-      console.log("storage = ", storage);
-      $('ul.nav li').on('click', function() {
-          var id = $(this).find('a').attr('href');
-          console.log("id = ", id);
-          localStorage.setItem('nav', id);
-      });
-
-      $('span.tags-badge').on('click', function() {
-          //var id = $(this).find('a').attr('href');
-          console.log("id = ", $(this).data('value'));
-      });*/
     let storage = localStorage.getItem('nav');
     console.log("storage = ", storage);
     if (storage && storage !== "#") {
@@ -104,4 +89,38 @@ $(function($){
             }
         );
     });
-  });
+});
+
+$("div.edit").on('click', function() {
+    let edit = $(this).attr("id");
+    let num = edit.split('fileName')[1];
+    $("button#save"+num).attr("hidden", false);
+    $("button#save"+num).attr("disabled", false);
+    console.log("num", num);
+});
+
+$("button.btn-create.save[id^='save']").on('click', function() {
+    console.log("$(this) = ", $(this));
+    $(this).each(function(id){
+        console.log("id = ", id);
+    });
+    let edit = $(this).attr("id");
+    console.log("edit = ", edit);
+    let num = edit.split('save')[1];
+    let newName = $("div#fileName"+num).text()
+    console.log("newName", newName);
+
+    const url = new URL(window.location.origin +"/files/"+num+"/changename");
+    const formData = new FormData();
+    formData.append("newName", newName);
+
+    const fetchOptions = {
+        method: "PUT",
+        body: formData,
+    };
+    console.log('Отправка!');
+    let response = fetch(url, fetchOptions);
+
+    $("button#save"+num).attr("hidden", true);
+    $("button#save"+num).attr("disabled", true);
+});
