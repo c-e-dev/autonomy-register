@@ -32,7 +32,7 @@
                         енен
                     </div> <!-- /.card-header -->
                     <div class="card-body">
-                        аккординс ыва
+                        аккординс
                     </div> <!-- /.card-body -->
                 </div> <!-- /.card -->
 
