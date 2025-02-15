@@ -58,3 +58,12 @@ CREATE TABLE labels (
 	name TEXT,
 	appeal_id INTEGER
 );
+
+CREATE TABLE secured_partyes (
+	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	amount INTEGER DEFAULT 0,
+	appeal_id INTEGER,
+	name TEXT,
+	create_date INTEGER,
+	apply_date INTEGER
+, used INTEGER DEFAULT 0);

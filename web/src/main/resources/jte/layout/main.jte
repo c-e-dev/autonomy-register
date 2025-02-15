@@ -128,6 +128,7 @@
           </li>
         </ul> <!--end::Sidebar Menu-->
         <ul class="nav nav-sidebar sidebar-bottom">
+          <li class="nav-header">Администрирование</li>
           <li class="nav-item"> <a href="/settings" class="nav-link" style="padding-bottom: 0px;padding-top: 0px;"> <i style="height:25px" class="nav-icon bi bi-palette"></i>
             <p>Настройки</p>
           </a> </li>
