@@ -14,7 +14,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/document/secured-party/${securedParty.id()}">[Тема] ${securedParty.name()}</a></li>
+                    <li class="breadcrumb-item"><a href="/document/secured-party/${securedParty.id()}">[ОИ] ${securedParty.name()}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Требование</li>
                 </ol>
             </div>
