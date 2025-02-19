@@ -2,8 +2,6 @@ package ru.c_energies.core.schedul;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.sql.SQLException;
 import java.util.concurrent.Executors;
@@ -28,10 +26,12 @@ public class BackupScheduler {
             }
         };
         final ScheduledFuture<?> beeperHandle = scheduler.scheduleAtFixedRate(beeper, 10, 600, SECONDS);
-        scheduler.schedule(new Runnable() {
+        /*scheduler.schedule(new Runnable() {
             public void run() {
                 beeperHandle.cancel(true);
             }
         }, 60 * 60, SECONDS);
+
+         */
     }
 }

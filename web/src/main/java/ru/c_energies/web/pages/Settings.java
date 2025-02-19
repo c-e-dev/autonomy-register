@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import ru.c_energies.databases.entity.settings.backup.write.BackupTotalWrite;
 
 import java.sql.SQLException;
 import java.util.Map;
@@ -22,7 +23,11 @@ public class Settings {
 
     @PostMapping(value = "/settings/{nameForm}")
     public ResponseEntity<Object> save(@PathVariable("nameForm") String nameForm, @RequestBody Map<String, Object> body) throws SQLException {
-
+        switch(nameForm){
+            case "backupTotal":
+                new BackupTotalWrite(body).update();
+                break;
+        }
         return ResponseEntity.ok().build();
     }
 }
