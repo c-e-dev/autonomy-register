@@ -29,7 +29,7 @@
             <div class="col-md-6">
                 <div class="card mb-4">
                     <div class="card-header">
-                        енен
+
                     </div> <!-- /.card-header -->
                     <div class="card-body">
                         <nav>
@@ -40,44 +40,47 @@
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
                             <div class="tab-pane fade show active" id="nav-backup" role="tabpanel" aria-labelledby="nav-backup-tab" tabindex="0">
-                                <div class="card-body">
+                                <div class="card mb-1">
                                     <div class="card-header">Общее</div>
                                     <div class="card-body">
-                                    <form class="row g-3">
+                                    <form class="row g-3" id="saveBackupTotal" onsubmit="return false;" action="/settings/backupTotal" method="POST" enctype="application/x-www-form-urlencoded">
                                         <div class="container" style="padding-left: 0px;margin-left: 0px;">
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                        <input class="form-check-input" type="checkbox" name="backupTotalUse" id="flexCheckDefault">
                                                         <label class="form-check-label" for="flexCheckDefault">Включено резервное копирование</label>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                                        <label class="form-check-label" for="flexCheckChecked">Checked checkbox</label>
+                                                        <input class="form-check-input" type="checkbox" name="backupTotalZip" id="flexCheckChecked">
+                                                        <label class="form-check-label" for="flexCheckChecked">Сжать данные</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col">
-                                                    <label class="form-label" for="rotate">Глубина ротаций</label>
-                                                    <select class="form-select" id="rotate" aria-label="Default select example">
+                                                    <label class="form-label" for="rotate">Глубина хранения</label>
+                                                    <select class="form-select" id="rotate" name="backupTotalRotate" aria-label="Default select example">
                                                         <option value="5" selected>Пять дней</option>
                                                         <option value="10">Десять дней</option>
                                                         <option value="30">Тридацать дней</option>
                                                     </select>
                                                 </div>
                                                 <div class="col">
-                                                    <label class="form-label" for="rotate">Вакантное место</label>
+                                                    <label class="form-label" for="backupTotalStartTime">Время начала резервирования</label>
+                                                    <input type="time" id="backupTotalStartTime" class="form-control" name="backupTotalStartTime" value="">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <button type="button" class="btn btn-primary" onclick="handleSubmit('editAppeal')">Сохранить</button>
+                                            <button type="button" class="btn btn-primary" onclick="settingSave('saveBackupTotal')">Сохранить</button>
                                         </div>
                                     </form>
                                     </div>
+                                </div>
+                                <div class="card mb-1">
                                     <div class="card-header">Yandex Disk</div>
                                     <div class="card-body">
                                         <form class="row g-3">
@@ -86,29 +89,61 @@
                                                     <div class="col">
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                            <label class="form-check-label" for="flexCheckDefault">Включено резервное копирование</label>
+                                                            <label class="form-check-label" for="flexCheckDefault">Использовать</label>
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                                            <label class="form-check-label" for="flexCheckChecked">Checked checkbox</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <label class="form-label" for="rotate">Глубина ротаций</label>
-                                                        <select class="form-select" id="rotate" aria-label="Default select example">
-                                                            <option value="5" selected>Пять дней</option>
-                                                            <option value="10">Десять дней</option>
-                                                            <option value="30">Тридацать дней</option>
-                                                        </select>
+                                                        <label class="form-label">Токен</label>
+                                                        <input type="text" class="form-control" name="tokenYandex" value="">
                                                     </div>
                                                     <div class="col">
-                                                        <label class="form-label" for="rotate">Вакантное место</label>
+                                                        <label class="form-label">Папка куда будут загружаться резервные копии</label>
+                                                        <input type="text" class="form-control" name="dirDist" value="">
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <button type="button" class="btn btn-primary" onclick="handleSubmit('editAppeal')">Сохранить</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="card mb-1">
+                                    <div class="card-header">Google Drive</div>
+                                    <div class="card-body">
+                                        <form class="row g-3">
+                                            <div class="container" style="padding-left: 0px;margin-left: 0px;">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                            <label class="form-check-label" for="flexCheckDefault">Использовать</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="form-check">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label class="form-label">Токен</label>
+                                                        <input type="text" class="form-control" name="tokenGoogleDrive" value="">
+                                                    </div>
+                                                    <div class="col">
+                                                        <label class="form-label">Папка куда будут загружаться резервные копии</label>
+                                                        <input type="text" class="form-control" name="dirDist" value="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <a href="https://support.webasyst.ru/14592/files-google-drive/">Документация на получение токена</a>
                                             </div>
                                             <div class="col-12">
                                                 <button type="button" class="btn btn-primary" onclick="handleSubmit('editAppeal')">Сохранить</button>

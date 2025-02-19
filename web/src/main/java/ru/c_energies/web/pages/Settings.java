@@ -1,15 +1,14 @@
 package ru.c_energies.web.pages;
 
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import ru.c_energies.databases.Query;
-import ru.c_energies.databases.entity.appeals.AppealRow;
-import ru.c_energies.databases.sqlite.SqliteDataSource;
-import ru.c_energies.web.models.appeals.AppealsTable;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Map;
 
 @Controller
 public class Settings {
@@ -19,5 +18,11 @@ public class Settings {
         List<AppealRow> list = new AppealsTable(q.exec()).list();
         model.addAttribute("list", list);*/
         return "pages/settings";
+    }
+
+    @PostMapping(value = "/settings/{nameForm}")
+    public ResponseEntity<Object> save(@PathVariable("nameForm") String nameForm, @RequestBody Map<String, Object> body) throws SQLException {
+
+        return ResponseEntity.ok().build();
     }
 }

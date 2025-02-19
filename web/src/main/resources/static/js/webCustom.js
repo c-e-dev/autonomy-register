@@ -124,3 +124,23 @@ $("button.btn-create.save[id^='save']").on('click', function() {
     $("button#save"+num).attr("hidden", true);
     $("button#save"+num).attr("disabled", true);
 });
+
+function settingSave(formId) {
+    const form = document.getElementById(formId);
+    const url = new URL(form.action);
+    const formData = new FormData(form);
+
+    var object = {};
+    formData.forEach((value, key) => object[key] = value);
+    var json = JSON.stringify(object);
+
+    const fetchOptions = {
+        headers:{
+              'Content-Type': 'application/json'
+            },
+        method: "POST",
+        body: json,
+    };
+    console.log('Отправка!');
+    let response = fetch(url, fetchOptions);
+}
