@@ -22,13 +22,11 @@ public class BackupTotalWrite {
     }
     public void update(){
         LOG.trace("Start method update");
-        String sql = "";
         for(Map.Entry<String, Object> entry : this.map.entrySet()){
-            sql += String.format("update settings set value = '%s' where name = '%s';", entry.getValue(), this.mapUiToDb.get(entry.getKey()));
+            String sql = String.format("update settings set value = '%s' where name = '%s';", entry.getValue(), this.mapUiToDb.get(entry.getKey()));
+            LOG.trace("result sql = {}", sql);
+            new Query(new SqliteDataSource(),sql).update();
         }
-        LOG.trace("result sql = {}", sql);
-        Query query = new Query(new SqliteDataSource(), sql);
-        query.update();
         LOG.trace("End method update");
     }
 }

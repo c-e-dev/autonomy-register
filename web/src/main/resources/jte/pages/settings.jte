@@ -1,11 +1,8 @@
 @import java.util.List
 
-@import ru.c_energies.databases.entity.appeals.AppealRow
-@import ru.c_energies.databases.entity.files.FileRow
-@import ru.c_energies.web.pages.FilesForm
-@import ru.c_energies.databases.entity.addresses.AddressRow
-@import ru.c_energies.databases.entity.labels.LabelRow
-@import ru.c_energies.databases.entity.themes.ThemeRow
+@import ru.c_energies.databases.entity.settings.backup.read.BackupTotalSettings
+
+@param BackupTotalSettings.Inner backupTotalSettings
 
 @template.layout.main(content = @`
 <div class="app-content-header"> <!--begin::Container-->
@@ -48,13 +45,15 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" name="backupTotalUse" id="flexCheckDefault">
+                                                        <input type="hidden" name="backupTotalUse" value="false">
+                                                        <input class="form-check-input" type="checkbox" name="backupTotalUse" id="flexCheckDefault" value="${backupTotalSettings.use()}">
                                                         <label class="form-check-label" for="flexCheckDefault">Включено резервное копирование</label>
                                                     </div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" name="backupTotalZip" id="flexCheckChecked">
+                                                        <input type="hidden" name="backupTotalZip" value="false">
+                                                        <input class="form-check-input" type="checkbox" name="backupTotalZip" id="flexCheckChecked" value="${backupTotalSettings.zip()}">
                                                         <label class="form-check-label" for="flexCheckChecked">Сжать данные</label>
                                                     </div>
                                                 </div>
@@ -70,7 +69,7 @@
                                                 </div>
                                                 <div class="col">
                                                     <label class="form-label" for="backupTotalStartTime">Время начала резервирования</label>
-                                                    <input type="time" id="backupTotalStartTime" class="form-control" name="backupTotalStartTime" value="">
+                                                    <input type="time" id="backupTotalStartTime" class="form-control" name="backupTotalStartTime" value="${backupTotalSettings.starttime()}">
                                                 </div>
                                             </div>
                                         </div>

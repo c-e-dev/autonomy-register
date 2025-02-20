@@ -143,4 +143,31 @@ function settingSave(formId) {
     };
     console.log('Отправка!');
     let response = fetch(url, fetchOptions);
+    form.reset();
 }
+
+function checkbox() {
+  var checked = false;
+  if (document.querySelector('.form-check-input:checked')) {
+     checked = true;
+  }
+  document.getElementById('msg').value = checked;
+}
+
+$(".form-check-input:checked").on('click', function() {
+    console.log(".form-check-input:checked = ", $(this).is(':checked'));
+    if($(this).is(':checked')){
+        $(this).val(true);
+    }else{
+        $(this).val(false);
+    }
+})
+
+$(".form-check-input").each(function(id){
+    console.log("id = ", $(this).val());
+    if($(this).val() === "true"){
+        $(this).attr("checked", "checked")
+    }else{
+        $(this).val(false);
+    }
+});

@@ -19,7 +19,7 @@ public class BackupYandexDiskSettings {
             this.values = values;
         }
         public boolean use(){
-            return this.values.get("backup-yandexdisk-use").equals("1");
+            return this.values.get("backup-yandexdisk-use").equals("true");
         }
         public String token(){
             return this.values.get("backup-yandexdisk-token");

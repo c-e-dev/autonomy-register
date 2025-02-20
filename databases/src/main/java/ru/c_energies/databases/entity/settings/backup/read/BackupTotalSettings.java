@@ -18,14 +18,17 @@ public class BackupTotalSettings {
         public Inner(Map<String, String> values){
             this.values = values;
         }
-        public boolean use(){
-            return this.values.get("backup-total-use").equals("1");
+        public Boolean use(){
+            return this.values.get("backup-total-use").equals("true");
         }
-        public boolean zip(){
-            return this.values.get("backup-total-zip").equals("1");
+        public Boolean zip(){
+            return this.values.get("backup-total-zip").equals("true");
         }
         public String rotate(){
             return this.values.get("backup-total-rotate");
+        }
+        public String starttime(){
+            return this.values.get("backup-total-starttime");
         }
     }
 }

@@ -19,7 +19,7 @@ public class BackupGoogleDriveSettings {
             this.values = values;
         }
         public boolean use(){
-            return this.values.get("backup-googledrive-use").equals("1");
+            return this.values.get("backup-googledrive-use").equals("true");
         }
         public String token(){
             return this.values.get("backup-googledrive-token");

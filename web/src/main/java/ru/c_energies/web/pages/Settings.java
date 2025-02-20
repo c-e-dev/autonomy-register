@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import ru.c_energies.databases.entity.settings.backup.read.BackupTotalSettings;
 import ru.c_energies.databases.entity.settings.backup.write.BackupTotalWrite;
 
 import java.sql.SQLException;
@@ -18,6 +19,8 @@ public class Settings {
         /*Query q = new Query(new SqliteDataSource(), "select * from settings");
         List<AppealRow> list = new AppealsTable(q.exec()).list();
         model.addAttribute("list", list);*/
+        BackupTotalSettings.Inner backupTotalSettings = new BackupTotalSettings().get();
+        model.addAttribute("backupTotalSettings", backupTotalSettings);
         return "pages/settings";
     }
 
