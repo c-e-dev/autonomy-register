@@ -1,13 +1,15 @@
 package ru.c_energies.web.pages;
 
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import ru.c_energies.databases.entity.settings.backup.read.BackupGoogleDriveSettings;
 import ru.c_energies.databases.entity.settings.backup.read.BackupTotalSettings;
+import ru.c_energies.databases.entity.settings.backup.read.BackupYandexDiskSettings;
+import ru.c_energies.databases.entity.settings.backup.write.BackupGoogleDriveWrite;
 import ru.c_energies.databases.entity.settings.backup.write.BackupTotalWrite;
+import ru.c_energies.databases.entity.settings.backup.write.BackupYandexDiskWrite;
 
 import java.sql.SQLException;
 import java.util.Map;
@@ -16,11 +18,12 @@ import java.util.Map;
 public class Settings {
     @GetMapping(value = "/settings")
     public String list(Model model) throws SQLException {
-        /*Query q = new Query(new SqliteDataSource(), "select * from settings");
-        List<AppealRow> list = new AppealsTable(q.exec()).list();
-        model.addAttribute("list", list);*/
         BackupTotalSettings.Inner backupTotalSettings = new BackupTotalSettings().get();
+        BackupYandexDiskSettings.Inner backupYandexDiskSetting = new BackupYandexDiskSettings().get();
+        BackupGoogleDriveSettings.Inner backupGoogleDriveSetting = new BackupGoogleDriveSettings().get();
         model.addAttribute("backupTotalSettings", backupTotalSettings);
+        model.addAttribute("backupYandexDiskSetting", backupYandexDiskSetting);
+        model.addAttribute("backupGoogleDriveSetting", backupGoogleDriveSetting);
         return "pages/settings";
     }
 
@@ -29,6 +32,12 @@ public class Settings {
         switch(nameForm){
             case "backupTotal":
                 new BackupTotalWrite(body).update();
+                break;
+            case "backupYandexDisk":
+                new BackupYandexDiskWrite(body).update();
+                break;
+            case "backupGoogleDrive":
+                new BackupGoogleDriveWrite(body).update();
                 break;
         }
         return ResponseEntity.ok().build();

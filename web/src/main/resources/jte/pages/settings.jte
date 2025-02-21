@@ -1,8 +1,12 @@
 @import java.util.List
 
 @import ru.c_energies.databases.entity.settings.backup.read.BackupTotalSettings
+@import ru.c_energies.databases.entity.settings.backup.read.BackupYandexDiskSettings
+@import ru.c_energies.databases.entity.settings.backup.read.BackupGoogleDriveSettings
 
 @param BackupTotalSettings.Inner backupTotalSettings
+@param BackupYandexDiskSettings.Inner backupYandexDiskSetting
+@param BackupGoogleDriveSettings.Inner backupGoogleDriveSetting
 
 @template.layout.main(content = @`
 <div class="app-content-header"> <!--begin::Container-->
@@ -82,12 +86,13 @@
                                 <div class="card mb-1">
                                     <div class="card-header">Yandex Disk</div>
                                     <div class="card-body">
-                                        <form class="row g-3">
+                                        <form class="row g-3" autocomplete="off"  id="saveBackupYandexDisk" onsubmit="return false;" action="/settings/backupYandexDisk" method="POST" enctype="application/x-www-form-urlencoded">
                                             <div class="container" style="padding-left: 0px;margin-left: 0px;">
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                            <input type="hidden" name="backupYandexDiskUse" value="false">
+                                                            <input class="form-check-input" type="checkbox" name="backupYandexDiskUse" value="${backupYandexDiskSetting.use()}">
                                                             <label class="form-check-label" for="flexCheckDefault">Использовать</label>
                                                         </div>
                                                     </div>
@@ -99,16 +104,16 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label">Токен</label>
-                                                        <input type="text" class="form-control" name="tokenYandex" value="">
+                                                        <input type="text" class="form-control" name="backupYandexDiskToken" value="${backupYandexDiskSetting.token()}">
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label">Папка куда будут загружаться резервные копии</label>
-                                                        <input type="text" class="form-control" name="dirDist" value="">
+                                                        <input type="text" class="form-control" name="backupYandexDiskDirdist" value="${backupYandexDiskSetting.dirdist()}">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-12">
-                                                <button type="button" class="btn btn-primary" onclick="handleSubmit('editAppeal')">Сохранить</button>
+                                                <button type="button" class="btn btn-primary" onclick="settingSave('saveBackupYandexDisk')">Сохранить</button>
                                             </div>
                                         </form>
                                     </div>
@@ -116,12 +121,13 @@
                                 <div class="card mb-1">
                                     <div class="card-header">Google Drive</div>
                                     <div class="card-body">
-                                        <form class="row g-3">
+                                        <form class="row g-3" autocomplete="off"  id="saveBackupGoogleDrive" onsubmit="return false;" action="/settings/backupGoogleDrive" method="POST" enctype="application/x-www-form-urlencoded">
                                             <div class="container" style="padding-left: 0px;margin-left: 0px;">
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                            <input type="hidden" name="backupGoogleDriveUse" value="false">
+                                                            <input class="form-check-input" type="checkbox" name="backupGoogleDriveUse" value="${backupGoogleDriveSetting.use()}">
                                                             <label class="form-check-label" for="flexCheckDefault">Использовать</label>
                                                         </div>
                                                     </div>
@@ -133,11 +139,11 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label">Токен</label>
-                                                        <input type="text" class="form-control" name="tokenGoogleDrive" value="">
+                                                        <input type="text" class="form-control" name="backupGoogleDriveToken" value="${backupGoogleDriveSetting.token()}">
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label">Папка куда будут загружаться резервные копии</label>
-                                                        <input type="text" class="form-control" name="dirDist" value="">
+                                                        <input type="text" class="form-control" name="backupGoogleDriveDirdist" value="${backupGoogleDriveSetting.dirdist()}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -145,7 +151,7 @@
                                                 <a href="https://support.webasyst.ru/14592/files-google-drive/">Документация на получение токена</a>
                                             </div>
                                             <div class="col-12">
-                                                <button type="button" class="btn btn-primary" onclick="handleSubmit('editAppeal')">Сохранить</button>
+                                                <button type="button" class="btn btn-primary" onclick="settingSave('saveBackupGoogleDrive')">Сохранить</button>
                                             </div>
                                         </form>
                                     </div>

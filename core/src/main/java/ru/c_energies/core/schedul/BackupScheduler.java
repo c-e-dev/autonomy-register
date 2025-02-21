@@ -27,8 +27,6 @@ public class BackupScheduler {
                     new BackupConfig().start();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
                 }
             }
         };
