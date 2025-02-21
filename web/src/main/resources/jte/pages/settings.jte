@@ -40,7 +40,7 @@
                                 <div class="card mb-1">
                                     <div class="card-header">Общее</div>
                                     <div class="card-body">
-                                    <form class="row g-3" id="saveBackupTotal" onsubmit="return false;" action="/settings/backupTotal" method="POST" enctype="application/x-www-form-urlencoded">
+                                    <form class="row g-3" autocomplete="off" id="saveBackupTotal" onsubmit="return false;" action="/settings/backupTotal" method="POST" enctype="application/x-www-form-urlencoded">
                                         <div class="container" style="padding-left: 0px;margin-left: 0px;">
                                             <div class="row">
                                                 <div class="col">

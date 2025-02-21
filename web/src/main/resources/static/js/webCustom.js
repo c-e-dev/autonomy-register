@@ -143,7 +143,6 @@ function settingSave(formId) {
     };
     console.log('Отправка!');
     let response = fetch(url, fetchOptions);
-    form.reset();
 }
 
 function checkbox() {
@@ -154,7 +153,7 @@ function checkbox() {
   document.getElementById('msg').value = checked;
 }
 
-$(".form-check-input:checked").on('click', function() {
+$(".form-check-input").on('click', function() {
     console.log(".form-check-input:checked = ", $(this).is(':checked'));
     if($(this).is(':checked')){
         $(this).val(true);
