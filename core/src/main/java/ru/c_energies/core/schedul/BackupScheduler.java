@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ru.c_energies.databases.entity.settings.backup.read.BackupTotalSettings;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -27,6 +28,8 @@ public class BackupScheduler {
                     new BackupConfig().start();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
             }
         };
@@ -47,5 +50,6 @@ public class BackupScheduler {
         }
         LOG.trace("initialDelay = {}", initialDelay);
         final ScheduledFuture<?> beeperHandle = scheduler.scheduleAtFixedRate(beeper, initialDelay, 86400, SECONDS);
+        //final ScheduledFuture<?> beeperHandle = scheduler.scheduleAtFixedRate(beeper, 10, 60, SECONDS);
     }
 }

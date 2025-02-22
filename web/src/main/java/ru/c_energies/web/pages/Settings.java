@@ -1,5 +1,7 @@
 package ru.c_energies.web.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,13 +13,15 @@ import ru.c_energies.databases.entity.settings.backup.write.BackupGoogleDriveWri
 import ru.c_energies.databases.entity.settings.backup.write.BackupTotalWrite;
 import ru.c_energies.databases.entity.settings.backup.write.BackupYandexDiskWrite;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 
 @Controller
 public class Settings {
+    private final Logger LOG = LogManager.getLogger(Settings.class);
     @GetMapping(value = "/settings")
-    public String list(Model model) throws SQLException {
+    public String list(Model model) throws SQLException, IOException {
         BackupTotalSettings.Inner backupTotalSettings = new BackupTotalSettings().get();
         BackupYandexDiskSettings.Inner backupYandexDiskSetting = new BackupYandexDiskSettings().get();
         BackupGoogleDriveSettings.Inner backupGoogleDriveSetting = new BackupGoogleDriveSettings().get();
