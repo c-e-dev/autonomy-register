@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Создание коннекта к БД Oracle
+ * Создание коннекта к БД SQLite
  */
 public class SqliteDataSource implements Source<Connection> {
     private final Logger LOG = LogManager.getLogger(SqliteDataSource.class);

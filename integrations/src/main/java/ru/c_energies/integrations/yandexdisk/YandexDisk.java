@@ -9,6 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 import reactor.util.retry.Retry;
+import ru.c_energies.utils.converters.DateFormat;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +18,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
+import java.time.Instant;
 
 public class YandexDisk {
     private final Logger LOG = LogManager.getLogger(YandexDisk.class);
@@ -29,7 +31,8 @@ public class YandexDisk {
     }
     public void upload() throws IOException {
         LOG.debug("Start method upload");
-        String uri = this.dirDist+"reestr.db";
+        String rotateDate = new DateFormat((int)Instant.now().getEpochSecond()).convert();
+        String uri = this.dirDist+"reestr.db"+"-"+rotateDate;
         Path currentRelativePath = Paths.get("");
         String filePath = currentRelativePath.toAbsolutePath().toString() + FileSystems.getDefault().getSeparator()+"reestr.db";
         LOG.info("file path = {}", filePath);
