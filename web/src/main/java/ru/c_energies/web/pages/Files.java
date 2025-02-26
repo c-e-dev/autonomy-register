@@ -4,6 +4,8 @@
 
 package ru.c_energies.web.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ContentDisposition;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.c_energies.core.images.ImageCompress;
 import ru.c_energies.databases.Query;
 import ru.c_energies.databases.entity.files.FileContent;
 import ru.c_energies.databases.entity.files.FileName;
@@ -24,6 +27,9 @@ import ru.c_energies.databases.entity.files.FilesCreate;
 import ru.c_energies.utils.converters.FileNameAndExtension;
 import ru.c_energies.web.models.files.FilesTable;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.Instant;
@@ -31,6 +37,7 @@ import java.util.List;
 
 @Controller
 public class Files {
+    private final Logger LOG = LogManager.getLogger(Files.class);
     /**
      * Вывод списка файлов по определенному appeal
      * @param model
@@ -114,16 +121,22 @@ public class Files {
     public ResponseEntity<Object> uploadFile(Model model, @PathVariable("id") String id, @RequestPart MultipartFile fileContent, @RequestPart String fileCategory) throws SQLException, IOException {
         FileNameAndExtension fileNameAndExtension = new FileNameAndExtension(fileContent.getOriginalFilename());
         int currentTime = (int)Instant.now().getEpochSecond();
+        ByteArrayInputStream in = new ByteArrayInputStream(fileContent.getBytes());
+        ImageCompress imageCompress = new ImageCompress(in);
+        byte[] bytes = imageCompress.start();
         FileRow fileRow = new FileRow(
                 0,
                 fileNameAndExtension.name(),
                 fileNameAndExtension.extension(),
-                fileContent.getSize(),
+                imageCompress.size(),
                 currentTime,
                 fileContent.getContentType(),
                 Integer.parseInt(fileCategory)
         );
-        new FilesCreate(Long.parseLong(id), fileRow).insert().update(fileContent.getBytes());
+
+        //new FilesCreate(Long.parseLong(id), fileRow).insert().update(fileContent.getBytes());
+        new FilesCreate(Long.parseLong(id), fileRow).insert().update(bytes);
+        LOG.info("size new file = {}", imageCompress.size());
         return ResponseEntity.ok().build();
     }
 
