@@ -8,6 +8,7 @@ public interface MapUiToDb {
         put("backupTotalUse", "backup-total-use");
         put("backupTotalZip", "backup-total-zip");
         put("backupTotalRotate", "backup-total-rotate");
+        put("backupTotalStartTime", "backup-total-starttime");
     }};
 
     Map<String, String> BACKUP_YANDEXDISK = new HashMap<>(){{
