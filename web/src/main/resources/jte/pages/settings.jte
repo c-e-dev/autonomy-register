@@ -1,11 +1,12 @@
 @import java.util.List
 
-@import ru.c_energies.databases.entity.appeals.AppealRow
-@import ru.c_energies.databases.entity.files.FileRow
-@import ru.c_energies.web.pages.FilesForm
-@import ru.c_energies.databases.entity.addresses.AddressRow
-@import ru.c_energies.databases.entity.labels.LabelRow
-@import ru.c_energies.databases.entity.themes.ThemeRow
+@import ru.c_energies.databases.entity.settings.backup.read.BackupTotalSettings
+@import ru.c_energies.databases.entity.settings.backup.read.BackupYandexDiskSettings
+@import ru.c_energies.databases.entity.settings.backup.read.BackupGoogleDriveSettings
+
+@param BackupTotalSettings.Inner backupTotalSettings
+@param BackupYandexDiskSettings.Inner backupYandexDiskSetting
+@param BackupGoogleDriveSettings.Inner backupGoogleDriveSetting
 
 @template.layout.main(content = @`
 <div class="app-content-header"> <!--begin::Container-->
@@ -29,10 +30,136 @@
             <div class="col-md-6">
                 <div class="card mb-4">
                     <div class="card-header">
-                        енен
+
                     </div> <!-- /.card-header -->
                     <div class="card-body">
-                        аккординс
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <button class="nav-link active" id="nav-backup-tab" data-bs-toggle="tab" data-bs-target="#nav-backup" type="button" role="tab" aria-controls="nav-backup" aria-selected="true">Резервное копирование</button>
+                                <button class="nav-link" id="nav-notification-tab" data-bs-toggle="tab" data-bs-target="#nav-notification" type="button" role="tab" aria-controls="nav-notification" aria-selected="false">Нотификации</button>
+                            </div>
+                        </nav>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-backup" role="tabpanel" aria-labelledby="nav-backup-tab" tabindex="0">
+                                <div class="card mb-1">
+                                    <div class="card-header">Общее</div>
+                                    <div class="card-body">
+                                    <form class="row g-3" autocomplete="off" id="saveBackupTotal" onsubmit="return false;" action="/settings/backupTotal" method="POST" enctype="application/x-www-form-urlencoded">
+                                        <div class="container" style="padding-left: 0px;margin-left: 0px;">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="form-check">
+                                                        <input type="hidden" name="backupTotalUse" value="false">
+                                                        <input class="form-check-input" type="checkbox" name="backupTotalUse" id="flexCheckDefault" value="${backupTotalSettings.use()}">
+                                                        <label class="form-check-label" for="flexCheckDefault">Включено резервное копирование</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="form-check">
+                                                        <input type="hidden" name="backupTotalZip" value="false">
+                                                        <input class="form-check-input" type="checkbox" name="backupTotalZip" id="flexCheckChecked" value="${backupTotalSettings.zip()}">
+                                                        <label class="form-check-label" for="flexCheckChecked">Сжать данные</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <label class="form-label" for="rotate">Глубина хранения</label>
+                                                    <select class="form-select" id="rotate" name="backupTotalRotate" aria-label="Default select example">
+                                                        <option value="5" selected>Пять дней</option>
+                                                        <option value="10">Десять дней</option>
+                                                        <option value="30">Тридацать дней</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col">
+                                                    <label class="form-label" for="backupTotalStartTime">Время начала резервирования</label>
+                                                    <input type="time" id="backupTotalStartTime" class="form-control" name="backupTotalStartTime" value="${backupTotalSettings.starttime()}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="button" class="btn btn-primary" onclick="settingSave('saveBackupTotal')">Сохранить</button>
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>
+                                <div class="card mb-1">
+                                    <div class="card-header">Yandex Disk</div>
+                                    <div class="card-body">
+                                        <form class="row g-3" autocomplete="off"  id="saveBackupYandexDisk" onsubmit="return false;" action="/settings/backupYandexDisk" method="POST" enctype="application/x-www-form-urlencoded">
+                                            <div class="container" style="padding-left: 0px;margin-left: 0px;">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="form-check">
+                                                            <input type="hidden" name="backupYandexDiskUse" value="false">
+                                                            <input class="form-check-input" type="checkbox" name="backupYandexDiskUse" value="${backupYandexDiskSetting.use()}">
+                                                            <label class="form-check-label" for="flexCheckDefault">Использовать</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="form-check">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label class="form-label">Токен</label>
+                                                        <input type="text" class="form-control" name="backupYandexDiskToken" value="${backupYandexDiskSetting.token()}">
+                                                    </div>
+                                                    <div class="col">
+                                                        <label class="form-label">Папка куда будут загружаться резервные копии</label>
+                                                        <input type="text" class="form-control" name="backupYandexDiskDirdist" value="${backupYandexDiskSetting.dirdist()}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <button type="button" class="btn btn-primary" onclick="settingSave('saveBackupYandexDisk')">Сохранить</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="card mb-1">
+                                    <div class="card-header">Google Drive</div>
+                                    <div class="card-body">
+                                        <form class="row g-3" autocomplete="off"  id="saveBackupGoogleDrive" onsubmit="return false;" action="/settings/backupGoogleDrive" method="POST" enctype="application/x-www-form-urlencoded">
+                                            <div class="container" style="padding-left: 0px;margin-left: 0px;">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="form-check">
+                                                            <input type="hidden" name="backupGoogleDriveUse" value="false">
+                                                            <input class="form-check-input" type="checkbox" name="backupGoogleDriveUse" value="${backupGoogleDriveSetting.use()}">
+                                                            <label class="form-check-label" for="flexCheckDefault">Использовать</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="form-check">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label class="form-label">Токен</label>
+                                                        <input type="text" class="form-control" name="backupGoogleDriveToken" value="${backupGoogleDriveSetting.token()}">
+                                                    </div>
+                                                    <div class="col">
+                                                        <label class="form-label">Папка куда будут загружаться резервные копии</label>
+                                                        <input type="text" class="form-control" name="backupGoogleDriveDirdist" value="${backupGoogleDriveSetting.dirdist()}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <a href="https://support.webasyst.ru/14592/files-google-drive/">Документация на получение токена</a>
+                                            </div>
+                                            <div class="col-12">
+                                                <button type="button" class="btn btn-primary" onclick="settingSave('saveBackupGoogleDrive')">Сохранить</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="nav-notification" role="tabpanel" aria-labelledby="nav-notification-tab" tabindex="0">...</div>
+                        </div>
+
                     </div> <!-- /.card-body -->
                 </div> <!-- /.card -->
 

@@ -25,6 +25,7 @@ import ru.c_energies.web.models.appeals.AppealsTable;
 import ru.c_energies.databases.entity.files.FileRow;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -72,14 +73,18 @@ public class Appeals {
             return "pages/appealNotFound";
         }
         List<FileRow> listFileRow = new Files().listFilesSended(id);
+        List<List<FileRow>> lists = lists(listFileRow);
         List<FileRow> listFilesAnswered = new Files().listFilesAnswered(id);
+        List<List<FileRow>> listsFileAnswered = lists(listFilesAnswered);
         AddressRow addressRow = new AppealAddress(ID).address();
         List<LabelRow> labelRows = new LabelTable(ID).list();
         ThemesLinkAppeals themesLinkAppeals = new ThemesLinkAppeals();
         model.addAttribute("appeal", list.get(0));
         model.addAttribute("answered", new DigitsToYesNo(0).reverse(list.get(0).answered()));
+        model.addAttribute("lists", lists);
         model.addAttribute("listFiles", listFileRow);
         model.addAttribute("listFileAnswered", listFilesAnswered);
+        model.addAttribute("listsFileAnswered", listsFileAnswered);
         model.addAttribute("address", addressRow);
         model.addAttribute("labels", labelRows);
         model.addAttribute("theme", themesLinkAppeals.theme(ID));
@@ -115,5 +120,23 @@ public class Appeals {
             new AppealAddress(appealRowNew.id()).address(addressDublicateSearch.id());
         }
         return ResponseEntity.ok().build();
+    }
+
+    private List<List<FileRow>> lists(List<FileRow> fileRowList){
+        List<List<FileRow>> lists = new ArrayList<>();
+        int i = 0;
+        int j = 0;
+        for(FileRow dr : fileRowList){
+            List<FileRow> flr = new ArrayList<>();
+            flr.add(dr);
+            if(i % 4 == 0){
+                lists.add(flr);
+                j++;
+            }else{
+                lists.get(j-1).add(dr);
+            }
+            i++;
+        }
+        return lists;
     }
 }
