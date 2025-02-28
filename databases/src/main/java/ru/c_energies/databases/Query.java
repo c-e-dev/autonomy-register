@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 public class Query {
     private final Source<Connection> datasource;
@@ -90,5 +92,18 @@ public class Query {
             throw new RuntimeException(e);
         }
         return out.toByteArray();
+    }
+
+    public void batch(List<String> params){
+        PreparedStatement p;
+        try {
+            p = this.datasource.session().prepareStatement(this.query);
+            for(String sql : params){
+                p.setString(1, "s");
+            }
+            //p.executeBatch();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }

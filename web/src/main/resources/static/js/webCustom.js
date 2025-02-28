@@ -124,3 +124,49 @@ $("button.btn-create.save[id^='save']").on('click', function() {
     $("button#save"+num).attr("hidden", true);
     $("button#save"+num).attr("disabled", true);
 });
+
+function settingSave(formId) {
+    const form = document.getElementById(formId);
+    const url = new URL(form.action);
+    const formData = new FormData(form);
+
+    var object = {};
+    formData.forEach((value, key) => object[key] = value);
+    var json = JSON.stringify(object);
+
+    const fetchOptions = {
+        headers:{
+              'Content-Type': 'application/json'
+            },
+        method: "POST",
+        body: json,
+    };
+    console.log('Отправка!');
+    let response = fetch(url, fetchOptions);
+}
+
+function checkbox() {
+  var checked = false;
+  if (document.querySelector('.form-check-input:checked')) {
+     checked = true;
+  }
+  document.getElementById('msg').value = checked;
+}
+
+$(".form-check-input").on('click', function() {
+    console.log(".form-check-input:checked = ", $(this).is(':checked'));
+    if($(this).is(':checked')){
+        $(this).val(true);
+    }else{
+        $(this).val(false);
+    }
+})
+
+$(".form-check-input").each(function(id){
+    console.log("id = ", $(this).val());
+    if($(this).val() === "true"){
+        $(this).attr("checked", "checked")
+    }else{
+        $(this).val(false);
+    }
+});
