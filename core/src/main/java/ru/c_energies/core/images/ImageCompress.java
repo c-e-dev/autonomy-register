@@ -10,18 +10,20 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.Iterator;
 
-public class ImageCompress {
+public class ImageCompress implements Compress {
     private final ByteArrayInputStream bais;
+    private final String extension;
     private int size;
-    public ImageCompress(ByteArrayInputStream bais){
+    public ImageCompress(ByteArrayInputStream bais, String extension){
         this.bais = bais;
+        this.extension = extension;
     }
     public byte[] start() throws IOException {
         BufferedImage image = ImageIO.read(this.bais);
-        File compressedImageFile = new File("compressed_image.jpg");
+        File compressedImageFile = new File("compressed_image." + this.extension);
         OutputStream os = new FileOutputStream(compressedImageFile);
 
-        Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+        Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName(this.extension);
         ImageWriter writer = (ImageWriter) writers.next();
 
         ImageOutputStream ios = ImageIO.createImageOutputStream(os);

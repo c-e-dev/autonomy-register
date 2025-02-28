@@ -4,6 +4,7 @@
 
 package ru.c_energies.web.pages;
 
+import com.itextpdf.text.DocumentException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.core.io.ByteArrayResource;
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.c_energies.core.images.Compress;
 import ru.c_energies.core.images.ImageCompress;
+import ru.c_energies.core.images.PdfCompress;
 import ru.c_energies.databases.Query;
 import ru.c_energies.databases.entity.files.FileContent;
 import ru.c_energies.databases.entity.files.FileName;
@@ -118,25 +121,30 @@ public class Files {
      * Загрузка файла на сервер по идентификатору appeal
      */
     @PostMapping(value = "/files/{id}/upload", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<Object> uploadFile(Model model, @PathVariable("id") String id, @RequestPart MultipartFile fileContent, @RequestPart String fileCategory) throws SQLException, IOException {
+    public ResponseEntity<Object> uploadFile(@PathVariable("id") String id, @RequestPart MultipartFile fileContent, @RequestPart String fileCategory) throws SQLException, IOException, DocumentException {
         FileNameAndExtension fileNameAndExtension = new FileNameAndExtension(fileContent.getOriginalFilename());
         int currentTime = (int)Instant.now().getEpochSecond();
-        ByteArrayInputStream in = new ByteArrayInputStream(fileContent.getBytes());
-        ImageCompress imageCompress = new ImageCompress(in);
-        byte[] bytes = imageCompress.start();
-        FileRow fileRow = new FileRow(
-                0,
-                fileNameAndExtension.name(),
-                fileNameAndExtension.extension(),
-                imageCompress.size(),
-                currentTime,
-                fileContent.getContentType(),
-                Integer.parseInt(fileCategory)
-        );
-
-        //new FilesCreate(Long.parseLong(id), fileRow).insert().update(fileContent.getBytes());
-        new FilesCreate(Long.parseLong(id), fileRow).insert().update(bytes);
-        LOG.info("size new file = {}", imageCompress.size());
+        String extension = fileNameAndExtension.extension();
+        if(extension.equalsIgnoreCase("JPG") || extension.equalsIgnoreCase("JPEG")){
+            ByteArrayInputStream in = new ByteArrayInputStream(fileContent.getBytes());
+            this.compress(id, new ImageCompress(in, fileNameAndExtension.extension()), fileNameAndExtension,
+                    fileContent, fileCategory);
+        } else if(extension.equalsIgnoreCase("PDF")) {
+            ByteArrayInputStream in = new ByteArrayInputStream(fileContent.getBytes());
+            this.compress(id, new PdfCompress(in, fileNameAndExtension.extension()), fileNameAndExtension,
+                    fileContent, fileCategory);
+        } else{
+            FileRow fileRow = new FileRow(
+                    0,
+                    fileNameAndExtension.name(),
+                    extension,
+                    fileContent.getBytes().length,
+                    currentTime,
+                    fileContent.getContentType(),
+                    Integer.parseInt(fileCategory)
+            );
+            new FilesCreate(Long.parseLong(id), fileRow).insert().update(fileContent.getBytes());
+        }
         return ResponseEntity.ok().build();
     }
 
@@ -147,5 +155,21 @@ public class Files {
     public ResponseEntity<Object> changeFileName(@PathVariable("id") String id, @RequestPart String newName) throws SQLException, IOException {
         new FileName(Integer.parseInt(id), newName).change();
         return ResponseEntity.ok().build();
+    }
+
+    private void compress(String id, Compress imageCompress, FileNameAndExtension fileNameAndExtension, MultipartFile fileContent, String fileCategory) throws SQLException, IOException, DocumentException {
+        int currentTime = (int)Instant.now().getEpochSecond();
+        byte[] bytes = imageCompress.start();
+        FileRow fileRow = new FileRow(
+                0,
+                fileNameAndExtension.name(),
+                fileNameAndExtension.extension(),
+                imageCompress.size(),
+                currentTime,
+                fileContent.getContentType(),
+                Integer.parseInt(fileCategory)
+        );
+        new FilesCreate(Long.parseLong(id), fileRow).insert().update(bytes);
+        LOG.info("size new file = {}", imageCompress.size());
     }
 }
