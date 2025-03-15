@@ -19,10 +19,11 @@ cp ../README.md linux/README.md
 cp ../AGREEMENT.md linux/AGREEMENT.md
 cp ../scripts/start_linux.sh linux/start.sh
 tar -xvzf openjdk-$JDK'_linux-x64_bin.tar.gz' -C linux
-tar -czvf autonomy-register-$VERSION_APP-linux-x64.tar.gz linux
+mv linux autonomy-register-$VERSION_APP
+tar -czvf autonomy-register-$VERSION_APP-linux-x64.tar.gz autonomy-register-$VERSION_APP
 
 rm -rf openjdk*
-rm -rf linux
+rm -rf autonomy-register-$VERSION_APP
 
 ########### package windows version ###########
 mkdir windows
@@ -36,10 +37,11 @@ cp ../README.md windows/README.md
 cp ../AGREEMENT.md windows/AGREEMENT.md
 cp ../scripts/start_windows.bat windows/start.bat
 unzip openjdk-$JDK'_windows-x64_bin.zip' -d windows
-zip -r autonomy-register-$VERSION_APP-windows-x64.zip windows
+mv windows autonomy-register-$VERSION_APP
+zip -r autonomy-register-$VERSION_APP-windows-x64.zip autonomy-register-$VERSION_APP
 
 rm -rf openjdk*
-rm -rf windows
+rm -rf autonomy-register-$VERSION_APP
 
 ########### package macos version ###########
 mkdir macos
@@ -53,9 +55,10 @@ cp ../README.md macos/README.md
 cp ../AGREEMENT.md macos/AGREEMENT.md
 cp ../scripts/start.sh macos/start.sh
 tar -xvzf openjdk-$JDK'_macos-x64_bin.tar.gz' -C macos
-tar -czvf autonomy-register-$VERSION_APP-macos-x64.tar.gz macos
+mv macos autonomy-register-$VERSION_APP
+tar -czvf autonomy-register-$VERSION_APP-macos-x64.tar.gz autonomy-register-$VERSION_APP
 
 rm -rf openjdk*
-rm -rf macos
+rm -rf autonomy-register-$VERSION_APP
 
 exit 0
