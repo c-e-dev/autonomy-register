@@ -137,6 +137,11 @@
             <artifactId>itext-asian</artifactId>
             <version>5.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.willena</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.49.1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

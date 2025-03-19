@@ -125,15 +125,18 @@ public class Files {
         FileNameAndExtension fileNameAndExtension = new FileNameAndExtension(fileContent.getOriginalFilename());
         int currentTime = (int)Instant.now().getEpochSecond();
         String extension = fileNameAndExtension.extension();
-        if(extension.equalsIgnoreCase("JPG") || extension.equalsIgnoreCase("JPEG")){
-            ByteArrayInputStream in = new ByteArrayInputStream(fileContent.getBytes());
-            this.compress(id, new ImageCompress(in, fileNameAndExtension.extension()), fileNameAndExtension,
-                    fileContent, fileCategory);
-        } else if(extension.equalsIgnoreCase("PDF")) {
-            ByteArrayInputStream in = new ByteArrayInputStream(fileContent.getBytes());
-            this.compress(id, new PdfCompress(in, fileNameAndExtension.extension()), fileNameAndExtension,
-                    fileContent, fileCategory);
-        } else{
+        if(fileContent.getBytes().length > 5000000){
+            if(extension.equalsIgnoreCase("JPG") || extension.equalsIgnoreCase("JPEG")){
+                ByteArrayInputStream in = new ByteArrayInputStream(fileContent.getBytes());
+                this.compress(id, new ImageCompress(in, fileNameAndExtension.extension()), fileNameAndExtension,
+                        fileContent, fileCategory);
+            }
+            if(extension.equalsIgnoreCase("PDF")) {
+                ByteArrayInputStream in = new ByteArrayInputStream(fileContent.getBytes());
+                this.compress(id, new PdfCompress(in, fileNameAndExtension.extension()), fileNameAndExtension,
+                        fileContent, fileCategory);
+            }
+        }else{
             FileRow fileRow = new FileRow(
                     0,
                     fileNameAndExtension.name(),
