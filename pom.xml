@@ -22,6 +22,7 @@
         <module>utils</module>
         <module>core</module>
         <module>integrations</module>
+        <module>update</module>
     </modules>
 
     <properties>
