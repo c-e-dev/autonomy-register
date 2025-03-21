@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.c_energies.core.schedul.BackupScheduler;
 import ru.c_energies.databases.sqlite.Source;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
+import ru.c_energies.update.Update;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,5 +20,7 @@ public class Main {
 
         BackupScheduler scheduler = new BackupScheduler();
         scheduler.init();
+        Update update = new Update();
+        update.start();
     }
 }
