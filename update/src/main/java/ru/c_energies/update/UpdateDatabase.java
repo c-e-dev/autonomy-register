@@ -10,8 +10,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-public class Update {
-    private final Logger LOG = LogManager.getLogger(Update.class);
+public class UpdateDatabase {
+    private final Logger LOG = LogManager.getLogger(UpdateDatabase.class);
     private final String ALL_TABLE_LIST = "select name from pragma_table_list";
     public void start() throws SQLException {
         for(Map.Entry<String, List<TableField>> tables : StructureTables.DB.entrySet()){
