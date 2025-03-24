@@ -22,11 +22,12 @@ public class Main {
 
         BackupScheduler scheduler = new BackupScheduler();
         scheduler.init();
-        UpdateDatabase update = new UpdateDatabase();
-        update.start();
+
+        //UpdateDatabase update = new UpdateDatabase();
+        //update.start();
         //WorkGit workGit = new WorkGit("https://gitlab.com/autonomy-register/autonomy-register-v1.git");
         //workGit.lastTag();
-        UpdateApp updateApp = new UpdateApp();
-        updateApp.start();
+        //UpdateApp updateApp = new UpdateApp();
+        //updateApp.start();
     }
 }

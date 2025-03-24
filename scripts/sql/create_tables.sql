@@ -67,3 +67,14 @@ CREATE TABLE secured_partyes (
 	create_date INTEGER,
 	apply_date INTEGER
 , used INTEGER DEFAULT 0);
+
+CREATE TABLE notifications (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	time INTEGER,
+	content TEXT,
+	is_read INTEGER
+);
+
+CREATE TABLE version (
+	"value" TEXT
+);
