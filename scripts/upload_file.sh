@@ -6,6 +6,7 @@
 TOKEN=`echo $TOKEN_REGISTRY`
 PROJECT_ID="67038642"
 PACKAGE_NAME="autonomy-register"
+git fetch --tags --force
 PACKAGE_VERSION=`git fetch --tags && git tag --list | sort -V | tail -n1`
 FILE="web-1.0-SNAPSHOT.jar"
 

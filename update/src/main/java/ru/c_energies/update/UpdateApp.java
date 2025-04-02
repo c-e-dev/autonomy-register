@@ -7,12 +7,14 @@ import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import ru.c_energies.databases.entity.version.VersionChange;
+import ru.c_energies.databases.entity.version.VersionRow;
 import ru.c_energies.databases.entity.version.VersionTable;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Скачиваем из репы файл по последней версии
@@ -25,7 +27,8 @@ public class UpdateApp {
         //Смотрим версию по tag в https://gitlab.com/autonomy-register/autonomy-register-v1.git
         WorkGit workGit = new WorkGit("https://gitlab.com/autonomy-register/autonomy-register-v1.git");
         String lastTag = workGit.lastTag();
-        String currentVersion = new VersionTable().list().get(0).value();
+        List<VersionRow> versionRowList = new VersionTable().list();
+        String currentVersion = !versionRowList.isEmpty() ? versionRowList.get(0).value() : "";
         if(!currentVersion.equals(lastTag)){
             LOG.info("Начинаем обновление приложения");
             //Скачиваем jar-файл и пытаемся заменить
@@ -36,7 +39,11 @@ public class UpdateApp {
                     .build();
             Flux<DataBuffer> dataBufferFlux = client.get().retrieve().bodyToFlux(DataBuffer.class);
             DataBufferUtils.write(dataBufferFlux, path, StandardOpenOption.CREATE).block(); //Creates new file or overwrites exisiting file
-            new VersionChange(lastTag).update();
+            if(!versionRowList.isEmpty()){
+                new VersionChange(lastTag).update();
+            }else{
+                new VersionChange(lastTag).insert();
+            }
             //Для завершения обновления, Вам необходимо вручную перезапустить приложение
             LOG.info("Обновление приложения завершено");
         }
