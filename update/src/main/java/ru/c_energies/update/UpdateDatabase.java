@@ -14,6 +14,7 @@ public class UpdateDatabase {
     private final Logger LOG = LogManager.getLogger(UpdateDatabase.class);
     private final String ALL_TABLE_LIST = "select name from pragma_table_list";
     public void start() throws SQLException {
+        LOG.info("Обновление структуры базы данных");
         for(Map.Entry<String, List<TableField>> tables : StructureTables.DB.entrySet()){
             String tableName = tables.getKey();
             if(this.existsTable(tableName)){
