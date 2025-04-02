@@ -1,4 +1,5 @@
-@param gg.jte.Content content
+@import gg.jte.Content
+@param Content content
 
 <!DOCTYPE html>
 <html lang="en"> <!--begin::Head-->
@@ -27,10 +28,15 @@
         <li class="nav-item d-none d-md-block"> <a href="/contact" class="nav-link">Контакты</a> </li>
         <li class="nav-item d-none d-md-block"> <a href="/agreement" class="nav-link">Соглашение</a> </li>
       </ul> <!--end::Start Navbar Links--> <!--begin::End Navbar Links-->
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <div id="version"></div>
+        </li>
+      </ul>
       <ul class="navbar-nav ms-auto"> <!--begin::Navbar Search-->
         <li class="nav-item"> <a class="nav-link" data-widget="navbar-search" href="#" role="button"> <i class="bi bi-search"></i> </a> </li> <!--end::Navbar Search--> <!--begin::Messages Dropdown Menu-->
-        <li class="nav-item dropdown"> <a class="nav-link" data-bs-toggle="dropdown" href="#"> <i class="bi bi-chat-text"></i> <span class="navbar-badge badge text-bg-danger">3</span> </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <a href="#" class="dropdown-item"> <!--begin::Message-->
+        <!--<li class="nav-item dropdown"> <a class="nav-link" data-bs-toggle="dropdown" href="#"> <i class="bi bi-chat-text"></i> <span class="navbar-badge badge text-bg-danger">3</span> </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <a href="#" class="dropdown-item">
             <div class="d-flex">
               <div class="flex-shrink-0"> <img src="/assets/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
               <div class="flex-grow-1">
@@ -42,9 +48,9 @@
                 <p class="fs-7 text-secondary"> <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
                 </p>
               </div>
-            </div> <!--end::Message-->
+            </div>
           </a>
-            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <!--begin::Message-->
+            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item">
               <div class="d-flex">
                 <div class="flex-shrink-0"> <img src="/assets/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
                 <div class="flex-grow-1">
@@ -56,9 +62,9 @@
                   <p class="fs-7 text-secondary"> <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
                   </p>
                 </div>
-              </div> <!--end::Message-->
+              </div>
             </a>
-            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <!--begin::Message-->
+            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item">
               <div class="d-flex">
                 <div class="flex-shrink-0"> <img src="/assets/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 rounded-circle me-3"> </div>
                 <div class="flex-grow-1">
@@ -70,17 +76,17 @@
                   <p class="fs-7 text-secondary"> <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
                   </p>
                 </div>
-              </div> <!--end::Message-->
+              </div>
             </a>
             <div class="dropdown-divider"></div> <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
           </div>
-        </li> <!--end::Messages Dropdown Menu--> <!--begin::Notifications Dropdown Menu-->
+        </li> --> <!--end::Messages Dropdown Menu--> <!--begin::Notifications Dropdown Menu-->
         <li class="nav-item dropdown"> <a class="nav-link" data-bs-toggle="dropdown" href="#"> <i class="bi bi-bell-fill"></i> <span class="navbar-badge badge text-bg-warning">15</span> </a>
           <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end"> <span class="dropdown-item dropdown-header">15 Notifications</span>
-            <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <i class="bi bi-envelope me-2"></i> 4 new messages
+            <!--<div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <i class="bi bi-envelope me-2"></i> 4 new messages
               <span class="float-end text-secondary fs-7">3 mins</span> </a>
             <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <i class="bi bi-people-fill me-2"></i> 8 friend requests
-              <span class="float-end text-secondary fs-7">12 hours</span> </a>
+              <span class="float-end text-secondary fs-7">12 hours</span> </a>-->
             <div class="dropdown-divider"></div> <a href="#" class="dropdown-item"> <i class="bi bi-file-earmark-fill me-2"></i> 3 new reports
               <span class="float-end text-secondary fs-7">2 days</span> </a>
             <div class="dropdown-divider"></div> <a href="#" class="dropdown-item dropdown-footer">
@@ -118,7 +124,7 @@
           <li class="nav-item"> <a href="#notifications" class="nav-link"> <i class="nav-icon bi bi-clipboard-fill"></i>
             <p>
               Оповещения (?)
-              <span class="nav-badge badge text-bg-secondary me-3">6</span> <i class="nav-arrow bi bi-chevron-right"></i>
+              <!--<span class="nav-badge badge text-bg-secondary me-3">6</span> <i class="nav-arrow bi bi-chevron-right"></i>-->
             </p>
           </a>
             <ul class="nav nav-treeview">
@@ -163,6 +169,7 @@
 <script src="/js/jquery-3.7.1.min.js"></script>
 <script src="/js/webCustom.js"></script>
 <script src="/js/notes.js"></script>
+<!--<script src="/js/notifications.js"></script>-->
 <script type="module">
   import Tags from "https://cdn.jsdelivr.net/gh/lekoala/bootstrap5-tags@master/tags.js";
   Tags.init("select");
