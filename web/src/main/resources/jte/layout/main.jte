@@ -169,7 +169,7 @@
 <script src="/js/jquery-3.7.1.min.js"></script>
 <script src="/js/webCustom.js"></script>
 <script src="/js/notes.js"></script>
-<script src="/js/notifications.js"></script>
+<!--<script src="/js/notifications.js"></script>-->
 <script type="module">
   import Tags from "https://cdn.jsdelivr.net/gh/lekoala/bootstrap5-tags@master/tags.js";
   Tags.init("select");
