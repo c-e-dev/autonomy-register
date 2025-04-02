@@ -6,6 +6,7 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
+import ru.c_energies.databases.entity.version.VersionChange;
 import ru.c_energies.databases.entity.version.VersionTable;
 
 import java.nio.file.Path;
@@ -35,7 +36,7 @@ public class UpdateApp {
                     .build();
             Flux<DataBuffer> dataBufferFlux = client.get().retrieve().bodyToFlux(DataBuffer.class);
             DataBufferUtils.write(dataBufferFlux, path, StandardOpenOption.CREATE).block(); //Creates new file or overwrites exisiting file
-
+            new VersionChange(lastTag).update();
             //Для завершения обновления, Вам необходимо вручную перезапустить приложение
             LOG.info("Обновление приложения завершено");
         }
