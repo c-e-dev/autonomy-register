@@ -11,6 +11,10 @@ public class VersionChange implements Changes {
     }
     @Override
     public int insert() {
+        String sql = "INSERT INTO version (value) VALUES('%s') RETURNING rowid";
+        Query q = new Query(new SqliteDataSource(),
+                String.format(sql, this.version));
+        q.insert();
         return 0;
     }
 
