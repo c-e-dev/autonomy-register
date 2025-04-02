@@ -1,6 +1,7 @@
 #!/bin/bash
 ## Upload build file to registry
 ## Only exists tag from main-branch
+## Only new tags!!!
 
 TOKEN=`echo $TOKEN_REGISTRY`
 PROJECT_ID="67038642"

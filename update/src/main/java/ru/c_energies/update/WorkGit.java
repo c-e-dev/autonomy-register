@@ -5,9 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.lib.Ref;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * help - https://github.com/centic9/jgit-cookbook/blob/master/src/main/java/org/dstadler/jgit/porcelain/ListRemoteRepository.java
@@ -32,10 +30,12 @@ public class WorkGit {
         }
         List<String> listTags = new ArrayList<>();
         for (Map.Entry<String, Ref> entry : map.entrySet()) {
-            listTags.add(entry.getKey());
+            listTags.add(entry.getKey().replace("refs/tags/", ""));
             LOG.debug("Key: " + entry.getKey() + ", Ref: " + entry.getValue());
         }
-        String lastTag = listTags.size() > 0 ? listTags.get(0).replace("refs/tags/", "") : "";
+        Collections.sort(listTags);
+        Collections.reverse(listTags);
+        String lastTag = listTags.size() > 0 ? listTags.get(0) : "";
         LOG.debug("last tag = {}", lastTag);
         return lastTag;
     }
