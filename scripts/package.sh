@@ -4,7 +4,8 @@
 #PATH_JAVA_JDK=$1
 JDK="17.0.2"
 VERSION_JDK="jdk-"$JDK
-VERSION_APP="1.0.0"
+git fetch --tags --force
+VERSION_APP=`git fetch --tags && git tag --list | sort -V | tail -n1`
 
 cd ../integration_build
 ########### package linux version ###########
