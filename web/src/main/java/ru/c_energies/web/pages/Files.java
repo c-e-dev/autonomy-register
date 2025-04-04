@@ -34,6 +34,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.time.Instant;
 import java.util.List;
@@ -112,7 +113,7 @@ public class Files {
                 .contentLength(resource.contentLength())
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         ContentDisposition.attachment()
-                                .filename(fileRow.name())
+                                .filename(fileRow.name(), StandardCharsets.UTF_8)
                                 .build().toString())
                 .body(resource);
     }
