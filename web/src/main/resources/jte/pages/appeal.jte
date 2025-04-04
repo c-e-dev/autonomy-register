@@ -57,9 +57,9 @@
                                             <label class="form-label">Срок исполнения</label>
                                             <input type="datetime-local" min="2020-01-01T00:00" class="form-control" id="inputText02" name="dueDate" value="${appeal.dueDate()}">
                                             <label class="form-label">Кому</label>
-                                            <input type="text" class="form-control" id="inputRecipient" name="recipient" value="">
+                                            <input type="text" class="form-control" id="inputRecipient" name="recipient" value="${address.recipient()}">
                                             <label class="form-label">Куда</label>
-                                            <input type="text" class="form-control" id="inputAddress" name="address" value="">
+                                            <input type="text" class="form-control" id="inputAddress" name="address" value="${address.address()}">
                                             <label class="form-label" for="getAnsweredable">Получен ответ</label>
                                             <select class="form-select" id="getAnsweredable" required autocomplete="off" name="getAnsweredable">
                                                 @if(answered == 0)
