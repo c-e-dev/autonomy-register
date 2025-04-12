@@ -16,7 +16,7 @@ public class AppealChanges implements Changes {
     public void update() {
         String sql = """
             UPDATE appeals 
-            SET title='%s', internal_number='%s', register_track_number='%s', due_date=%d, answered=%d 
+            SET title='%s', internal_number='%s', register_track_number='%s', due_date=%d, answered=%d, type='%s'
             WHERE id=%d
             """;
         Query q = new Query(new SqliteDataSource(),
@@ -26,6 +26,7 @@ public class AppealChanges implements Changes {
                         this.appealRow.registerTrackNumber(),
                         (int)Instant.parse(this.appealRow.dueDate()).getEpochSecond(),
                         Integer.parseInt(this.appealRow.answered()),
+                        this.appealRow.type(),
                         this.appealRow.id()
                                 ));
         q.update();

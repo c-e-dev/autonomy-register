@@ -21,6 +21,7 @@ import ru.c_energies.databases.entity.themes.ThemesLinkAppeals;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
 import ru.c_energies.databases.entity.appeals.AppealRow;
 import ru.c_energies.utils.converters.DigitsToYesNo;
+import ru.c_energies.utils.converters.TypeAppealsConvert;
 import ru.c_energies.web.models.appeals.AppealsTable;
 import ru.c_energies.databases.entity.files.FileRow;
 
@@ -41,9 +42,9 @@ public class Appeals {
     @PostMapping(value = "/document/appeals", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<Object> createAppeal(Model model, @RequestPart String themeId, @RequestPart String title, @RequestPart String registerTrackNumber,
                                                @RequestPart String dueDate, @RequestPart String getAnsweredable,
-                                               @RequestPart String recipient, @RequestPart String address
+                                               @RequestPart String recipient, @RequestPart String address, @RequestPart String type
                                                ) throws SQLException {
-        AppealRow appealRowNewTemp = new AppealRow(0, title, "", registerTrackNumber, "", dueDate+":00Z", getAnsweredable);
+        AppealRow appealRowNewTemp = new AppealRow(0, title, "", registerTrackNumber, "", dueDate+":00Z", getAnsweredable, type);
         AppealCreate appealCreate = new AppealCreate(Integer.parseInt(themeId), appealRowNewTemp);
         appealCreate.insert();
         AddressDublicateSearch addressDublicateSearch = new AddressDublicateSearch(recipient, address);
@@ -72,6 +73,7 @@ public class Appeals {
         if(list.size() == 0){
             return "pages/appealNotFound";
         }
+        AppealRow appealRow = list.get(0);
         List<FileRow> listFileRow = new Files().listFilesSended(id);
         List<List<FileRow>> lists = lists(listFileRow);
         List<FileRow> listFilesAnswered = new Files().listFilesAnswered(id);
@@ -79,7 +81,7 @@ public class Appeals {
         AddressRow addressRow = new AppealAddress(ID).address();
         List<LabelRow> labelRows = new LabelTable(ID).list();
         ThemesLinkAppeals themesLinkAppeals = new ThemesLinkAppeals();
-        model.addAttribute("appeal", list.get(0));
+        model.addAttribute("appeal", appealRow);
         model.addAttribute("answered", new DigitsToYesNo(0).reverse(list.get(0).answered()));
         model.addAttribute("lists", lists);
         model.addAttribute("listFiles", listFileRow);
@@ -88,26 +90,28 @@ public class Appeals {
         model.addAttribute("address", addressRow);
         model.addAttribute("labels", labelRows);
         model.addAttribute("theme", themesLinkAppeals.theme(ID));
+        model.addAttribute("type", new TypeAppealsConvert("").reverse(appealRow.type()));
         return "pages/appeal";
     }
 
     /**
      * Изменение обращения
-     * @param model
      * @param id
      * @return
      * @throws SQLException
      */
     @PostMapping(value = "/document/appeals/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<Object> editAppeal(Model model, @PathVariable("id") String id,
+    public ResponseEntity<Object> editAppeal(@PathVariable("id") String id, @RequestPart String internalNumber,
                                              @RequestPart String registerTrackNumber, @RequestPart String dueDate, @RequestPart String getAnsweredable,
-                                             @RequestPart String recipient, @RequestPart String address ) throws SQLException {
+                                             @RequestPart(required = false) String recipient, @RequestPart(required = false) String address, @RequestPart String type ) throws SQLException {
+        if(recipient == null) recipient = "";
+        if(address == null) address = "";
         Query q = new Query(new SqliteDataSource(), String.format("select * from appeals where id = %d", Integer.parseInt(id)));
         List<AppealRow> list = new AppealsTable(q.exec()).list();
         AppealRow appealRowOld = list.get(0);
         AppealRow appealRowNew = new AppealRow(
-                appealRowOld.id(), appealRowOld.title(), appealRowOld.internalNumber(),
-                registerTrackNumber, appealRowOld.createDate(), dueDate+":00Z", getAnsweredable
+                appealRowOld.id(), appealRowOld.title(), internalNumber,
+                registerTrackNumber, appealRowOld.createDate(), dueDate+":00Z", getAnsweredable, type
         );
         AppealChanges appealChanges = new AppealChanges(appealRowNew);
         appealChanges.update();
