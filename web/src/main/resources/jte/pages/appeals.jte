@@ -39,6 +39,7 @@
                     <th style="width: 10px">#</th>
                     <th>Номер отправления (РПО)</th>
                     <th>Внутренний номер</th>
+                    <th>Тип обращения</th>
                     <th>Тема</th>
                     <th>Дата создания</th>
                   </tr>
@@ -49,6 +50,7 @@
                       <td><a href="/document/appeals/${at.id()}">${at.id()}.</a></td>
                       <td><a href="/document/appeals/${at.id()}">${at.registerTrackNumber()}</a></td>
                       <td>${at.internalNumber()}</td>
+                      <td>${at.type()}</td>
                       <td>${at.title()}</td>
                       <td>${at.createDate()}</td>
                     </tr>
