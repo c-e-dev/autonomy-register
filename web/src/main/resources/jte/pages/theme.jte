@@ -123,6 +123,7 @@
                                                         <option value="0">Нет</option>
                                                         <option value="1">Да</option>
                                                     </select>
+                                                    <label class="form-label" for="getType">Тип обращения</label>
                                                     <select class="form-select" id="getType" required autocomplete="off" name="type">
                                                         <option selected disabled value="none">Не выбрано</option>
                                                         <option selected value="inbound">Входящее</option>
