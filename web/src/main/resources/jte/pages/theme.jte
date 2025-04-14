@@ -115,6 +115,8 @@
 
                                                     <label class="form-label">Номер отправления</label>
                                                     <input type="text" class="form-control" id="registerTrackNumber" name="registerTrackNumber" value="">
+                                                    <label class="form-label">Внутренний номер</label>
+                                                    <input type="text" class="form-control" id="inputInternalNumber" name="internalNumber" value="">
                                                     <label class="form-label">Срок исполнения</label>
                                                     <input type="datetime-local" min="2025-01-01T00:00" class="form-control" id="dueDate" name="dueDate" value="2020-01-01T00:00">
                                                     <label class="form-label" for="getAnsweredable">Получен ответ</label>

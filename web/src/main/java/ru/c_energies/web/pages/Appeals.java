@@ -40,11 +40,14 @@ public class Appeals {
     }
 
     @PostMapping(value = "/document/appeals", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<Object> createAppeal(Model model, @RequestPart String themeId, @RequestPart String title, @RequestPart String registerTrackNumber,
-                                               @RequestPart String dueDate, @RequestPart String getAnsweredable,
-                                               @RequestPart String recipient, @RequestPart String address, @RequestPart String type
+    public ResponseEntity<Object> createAppeal(@RequestPart String themeId, @RequestPart String title, @RequestPart String registerTrackNumber,
+                                               @RequestPart String dueDate, @RequestPart String getAnsweredable, @RequestPart(required = false) String internalNumber,
+                                               @RequestPart(required = false) String recipient, @RequestPart(required = false) String address, @RequestPart String type
                                                ) throws SQLException {
-        AppealRow appealRowNewTemp = new AppealRow(0, title, "", registerTrackNumber, "", dueDate+":00Z", getAnsweredable, type);
+        if(recipient == null) recipient = "";
+        if(address == null) address = "";
+        if(internalNumber == null) internalNumber = "";
+        AppealRow appealRowNewTemp = new AppealRow(0, title, internalNumber, registerTrackNumber, "", dueDate+":00Z", getAnsweredable, type);
         AppealCreate appealCreate = new AppealCreate(Integer.parseInt(themeId), appealRowNewTemp);
         appealCreate.insert();
         AddressDublicateSearch addressDublicateSearch = new AddressDublicateSearch(recipient, address);

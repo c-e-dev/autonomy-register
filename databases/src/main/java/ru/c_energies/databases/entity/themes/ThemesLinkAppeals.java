@@ -50,6 +50,6 @@ public class ThemesLinkAppeals {
                     )
             );
         }
-        return themeRows.size() > 0 ? themeRows.get(0) : null;
+        return themeRows.size() > 0 ? themeRows.get(0) : new ThemeRow(0, "Empty", "", "", "", "");
     }
 }
