@@ -11,8 +11,8 @@ import java.time.Instant;
 public class AppealCreate implements Create<AppealCreate> {
     private final String INSERT = """
                 INSERT INTO appeals
-                (title, internal_number, register_track_number, create_date, due_date, answered)
-                VALUES('%s', '%s', '%s', %d, %d, %d) RETURNING rowid
+                (title, internal_number, register_track_number, create_date, due_date, answered, type)
+                VALUES('%s', '%s', '%s', %d, %d, %d, '%s') RETURNING rowid
             """;
     private final String INSERT_INTO_THEME = """
                 INSERT INTO themes_link_appeals (theme_id, appeal_id) VALUES(%d, %d)
@@ -32,7 +32,8 @@ public class AppealCreate implements Create<AppealCreate> {
                 this.appealRow.registerTrackNumber(),
                 (int)Instant.now().getEpochSecond(),
                 (int)Instant.parse(this.appealRow.dueDate()).getEpochSecond(),
-                0
+                0,
+                this.appealRow.type()
         ));
         ResultSet resultSet = q.exec();
         while(resultSet.next()){

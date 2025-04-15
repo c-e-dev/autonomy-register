@@ -33,6 +33,7 @@ public interface StructureTables {
             add(new TableField("create_date", "INTEGER", 0, 0));
             add(new TableField("due_date", "INTEGER", 0, 0));
             add(new TableField("answered", "INTEGER", 0, 0));
+            add(new TableField("type", "TEXT", 0, 0)); // тип обращения - inbound, outbound, none
         }});
         put("files", new ArrayList<>(){{
             add(new TableField("id", "INTEGER", 0, 1));

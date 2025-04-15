@@ -6,6 +6,7 @@ import ru.c_energies.databases.sqlite.SqliteDataSource;
 import ru.c_energies.utils.converters.DateFormat;
 import ru.c_energies.utils.converters.DigitsToYesNo;
 import ru.c_energies.utils.converters.ThemeStatuses;
+import ru.c_energies.utils.converters.TypeAppealsConvert;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +27,8 @@ public class ThemesLinkAppeals {
                             resultSet.getString("register_track_number"),
                             new DateFormat(resultSet.getInt("create_date")).convert(),
                             new DateFormat(resultSet.getInt("due_date")).convert(),
-                            new DigitsToYesNo(resultSet.getInt("answered")).value()
+                            new DigitsToYesNo(resultSet.getInt("answered")).value(),
+                            new TypeAppealsConvert(resultSet.getString("type")).value()
                     )
             );
         }
@@ -48,6 +50,6 @@ public class ThemesLinkAppeals {
                     )
             );
         }
-        return themeRows.size() > 0 ? themeRows.get(0) : null;
+        return themeRows.size() > 0 ? themeRows.get(0) : new ThemeRow(0, "Empty", "", "", "", "");
     }
 }

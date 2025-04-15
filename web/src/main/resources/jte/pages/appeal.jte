@@ -15,6 +15,7 @@
 @param List<LabelRow> labels
 @param FilesForm ff
 @param Integer answered
+@param String type
 @param AddressRow address
 @param ThemeRow theme
 @param Integer countFr = 0
@@ -54,6 +55,8 @@
                                         <div class="modal-body">
                                             <label class="form-label">Номер отправления</label>
                                             <input type="text" class="form-control" id="inputText01" name="registerTrackNumber" value="${appeal.registerTrackNumber()}">
+                                            <label class="form-label">Внутренний номер</label>
+                                            <input type="text" class="form-control" id="inputInternalNumber" name="internalNumber" value="${appeal.internalNumber()}">
                                             <label class="form-label">Срок исполнения</label>
                                             <input type="datetime-local" min="2020-01-01T00:00" class="form-control" id="inputText02" name="dueDate" value="${appeal.dueDate()}">
                                             <label class="form-label">Кому</label>
@@ -68,6 +71,15 @@
                                                 <option selected value="1">Нет</option>@else<option value="1">Нет</option>@endif
                                                 @if(answered == 2)
                                                 <option selected value="2">Да</option>@else<option value="2">Да</option>@endif
+                                            </select>
+                                            <label class="form-label" for="getType">Тип обращения (входящее, исходящее)</label>
+                                            <select class="form-select" id="getType" required autocomplete="off" name="type">
+                                                @if(type == "none")
+                                                <option selected value="none">Не выбрано</option>@else<option value="none">Не выбрано</option>@endif
+                                                @if(type == "inbound")
+                                                <option selected value="inbound">Входящее</option>@else<option value="inbound">Входящее</option>@endif
+                                                @if(type == "outbound")
+                                                <option selected value="outbound">Исходящее</option>@else<option value="outbound">Исходящее</option>@endif
                                             </select>
                                         </div>
                                         <div class="modal-footer">
@@ -85,15 +97,19 @@
                             <table class="table">
                                 <tr>
                                     <th style="width:15%">Номер отправления:</th><td style="width:35%">${appeal.registerTrackNumber()}</td>
-                                    <th style="width:15%">Дата создания:</th><td style="width:35%">${appeal.createDate()}</td>
+                                    <th style="width:15%">Внутренний номер:</th><td style="width:35%">${appeal.internalNumber()}</td>
+                                </tr>
+                                <tr>
+                                    <th style="width:15%">Тип обращения:</th><td style="width:35%">${appeal.type()}</td>
+                                    <th>Получен ответ:</th><td class="text-bg-info">${appeal.answered()}</td>
                                 </tr>
                                 <tr>
                                     <th style="width:15%">Кому:</th><td style="width:35%">${address.recipient()}</td>
                                     <th style="width:15%">Адрес:</th><td style="width:35%">${address.address()}</td>
                                 </tr>
                                 <tr>
+                                    <th style="width:15%">Дата создания:</th><td style="width:35%">${appeal.createDate()}</td>
                                     <th>Срок исполнения:</th><td>${appeal.dueDate()}</td>
-                                    <th>Получен ответ:</th><td class="text-bg-info">${appeal.answered()}</td>
                                 </tr>
                                 <tr>
                                     <th>Сопровождающие документы:</th><td id="listTags">

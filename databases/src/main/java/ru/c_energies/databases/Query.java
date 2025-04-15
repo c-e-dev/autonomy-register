@@ -35,15 +35,28 @@ public class Query {
     /**
      * Вставка строки в таблицу по запросу. В запросе INSERT должно быть обязательно прописано RETURNING rowid
      */
-    public void insert(){
+    public void insert() {
         PreparedStatement p;
         ResultSet rs;
-        try {
-            p = this.datasource.session().prepareStatement(this.query);
-            rs = p.executeQuery();
-            while(rs.next()){
 
+        try {
+            final boolean oldAutoCommit = this.datasource.session().getAutoCommit();
+            this.datasource.session().setAutoCommit(false);
+
+            try{
+                p = this.datasource.session().prepareStatement(this.query);
+                rs = p.executeQuery();
+                while(rs.next()){
+
+                }
+            } catch (SQLException e) {
+                this.datasource.session().rollback();
+                throw new RuntimeException(e);
+            } finally {
+                this.datasource.session().commit();
+                this.datasource.session().setAutoCommit(oldAutoCommit);
             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
