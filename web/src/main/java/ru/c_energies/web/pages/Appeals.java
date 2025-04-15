@@ -104,11 +104,12 @@ public class Appeals {
      * @throws SQLException
      */
     @PostMapping(value = "/document/appeals/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<Object> editAppeal(@PathVariable("id") String id, @RequestPart String internalNumber,
+    public ResponseEntity<Object> editAppeal(@PathVariable("id") String id, @RequestPart(required = false) String internalNumber,
                                              @RequestPart String registerTrackNumber, @RequestPart String dueDate, @RequestPart String getAnsweredable,
                                              @RequestPart(required = false) String recipient, @RequestPart(required = false) String address, @RequestPart String type ) throws SQLException {
         if(recipient == null) recipient = "";
         if(address == null) address = "";
+        if(internalNumber == null) internalNumber = "";
         Query q = new Query(new SqliteDataSource(), String.format("select * from appeals where id = %d", Integer.parseInt(id)));
         List<AppealRow> list = new AppealsTable(q.exec()).list();
         AppealRow appealRowOld = list.get(0);

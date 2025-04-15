@@ -10,6 +10,7 @@
 @param Integer decisionStatus
 @param Map<Integer, AddressRow> addressRowMap
 @param List<NoteRow> noteRows
+@param Map<Integer, List<AppealRow>> mapSubAppeal
 
 @template.layout.main(content = @`
 <div class="app-content-header"> <!--begin::Container-->
@@ -143,17 +144,17 @@
                                 <div class="card-body">
                                     <table class="table table-bordered">
                                         <thead>
-                                        <tr>
-                                            <th style="width: 10px">#</th>
-                                            <th style="width: 200px">Номер отправления</th>
-                                            <th style="width: 200px">Внутренний номер</th>
-                                            <th>Тип обращения</th>
-                                            <th>Название</th>
-                                            <th>Кому</th>
-                                            <th style="width: 150px">Дата создания</th>
-                                            <th style="width: 150px">Срок исполнения</th>
-                                            <th style="width: 40px">Ответили?</th>
-                                        </tr>
+                                            <tr style="width: 100%">
+                                                <th >#</th>
+                                                <th>Номер отправления</th>
+                                                <th >Внутренний номер</th>
+                                                <th >Тип обращения</th>
+                                                <th>Название</th>
+                                                <th>Кому</th>
+                                                <th >Дата создания</th>
+                                                <th >Срок исполнения</th>
+                                                <th>Ответили?</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                         @for(AppealRow lar : listAppeals)
@@ -168,6 +169,43 @@
                                             <td>${lar.dueDate()}</td>
                                             <td class="text-bg-info">${lar.answered()}</td>
                                         </tr>
+                                        @if(mapSubAppeal.containsKey(lar.id()))
+                                        <tr>
+                                            <td colspan="9" style="background-color: red">
+                                                <table class="table" >
+                                                    <thead>
+                                                    <tr style="width: 100%">
+                                                        <th >#</th>
+                                                        <th>Номер отправления</th>
+                                                        <th>Внутренний номер</th>
+                                                        <th>Тип обращения</th>
+                                                        <th>Название</th>
+                                                        <th>Кому</th>
+                                                        <th>Дата создания</th>
+                                                        <th>Срок исполнения</th>
+                                                        <th>Ответили?</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @for(AppealRow subLar : mapSubAppeal.get(lar.id()))
+                                                    <tr class="align-middle">
+                                                        <td><a href="/document/appeals/${subLar.id()}">${subLar.id()}.</a></td>
+                                                        <td><a href="/document/appeals/${subLar.id()}">${subLar.registerTrackNumber()}</a></td>
+                                                        <td>${subLar.internalNumber()}</td>
+                                                        <td>${subLar.type()}</td>
+                                                        <td>${subLar.title()}</td>
+                                                        <!--<td>${addressRowMap.get(subLar.id()).recipient()}</td>-->
+
+                                                        <td>${subLar.createDate()}</td>
+                                                        <td>${subLar.dueDate()}</td>
+                                                        <td class="text-bg-info">${subLar.answered()}</td>
+                                                    </tr>
+                                                    @endfor
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        @endif
                                         @endfor
                                         </tbody>
                                     </table>

@@ -60,12 +60,20 @@ public class Themes {
             return "pages/themeNotFound";
         }
         Query q2 = new Query(new SqliteDataSource(),
-                String.format("select * from appeals where id in (select appeal_id from themes_link_appeals where theme_id = %d)", Integer.parseInt(id)));
+                String.format("select * from appeals where id in (select appeal_id from themes_link_appeals where theme_id = %d)", themeId));
         List<AppealRow> listAppeal = new AppealsTable(q2.exec()).list();
+
         int decisionStatus = new ThemeStatuses(0).reverse(list.get(0).decisionStatus());
         Map<Integer, AddressRow> addressRowMap = new HashMap<>();
+        Map<Integer, List<AppealRow>> mapSubAppeal = new HashMap<>();
         for(AppealRow appealRow : listAppeal){
-            addressRowMap.put(appealRow.id(), new AppealAddress(appealRow.id()).address());
+            int appealId = appealRow.id();
+            addressRowMap.put(appealId, new AppealAddress(appealId).address());
+            Query querySubList = new Query(new SqliteDataSource(),
+                    String.format("select a.* from appeals a, appeal_from_appeal afa\n" +
+                                  "where afa.theme_id = %d and afa.parent_appeal_id = %d and afa.appeal_id = a.id", themeId, appealId));
+            List<AppealRow> subListAppeal = new AppealsTable(querySubList.exec()).list();
+            if(subListAppeal.size() > 0) mapSubAppeal.put(appealId, subListAppeal);
         }
         List<NoteRow> noteRows = new NoteTable(themeId, 0).list();
         model.addAttribute("theme", list.get(0));
@@ -73,6 +81,7 @@ public class Themes {
         model.addAttribute("addressRowMap", addressRowMap);
         model.addAttribute("decisionStatus", decisionStatus);
         model.addAttribute("noteRows", noteRows);
+        model.addAttribute("mapSubAppeal", mapSubAppeal);
         return "pages/theme";
     }
 

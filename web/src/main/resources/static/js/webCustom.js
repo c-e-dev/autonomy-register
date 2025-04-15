@@ -170,3 +170,10 @@ $(".form-check-input").each(function(id){
         $(this).val(false);
     }
 });
+
+$(document).ready(function(){
+   $('.js-tabularinfo').bootstrapTable({
+        escape: false,
+        showHeader: false
+      });
+});
