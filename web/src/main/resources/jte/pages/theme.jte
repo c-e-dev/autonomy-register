@@ -99,23 +99,24 @@
                                             </div>
                                             <form onsubmit="return false;" action="/document/appeals" method="POST" enctype="application/x-www-form-urlencoded" id="createAppeal">
                                                 <div class="modal-body">
-                                                    <label class="form-label">Тема</label>
-                                                    <input type="text" required class="form-control" id="themeId" name="themeId" value="${theme.id()}" readonly>
+                                                    <input type="text" required class="form-control" id="themeId" name="themeId" value="${theme.id()}" readonly hidden="true">
                                                     <label class="form-label">Тема обращения</label>
                                                     <input type="text" required class="form-control" id="titleAppeal" name="title" value="">
                                                     <label class="form-label">Кому</label>
                                                     <input type="text" class="form-control" id="inputRecipient" name="recipient" value="">
                                                     <label class="form-label">Куда</label>
                                                     <input type="text" class="form-control" id="inputAddress" name="address" value="">
-                                                    <label class="form-label">Live Куда</label>
+                                                    <!--<label class="form-label">Live Куда</label>
                                                     <select class="form-select" data-live-search="true">
                                                         <option >Hot Dog, Fries and a Soda</option>
                                                         <option>Burger, Shake and a Smile</option>
                                                         <option >Sugar, Spice and all things nice</option>
-                                                    </select>
+                                                    </select>-->
 
                                                     <label class="form-label">Номер отправления</label>
                                                     <input type="text" class="form-control" id="registerTrackNumber" name="registerTrackNumber" value="">
+                                                    <label class="form-label">Внутренний номер</label>
+                                                    <input type="text" class="form-control" id="inputInternalNumber" name="internalNumber" value="">
                                                     <label class="form-label">Срок исполнения</label>
                                                     <input type="datetime-local" min="2025-01-01T00:00" class="form-control" id="dueDate" name="dueDate" value="2020-01-01T00:00">
                                                     <label class="form-label" for="getAnsweredable">Получен ответ</label>
@@ -123,6 +124,12 @@
                                                         <option selected disabled value="">Выберите</option>
                                                         <option value="0">Нет</option>
                                                         <option value="1">Да</option>
+                                                    </select>
+                                                    <label class="form-label" for="getType">Тип обращения</label>
+                                                    <select class="form-select" id="getType" required autocomplete="off" name="type">
+                                                        <option selected disabled value="none">Не выбрано</option>
+                                                        <option selected value="inbound">Входящее</option>
+                                                        <option selected value="outbound">Исходящее</option>
                                                     </select>
                                                 </div>
                                                 <div class="modal-footer">
@@ -139,6 +146,8 @@
                                         <tr>
                                             <th style="width: 10px">#</th>
                                             <th style="width: 200px">Номер отправления</th>
+                                            <th style="width: 200px">Внутренний номер</th>
+                                            <th>Тип обращения</th>
                                             <th>Название</th>
                                             <th>Кому</th>
                                             <th style="width: 150px">Дата создания</th>
@@ -151,6 +160,8 @@
                                         <tr class="align-middle">
                                             <td><a href="/document/appeals/${lar.id()}">${lar.id()}.</a></td>
                                             <td><a href="/document/appeals/${lar.id()}">${lar.registerTrackNumber()}</a></td>
+                                            <td>${lar.internalNumber()}</td>
+                                            <td>${lar.type()}</td>
                                             <td>${lar.title()}</td>
                                             <td>${addressRowMap.get(lar.id()).recipient()}</td>
                                             <td>${lar.createDate()}</td>

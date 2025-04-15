@@ -116,15 +116,15 @@
               <li class="nav-item"> <a href="/document/appeals" class="nav-link active" > <i class="nav-icon bi bi-circle"></i>
                 <p>Обращения</p>
               </a> </li>
-              <li class="nav-item"> <a href="/document/secured-party" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+              <!--<li class="nav-item"> <a href="/document/secured-party" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                 <p>Обеспеченный интерес</p>
-              </a> </li>
+              </a> </li>-->
             </ul>
           </li>
-          <li class="nav-item"> <a href="#notifications" class="nav-link"> <i class="nav-icon bi bi-clipboard-fill"></i>
+          <!--<li class="nav-item"> <a href="#notifications" class="nav-link"> <i class="nav-icon bi bi-clipboard-fill"></i>
             <p>
               Оповещения (?)
-              <!--<span class="nav-badge badge text-bg-secondary me-3">6</span> <i class="nav-arrow bi bi-chevron-right"></i>-->
+              <span class="nav-badge badge text-bg-secondary me-3">6</span> <i class="nav-arrow bi bi-chevron-right"></i>
             </p>
           </a>
             <ul class="nav nav-treeview">
@@ -132,7 +132,7 @@
                 <p>Default Sidebar</p>
               </a> </li>
             </ul>
-          </li>
+          </li>-->
         </ul> <!--end::Sidebar Menu-->
         <ul class="nav nav-sidebar sidebar-bottom">
           <li class="nav-header">Администрирование</li>
