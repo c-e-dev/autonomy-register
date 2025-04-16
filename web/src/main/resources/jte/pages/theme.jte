@@ -145,21 +145,33 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr style="width: 100%">
-                                                <th >#</th>
+                                                <th style="width: 1%">#</th>
                                                 <th>Номер отправления</th>
-                                                <th >Внутренний номер</th>
-                                                <th >Тип обращения</th>
+                                                <th>Внутренний номер</th>
+                                                <th>Тип обращения</th>
                                                 <th>Название</th>
                                                 <th>Кому</th>
-                                                <th >Дата создания</th>
-                                                <th >Срок исполнения</th>
+                                                <th>Дата создания</th>
+                                                <th>Срок исполнения</th>
                                                 <th>Ответили?</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         @for(AppealRow lar : listAppeals)
-                                        <tr class="align-middle">
-                                            <td><a href="/document/appeals/${lar.id()}">${lar.id()}.</a></td>
+                                        <tr>
+                                            <!--<td><a href="/document/appeals/${lar.id()}">${lar.id()}.</a></td>-->
+                                            <td align="center" style="padding: 0px;">
+                                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                                    <div class="btn-group" role="group"> <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        ${lar.id()}.
+                                                    </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li> <a class="dropdown-item" href="/document/appeals/${lar.id()}">Перейти</a> </li>
+                                                            <li> <a class="dropdown-item" href="#">Создать связанное обращение</a> </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
                                             <td><a href="/document/appeals/${lar.id()}">${lar.registerTrackNumber()}</a></td>
                                             <td>${lar.internalNumber()}</td>
                                             <td>${lar.type()}</td>
@@ -171,8 +183,8 @@
                                         </tr>
                                         @if(mapSubAppeal.containsKey(lar.id()))
                                         <tr>
-                                            <td colspan="9" style="background-color: red">
-                                                <table class="table" >
+                                            <td colspan="9">
+                                                <table class="table" style="border: 1px solid black; ">
                                                     <thead>
                                                     <tr style="width: 100%">
                                                         <th >#</th>
@@ -194,8 +206,7 @@
                                                         <td>${subLar.internalNumber()}</td>
                                                         <td>${subLar.type()}</td>
                                                         <td>${subLar.title()}</td>
-                                                        <!--<td>${addressRowMap.get(subLar.id()).recipient()}</td>-->
-
+                                                        <td><!--${addressRowMap.get(subLar.id()).recipient()}--></td>
                                                         <td>${subLar.createDate()}</td>
                                                         <td>${subLar.dueDate()}</td>
                                                         <td class="text-bg-info">${subLar.answered()}</td>
