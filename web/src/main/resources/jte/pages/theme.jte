@@ -160,15 +160,59 @@
                                         @for(AppealRow lar : listAppeals)
                                         <tr>
                                             <!--<td><a href="/document/appeals/${lar.id()}">${lar.id()}.</a></td>-->
-                                            <td align="center" style="padding: 0px;">
+                                            <td style="padding: 0px;">
                                                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                                    <div class="btn-group" role="group"> <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <div class="btn-group" role="group"> <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
                                                         ${lar.id()}.
                                                     </button>
                                                         <ul class="dropdown-menu">
                                                             <li> <a class="dropdown-item" href="/document/appeals/${lar.id()}">Перейти</a> </li>
-                                                            <li> <a class="dropdown-item" href="#">Создать связанное обращение</a> </li>
+                                                            <li> <a class="dropdown-item" href="#createSubAppealByTheme${lar.id()}" data-bs-toggle="modal" data-bs-target="#createSubAppealByTheme${lar.id()}" >Создать связанное обращение</a> </li>
                                                         </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade" id="createSubAppealByTheme${lar.id()}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" style="max-width:1000px">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5" id="exampleModalLabel2">Создать обращение к теме "${theme.title()}"</h1>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <form onsubmit="return false;" action="/document/appeals" method="POST" enctype="application/x-www-form-urlencoded" id="createSubAppeal">
+                                                                <div class="modal-body">
+                                                                    <input type="text" required class="form-control" id="parentAppealId" name="parentAppealId" value="${lar.id()}" readonly hidden="true">
+                                                                    <input type="text" required class="form-control" id="subThemeId${lar.id()}" name="themeId" value="${theme.id()}" readonly hidden="true">
+                                                                    <label class="form-label">Тема обращения</label>
+                                                                    <input type="text" required class="form-control" id="subTitleAppeal${lar.id()}" name="title" value="">
+                                                                    <label class="form-label">Кому</label>
+                                                                    <input type="text" class="form-control" id="subInputRecipient${lar.id()}" name="recipient" value="">
+                                                                    <label class="form-label">Куда</label>
+                                                                    <input type="text" class="form-control" id="subInputAddress${lar.id()}" name="address" value="">
+                                                                    <label class="form-label">Номер отправления</label>
+                                                                    <input type="text" class="form-control" id="subRegisterTrackNumber${lar.id()}" name="registerTrackNumber" value="">
+                                                                    <label class="form-label">Внутренний номер</label>
+                                                                    <input type="text" class="form-control" id="subInputInternalNumber${lar.id()}" name="internalNumber" value="">
+                                                                    <label class="form-label">Срок исполнения</label>
+                                                                    <input type="datetime-local" min="2025-01-01T00:00" class="form-control" id="subDueDate${lar.id()}" name="dueDate" value="2020-01-01T00:00">
+                                                                    <label class="form-label" for="getAnsweredable">Получен ответ</label>
+                                                                    <select class="form-select" id="subGetAnsweredable${lar.id()}" required name="getAnsweredable">
+                                                                        <option selected disabled value="">Выберите</option>
+                                                                        <option value="0">Нет</option>
+                                                                        <option value="1">Да</option>
+                                                                    </select>
+                                                                    <label class="form-label" for="getType">Тип обращения</label>
+                                                                    <select class="form-select" id="subGetType" required autocomplete="off" name="type">
+                                                                        <option selected disabled value="none">Не выбрано</option>
+                                                                        <option selected value="inbound">Входящее</option>
+                                                                        <option selected value="outbound">Исходящее</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" id="closeForm_createSubAppeal" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                                    <button type="button" class="btn btn-primary" onclick="handleSubmit('createSubAppeal')">Сохранить</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>

@@ -60,7 +60,10 @@ public class Themes {
             return "pages/themeNotFound";
         }
         Query q2 = new Query(new SqliteDataSource(),
-                String.format("select * from appeals where id in (select appeal_id from themes_link_appeals where theme_id = %d)", themeId));
+                String.format("select * from appeals a\n" +
+                              "inner join themes_link_appeals tla on tla.appeal_id = a.id and tla.theme_id = %d\n" +
+                              "--left join appeal_from_appeal afa on afa.appeal_id = a.id and afa.theme_id = tla.theme_id \n" +
+                              "where tla.appeal_id not in (select appeal_id from appeal_from_appeal where appeal_id = tla.appeal_id)", themeId));
         List<AppealRow> listAppeal = new AppealsTable(q2.exec()).list();
 
         int decisionStatus = new ThemeStatuses(0).reverse(list.get(0).decisionStatus());

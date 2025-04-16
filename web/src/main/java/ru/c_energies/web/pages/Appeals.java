@@ -12,6 +12,7 @@ import ru.c_energies.databases.Query;
 import ru.c_energies.databases.entity.addresses.AddressCreate;
 import ru.c_energies.databases.entity.addresses.AddressDublicateSearch;
 import ru.c_energies.databases.entity.addresses.AddressRow;
+import ru.c_energies.databases.entity.appealfromappeal.AppealFromAppealCreate;
 import ru.c_energies.databases.entity.appeals.AppealAddress;
 import ru.c_energies.databases.entity.appeals.AppealChanges;
 import ru.c_energies.databases.entity.appeals.AppealCreate;
@@ -42,8 +43,9 @@ public class Appeals {
     @PostMapping(value = "/document/appeals", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<Object> createAppeal(@RequestPart String themeId, @RequestPart String title, @RequestPart String registerTrackNumber,
                                                @RequestPart String dueDate, @RequestPart String getAnsweredable, @RequestPart(required = false) String internalNumber,
-                                               @RequestPart(required = false) String recipient, @RequestPart(required = false) String address, @RequestPart String type
-                                               ) throws SQLException {
+                                               @RequestPart(required = false) String recipient, @RequestPart(required = false) String address, @RequestPart String type,
+                                               @RequestPart(required = false) String parentAppealId
+    ) throws SQLException {
         if(recipient == null) recipient = "";
         if(address == null) address = "";
         if(internalNumber == null) internalNumber = "";
@@ -57,6 +59,11 @@ public class Appeals {
             new AppealAddress(appealCreate.id()).address(addressCreate.id());
         }else {
             new AppealAddress(appealCreate.id()).address(addressDublicateSearch.id());
+        }
+        if(!parentAppealId.isBlank()){
+            AppealFromAppealCreate appealFromAppealCreate = new AppealFromAppealCreate(appealCreate.id(),
+                    Integer.parseInt(parentAppealId), Integer.parseInt(themeId));
+            appealFromAppealCreate.insert();
         }
         return ResponseEntity.ok().build();
     }
