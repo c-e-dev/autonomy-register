@@ -178,16 +178,16 @@
                                                                 <h1 class="modal-title fs-5" id="exampleModalLabel2">Создать обращение к теме "${theme.title()}"</h1>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
-                                                            <form onsubmit="return false;" action="/document/appeals" method="POST" enctype="application/x-www-form-urlencoded" id="createSubAppeal">
+                                                            <form onsubmit="return false;" action="/document/appeals" method="POST" enctype="application/x-www-form-urlencoded" id="createSubAppeal${lar.id()}">
                                                                 <div class="modal-body">
                                                                     <input type="text" required class="form-control" id="parentAppealId" name="parentAppealId" value="${lar.id()}" readonly hidden="true">
                                                                     <input type="text" required class="form-control" id="subThemeId${lar.id()}" name="themeId" value="${theme.id()}" readonly hidden="true">
                                                                     <label class="form-label">Тема обращения</label>
                                                                     <input type="text" required class="form-control" id="subTitleAppeal${lar.id()}" name="title" value="">
                                                                     <label class="form-label">Кому</label>
-                                                                    <input type="text" class="form-control" id="subInputRecipient${lar.id()}" name="recipient" value="">
+                                                                    <input type="text" class="form-control" id="subInputRecipient${lar.id()}" name="recipient" value="${addressRowMap.get(lar.id()).recipient()}">
                                                                     <label class="form-label">Куда</label>
-                                                                    <input type="text" class="form-control" id="subInputAddress${lar.id()}" name="address" value="">
+                                                                    <input type="text" class="form-control" id="subInputAddress${lar.id()}" name="address" value="${addressRowMap.get(lar.id()).address()}">
                                                                     <label class="form-label">Номер отправления</label>
                                                                     <input type="text" class="form-control" id="subRegisterTrackNumber${lar.id()}" name="registerTrackNumber" value="">
                                                                     <label class="form-label">Внутренний номер</label>
@@ -208,8 +208,8 @@
                                                                     </select>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" id="closeForm_createSubAppeal" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                                                    <button type="button" class="btn btn-primary" onclick="handleSubmit('createSubAppeal')">Сохранить</button>
+                                                                    <button type="button" id="closeForm_createSubAppeal${lar.id()}" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                                    <button type="button" class="btn btn-primary" onclick="handleSubmit('createSubAppeal${lar.id()}')">Сохранить</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -228,24 +228,34 @@
                                         @if(mapSubAppeal.containsKey(lar.id()))
                                         <tr>
                                             <td colspan="9">
-                                                <table class="table" style="border: 1px solid black; ">
+                                                <table class="table table-bordered" style="border-style: inset" >
                                                     <thead>
-                                                    <tr style="width: 100%">
-                                                        <th >#</th>
-                                                        <th>Номер отправления</th>
-                                                        <th>Внутренний номер</th>
-                                                        <th>Тип обращения</th>
-                                                        <th>Название</th>
-                                                        <th>Кому</th>
-                                                        <th>Дата создания</th>
-                                                        <th>Срок исполнения</th>
-                                                        <th>Ответили?</th>
-                                                    </tr>
+                                                        <tr style="width: 100%">
+                                                            <th style="width: 1%">#</th>
+                                                            <th>Номер отправления</th>
+                                                            <th>Внутренний номер</th>
+                                                            <th>Тип обращения</th>
+                                                            <th>Название</th>
+                                                            <th>Кому</th>
+                                                            <th>Дата создания</th>
+                                                            <th>Срок исполнения</th>
+                                                            <th>Ответили?</th>
+                                                        </tr>
                                                     </thead>
                                                     <tbody>
                                                     @for(AppealRow subLar : mapSubAppeal.get(lar.id()))
                                                     <tr class="align-middle">
-                                                        <td><a href="/document/appeals/${subLar.id()}">${subLar.id()}.</a></td>
+                                                        <td style="padding: 0px;">
+                                                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                                                <div class="btn-group" role="group"> <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
+                                                                    ${subLar.id()}.
+                                                                </button>
+                                                                    <ul class="dropdown-menu">
+                                                                        <li> <a class="dropdown-item" href="/document/appeals/${subLar.id()}">Перейти</a> </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </td>
                                                         <td><a href="/document/appeals/${subLar.id()}">${subLar.registerTrackNumber()}</a></td>
                                                         <td>${subLar.internalNumber()}</td>
                                                         <td>${subLar.type()}</td>
