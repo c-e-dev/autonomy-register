@@ -1,4 +1,5 @@
 @import java.util.List
+@import java.util.Map
 
 @import ru.c_energies.databases.entity.appeals.AppealRow
 @import ru.c_energies.databases.entity.files.FileRow
@@ -19,6 +20,8 @@
 @param AddressRow address
 @param ThemeRow theme
 @param Integer countFr = 0
+@param List<AppealRow> subList
+@param Map<Integer, AddressRow> addressRowMap
 
 @template.layout.main(content = @`
 <div class="app-content-header"> <!--begin::Container-->
@@ -156,6 +159,53 @@
                                     <th></th><td></td>
                                 </tr>
                             </table>
+                        </div>
+                        <div class="card card-primary card-outline mb-4">
+                            <div class="card-header">
+                                <div class="card-title">Связанные обращения</div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr style="width: 100%">
+                                        <th style="width: 1%">#</th>
+                                        <th>Номер отправления</th>
+                                        <th>Внутренний номер</th>
+                                        <th>Тип обращения</th>
+                                        <th>Название</th>
+                                        <th>Кому</th>
+                                        <th>Дата создания</th>
+                                        <th>Срок исполнения</th>
+                                        <th>Ответили?</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @for(AppealRow subAppeal : subList)
+                                    <tr class="align-middle">
+                                        <td style="padding: 0px;">
+                                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                                <div class="btn-group" role="group"> <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" >
+                                                    ${subAppeal.id()}.
+                                                </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li> <a class="dropdown-item" href="/document/appeals/${subAppeal.id()}">Перейти</a> </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td><a href="/document/appeals/${subAppeal.registerTrackNumber()}">${subAppeal.registerTrackNumber()}</a></td>
+                                        <td>${subAppeal.internalNumber()}</td>
+                                        <td>${subAppeal.type()}</td>
+                                        <td>${subAppeal.title()}</td>
+                                        <td>${addressRowMap.get(subAppeal.id()).recipient()}</td>
+                                        <td>${subAppeal.createDate()}</td>
+                                        <td>${subAppeal.dueDate()}</td>
+                                        <td class="text-bg-info">${subAppeal.answered()}</td>
+                                    </tr>
+                                    @endfor
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <div class="card card-primary card-outline mb-4"> <!--begin::Header-->
                             <div class="card-header">

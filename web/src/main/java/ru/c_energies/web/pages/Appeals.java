@@ -28,7 +28,9 @@ import ru.c_energies.databases.entity.files.FileRow;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class Appeals {
@@ -83,6 +85,13 @@ public class Appeals {
         if(list.size() == 0){
             return "pages/appealNotFound";
         }
+        Query subQ = new Query(new SqliteDataSource(), String.format("select * from appeals a, appeal_from_appeal afa where afa.appeal_id = a.id and afa.parent_appeal_id = %d", ID));
+        List<AppealRow> subList = new AppealsTable(subQ.exec()).list();
+        Map<Integer, AddressRow> addressRowMap = new HashMap<>();
+        for(AppealRow subAppealRow : subList) {
+            int subAppealId = subAppealRow.id();
+            addressRowMap.put(subAppealId, new AppealAddress(subAppealId).address());
+        }
         AppealRow appealRow = list.get(0);
         List<FileRow> listFileRow = new Files().listFilesSended(id);
         List<List<FileRow>> lists = lists(listFileRow);
@@ -101,6 +110,8 @@ public class Appeals {
         model.addAttribute("labels", labelRows);
         model.addAttribute("theme", themesLinkAppeals.theme(ID));
         model.addAttribute("type", new TypeAppealsConvert("").reverse(appealRow.type()));
+        model.addAttribute("subList", subList);
+        model.addAttribute("addressRowMap", addressRowMap);
         return "pages/appeal";
     }
 

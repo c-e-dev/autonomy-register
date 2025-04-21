@@ -97,5 +97,11 @@ public interface StructureTables {
         put("version", new ArrayList<>(){{
             add(new TableField("value", "TEXT", 0, 0));
         }});
+        put("appeal_from_appeal", new ArrayList<>(){{
+            add(new TableField("id", "INTEGER", 0, 1));
+            add(new TableField("appeal_id", "INTEGER", 0, 0));
+            add(new TableField("parent_appeal_id", "INTEGER", 0, 0));
+            add(new TableField("theme_id", "INTEGER", 0, 0));
+        }});
     }};
 }
