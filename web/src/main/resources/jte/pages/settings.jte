@@ -37,6 +37,7 @@
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                 <button class="nav-link active" id="nav-backup-tab" data-bs-toggle="tab" data-bs-target="#nav-backup" type="button" role="tab" aria-controls="nav-backup" aria-selected="true">Резервное копирование</button>
                                 <button class="nav-link" id="nav-notification-tab" data-bs-toggle="tab" data-bs-target="#nav-notification" type="button" role="tab" aria-controls="nav-notification" aria-selected="false">Нотификации</button>
+                                <button class="nav-link" id="nav-internalnumber-tab" data-bs-toggle="tab" data-bs-target="#nav-internalnumber" type="button" role="tab" aria-controls="nav-internalnumber" aria-selected="false">Внутренние номера</button>
                             </div>
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
@@ -158,6 +159,42 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="nav-notification" role="tabpanel" aria-labelledby="nav-notification-tab" tabindex="0">...</div>
+                            <div class="tab-pane fade" id="nav-internalnumber" role="tabpanel" aria-labelledby="nav-internalnumber-tab" tabindex="0">
+                                <div class="card mb-1">
+                                    <div class="card-header">Формирование внутреннего номера</div>
+                                    <div class="card-body">
+                                        <form class="row g-3" autocomplete="off"  id="saveBackupGoogleDrive" onsubmit="return false;" action="/settings/backupGoogleDrive" method="POST" enctype="application/x-www-form-urlencoded">
+                                            <div class="container" style="padding-left: 0px;margin-left: 0px;">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="form-check">
+                                                            <input type="hidden" name="backupGoogleDriveUse" value="false">
+                                                            <input class="form-check-input" type="checkbox" name="backupGoogleDriveUse" value="${backupGoogleDriveSetting.use()}">
+                                                            <label class="form-check-label" for="flexCheckDefault">Использовать</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="form-check">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label class="form-label">Шаблон формирования</label>
+                                                        <input type="text" class="form-control" name="backupGoogleDriveToken" value="${backupGoogleDriveSetting.token()}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                Расположить документацию
+                                            </div>
+                                            <div class="col-12">
+                                                <button type="button" class="btn btn-primary" onclick="settingSave('saveBackupGoogleDrive')">Сохранить</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div> <!-- /.card-body -->
