@@ -30,15 +30,21 @@ public class UpdateDatabase {
                 StringBuilder field = new StringBuilder();
                 List<TableField> columns = tables.getValue();
                 int i = columns.size()-1;
+                String autoincrement = "";
                 for(TableField column : columns){
+                    if(column.pk() == 1){
+                        autoincrement = ", PRIMARY KEY(\""+ column.name() + "\" AUTOINCREMENT) ";
+                    }
                     if(i > 0){
                         field.append(column.name() + " " + column.type() + ", ");
                     }else{
                         field.append(column.name() + " " + column.type());
+                        field.append(autoincrement);
                     }
                     i--;
                 }
                 LOG.trace("field = {}", field);
+
                 String ddl = String.format("CREATE TABLE %s (%s)", tableName, field);
                 LOG.trace("ddl = {}", ddl);
                 new Query(new SqliteDataSource(), ddl).update();

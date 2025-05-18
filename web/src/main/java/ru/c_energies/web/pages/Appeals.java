@@ -62,7 +62,7 @@ public class Appeals {
         }else {
             new AppealAddress(appealCreate.id()).address(addressDublicateSearch.id());
         }
-        if(!parentAppealId.isBlank()){
+        if(parentAppealId != null){
             AppealFromAppealCreate appealFromAppealCreate = new AppealFromAppealCreate(appealCreate.id(),
                     Integer.parseInt(parentAppealId), Integer.parseInt(themeId));
             appealFromAppealCreate.insert();
