@@ -4,6 +4,6 @@ import java.sql.SQLException;
 
 public interface Create<T> {
     T insert() throws SQLException;
-    void update();
+    void update() throws SQLException;
     int id();
 }
