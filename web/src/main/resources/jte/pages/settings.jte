@@ -3,10 +3,12 @@
 @import ru.c_energies.databases.entity.settings.backup.read.BackupTotalSettings
 @import ru.c_energies.databases.entity.settings.backup.read.BackupYandexDiskSettings
 @import ru.c_energies.databases.entity.settings.backup.read.BackupGoogleDriveSettings
+@import ru.c_energies.databases.entity.settings.internalnumber.read.InternalNumberSetting;
 
 @param BackupTotalSettings.Inner backupTotalSettings
 @param BackupYandexDiskSettings.Inner backupYandexDiskSetting
 @param BackupGoogleDriveSettings.Inner backupGoogleDriveSetting
+@param InternalNumberSetting.Inner internalNumberSetting
 
 @template.layout.main(content = @`
 <div class="app-content-header"> <!--begin::Container-->
@@ -163,13 +165,13 @@
                                 <div class="card mb-1">
                                     <div class="card-header">Формирование внутреннего номера</div>
                                     <div class="card-body">
-                                        <form class="row g-3" autocomplete="off"  id="saveBackupGoogleDrive" onsubmit="return false;" action="/settings/backupGoogleDrive" method="POST" enctype="application/x-www-form-urlencoded">
+                                        <form class="row g-3" autocomplete="off"  id="saveInternalNumber" onsubmit="return false;" action="/settings/internalNumber" method="POST" enctype="application/x-www-form-urlencoded">
                                             <div class="container" style="padding-left: 0px;margin-left: 0px;">
                                                 <div class="row">
                                                     <div class="col">
                                                         <div class="form-check">
-                                                            <input type="hidden" name="backupGoogleDriveUse" value="false">
-                                                            <input class="form-check-input" type="checkbox" name="backupGoogleDriveUse" value="${backupGoogleDriveSetting.use()}">
+                                                            <input type="hidden" name="saveInternalNumberUse" value="false">
+                                                            <input class="form-check-input" type="checkbox" name="internalNumberUse" value="${internalNumberSetting.use()}">
                                                             <label class="form-check-label" for="flexCheckDefault">Использовать</label>
                                                         </div>
                                                     </div>
@@ -181,15 +183,31 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label">Шаблон формирования</label>
-                                                        <input type="text" class="form-control" name="backupGoogleDriveToken" value="${backupGoogleDriveSetting.token()}">
+                                                        <input type="text" class="form-control" name="internalNumberTemplate" value="${internalNumberSetting.format()}">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-12">
-                                                Расположить документацию
+                                                <table>
+                                                    <tr>
+                                                        <td>%type - тип обращения. Значения Вх - входящее, Исх - исходящее,</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>%year - год обращения,</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>%month - месяц обращения,</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>%day - число обращения,</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>%increment - количество обращения в заданный период,</td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                             <div class="col-12">
-                                                <button type="button" class="btn btn-primary" onclick="settingSave('saveBackupGoogleDrive')">Сохранить</button>
+                                                <button type="button" class="btn btn-primary" onclick="settingSave('saveInternalNumber')">Сохранить</button>
                                             </div>
                                         </form>
                                     </div>

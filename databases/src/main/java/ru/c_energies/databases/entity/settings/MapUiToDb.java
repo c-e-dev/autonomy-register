@@ -22,4 +22,9 @@ public interface MapUiToDb {
         put("backupGoogleDriveToken", "backup-googledrive-token");
         put("backupGoogleDriveDirdist", "backup-googledrive-dirdist");
     }};
+
+    Map<String, String> INTERNAL_NUMBER = new HashMap<>(){{
+        put("internalNumberUse", "internalnumber-use");
+        put("internalNumberTemplate", "internalnumber-format");
+    }};
 }

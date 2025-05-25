@@ -12,6 +12,8 @@ import ru.c_energies.databases.entity.settings.backup.read.BackupYandexDiskSetti
 import ru.c_energies.databases.entity.settings.backup.write.BackupGoogleDriveWrite;
 import ru.c_energies.databases.entity.settings.backup.write.BackupTotalWrite;
 import ru.c_energies.databases.entity.settings.backup.write.BackupYandexDiskWrite;
+import ru.c_energies.databases.entity.settings.internalnumber.read.InternalNumberSetting;
+import ru.c_energies.databases.entity.settings.internalnumber.write.InternalNumberSettingWrite;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -25,9 +27,11 @@ public class Settings {
         BackupTotalSettings.Inner backupTotalSettings = new BackupTotalSettings().get();
         BackupYandexDiskSettings.Inner backupYandexDiskSetting = new BackupYandexDiskSettings().get();
         BackupGoogleDriveSettings.Inner backupGoogleDriveSetting = new BackupGoogleDriveSettings().get();
+        InternalNumberSetting.Inner internalNumberSetting = new InternalNumberSetting().get();
         model.addAttribute("backupTotalSettings", backupTotalSettings);
         model.addAttribute("backupYandexDiskSetting", backupYandexDiskSetting);
         model.addAttribute("backupGoogleDriveSetting", backupGoogleDriveSetting);
+        model.addAttribute("internalNumberSetting", internalNumberSetting);
         return "pages/settings";
     }
 
@@ -42,6 +46,9 @@ public class Settings {
                 break;
             case "backupGoogleDrive":
                 new BackupGoogleDriveWrite(body).update();
+                break;
+            case "internalNumber":
+                new InternalNumberSettingWrite(body).update();
                 break;
         }
         return ResponseEntity.ok().build();
