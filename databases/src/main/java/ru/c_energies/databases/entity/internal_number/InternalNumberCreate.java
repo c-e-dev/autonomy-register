@@ -18,7 +18,7 @@ public class InternalNumberCreate implements Create<InternalNumberCreate> {
     public InternalNumberCreate insert() throws SQLException {
         String query = """
                     INSERT INTO internal_number("type", "year", "month", "day", "increment") 
-                    values ('%s', '%s', '%s', '%s','%s');
+                    values ('%s', %d, %d, %d, %d);
                 """;
         Query q = new Query(new SqliteDataSource(), String.format(query,
                 this.internalNumberRow.type(),

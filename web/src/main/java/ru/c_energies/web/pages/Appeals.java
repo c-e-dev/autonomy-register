@@ -16,6 +16,7 @@ import ru.c_energies.databases.entity.appealfromappeal.AppealFromAppealCreate;
 import ru.c_energies.databases.entity.appeals.AppealAddress;
 import ru.c_energies.databases.entity.appeals.AppealChanges;
 import ru.c_energies.databases.entity.appeals.AppealCreate;
+import ru.c_energies.databases.entity.internal_number.InternalNumberLast;
 import ru.c_energies.databases.entity.labels.LabelRow;
 import ru.c_energies.databases.entity.labels.LabelTable;
 import ru.c_energies.databases.entity.themes.ThemesLinkAppeals;
@@ -112,6 +113,9 @@ public class Appeals {
         model.addAttribute("type", new TypeAppealsConvert("").reverse(appealRow.type()));
         model.addAttribute("subList", subList);
         model.addAttribute("addressRowMap", addressRowMap);
+
+        InternalNumberLast internalNumberLast = new InternalNumberLast("%type-%year-%increment");
+        internalNumberLast.increment();
         return "pages/appeal";
     }
 
