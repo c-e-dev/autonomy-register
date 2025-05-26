@@ -17,6 +17,7 @@ import ru.c_energies.databases.entity.appeals.AppealAddress;
 import ru.c_energies.databases.entity.appeals.AppealChanges;
 import ru.c_energies.databases.entity.appeals.AppealCreate;
 import ru.c_energies.databases.entity.internal_number.InternalNumberLast;
+import ru.c_energies.databases.entity.internal_number.InternalNumberRow;
 import ru.c_energies.databases.entity.labels.LabelRow;
 import ru.c_energies.databases.entity.labels.LabelTable;
 import ru.c_energies.databases.entity.themes.ThemesLinkAppeals;
@@ -28,6 +29,8 @@ import ru.c_energies.web.models.appeals.AppealsTable;
 import ru.c_energies.databases.entity.files.FileRow;
 
 import java.sql.SQLException;
+import java.time.Month;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +55,11 @@ public class Appeals {
         if(recipient == null) recipient = "";
         if(address == null) address = "";
         if(internalNumber == null) internalNumber = "";
+        if(type == "inbound"){
+            String ty = "Вх";
+            InternalNumberRow internalNumberRow = new InternalNumberRow(ty, Year.now().getValue(),
+                    Month)
+        }
         AppealRow appealRowNewTemp = new AppealRow(0, title, internalNumber, registerTrackNumber, "", dueDate+":00Z", getAnsweredable, type);
         AppealCreate appealCreate = new AppealCreate(Integer.parseInt(themeId), appealRowNewTemp);
         appealCreate.insert();
@@ -114,8 +122,6 @@ public class Appeals {
         model.addAttribute("subList", subList);
         model.addAttribute("addressRowMap", addressRowMap);
 
-        InternalNumberLast internalNumberLast = new InternalNumberLast("%type-%year-%increment");
-        internalNumberLast.increment();
         return "pages/appeal";
     }
 
