@@ -162,6 +162,35 @@
                         </div>
                         <div class="card card-primary card-outline mb-4">
                             <div class="card-header">
+                                <div class="card-title">Документы</div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr style="width: 100%">
+                                        <th style="width: 1%">#</th>
+                                        <th>Название документа</th>
+                                        <th>Внутренний номер</th>
+                                        <th>Файл</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    <tr class="align-middle">
+                                        <td style="padding: 0px;">
+                                            1
+                                        </td>
+                                        <td>Назв</td>
+                                        <td>внутр</td>
+                                        <td>файл</td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card card-primary card-outline mb-4">
+                            <div class="card-header">
                                 <div class="card-title">Связанные обращения</div>
                             </div>
                             <div class="card-body">
