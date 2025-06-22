@@ -59,7 +59,7 @@ public class AppealAddress {
      */
     public List<AppealRow> appeals(int addressId) throws SQLException{
         String sql = String.format("""
-                    select a.id, a.title, a.internal_number, a.register_track_number, a.create_date, a.due_date, a.answeredm a.type from appeal_address aa
+                    select a.id, a.title, a.internal_number, a.register_track_number, a.create_date, a.due_date, a.answeredm a.type, a.rule_internal_number from appeal_address aa
                     join appeals a on a.id = aa.appeal_id 
                     where aa.address_id = %d;
                 """, addressId);
@@ -75,7 +75,8 @@ public class AppealAddress {
                             new DateFormat(resultSet.getInt("create_date")).convert(),
                             new DateFormat(resultSet.getInt("due_date")).convert(),
                             new DigitsToYesNo(resultSet.getInt("answered")).value(),
-                            resultSet.getString("type")
+                            resultSet.getString("type"),
+                            resultSet.getString("rule_internal_number")
                     )
             );
         }

@@ -20,6 +20,7 @@ import ru.c_energies.databases.entity.internal_number.InternalNumberLast;
 import ru.c_energies.databases.entity.internal_number.InternalNumberRow;
 import ru.c_energies.databases.entity.labels.LabelRow;
 import ru.c_energies.databases.entity.labels.LabelTable;
+import ru.c_energies.databases.entity.settings.internalnumber.read.InternalNumberSetting;
 import ru.c_energies.databases.entity.themes.ThemesLinkAppeals;
 import ru.c_energies.databases.sqlite.SqliteDataSource;
 import ru.c_energies.databases.entity.appeals.AppealRow;
@@ -55,12 +56,15 @@ public class Appeals {
         if(recipient == null) recipient = "";
         if(address == null) address = "";
         if(internalNumber == null) internalNumber = "";
-        if(type == "inbound"){
+        /*if(type == "inbound"){
             String ty = "Вх";
             InternalNumberRow internalNumberRow = new InternalNumberRow(ty, Year.now().getValue(),
-                    Month)
-        }
-        AppealRow appealRowNewTemp = new AppealRow(0, title, internalNumber, registerTrackNumber, "", dueDate+":00Z", getAnsweredable, type);
+                    Month);
+        }*/
+        InternalNumberSetting.Inner internalNumberInner = new InternalNumberSetting().get();
+        String format = internalNumberInner.format();
+        AppealRow appealRowNewTemp = new AppealRow(0, title, internalNumber, registerTrackNumber,
+                "", dueDate+":00Z", getAnsweredable, type, format);
         AppealCreate appealCreate = new AppealCreate(Integer.parseInt(themeId), appealRowNewTemp);
         appealCreate.insert();
         AddressDublicateSearch addressDublicateSearch = new AddressDublicateSearch(recipient, address);
@@ -143,7 +147,7 @@ public class Appeals {
         AppealRow appealRowOld = list.get(0);
         AppealRow appealRowNew = new AppealRow(
                 appealRowOld.id(), appealRowOld.title(), internalNumber,
-                registerTrackNumber, appealRowOld.createDate(), dueDate+":00Z", getAnsweredable, type
+                registerTrackNumber, appealRowOld.createDate(), dueDate+":00Z", getAnsweredable, type, ""
         );
         AppealChanges appealChanges = new AppealChanges(appealRowNew);
         appealChanges.update();

@@ -34,6 +34,7 @@ public interface StructureTables {
             add(new TableField("due_date", "INTEGER", 0, 0, 0));
             add(new TableField("answered", "INTEGER", 0, 0, 0));
             add(new TableField("type", "TEXT", 0, 0, 0)); // тип обращения - inbound, outbound, none
+            add(new TableField("rule_internal_number", "TEXT", 0, 0, 0)); // конкретное правило формирования внутреннего номера для данного обращения
         }});
         put("files", new ArrayList<>(){{
             add(new TableField("id", "INTEGER", 0, 1, 1));

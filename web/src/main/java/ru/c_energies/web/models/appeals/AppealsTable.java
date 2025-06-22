@@ -26,7 +26,8 @@ public class AppealsTable{
                             new DateFormat(resultSet.getInt("create_date")).convert(),
                             new DateFormat(resultSet.getInt("due_date")).convert(),
                             new DigitsToYesNo(resultSet.getInt("answered")).value(),
-                            new TypeAppealsConvert(resultSet.getString("type")).value()
+                            new TypeAppealsConvert(resultSet.getString("type")).value(),
+                            resultSet.getString("rule_internal_number")
                     )
             );
         }

@@ -193,7 +193,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td><a href="/document/appeals/${subAppeal.registerTrackNumber()}">${subAppeal.registerTrackNumber()}</a></td>
+                                        <td><a href="/document/appeals/${subAppeal.id()}">${subAppeal.registerTrackNumber()}</a></td>
                                         <td>${subAppeal.internalNumber()}</td>
                                         <td>${subAppeal.type()}</td>
                                         <td>${subAppeal.title()}</td>
