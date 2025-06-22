@@ -11,7 +11,7 @@ import java.time.Instant;
 public class AppealCreate implements Create<AppealCreate> {
     private final String INSERT = """
                 INSERT INTO appeals
-                (title, internal_number, register_track_number, create_date, due_date, answered, type)
+                (title, internal_number, register_track_number, create_date, due_date, answered, type, rule_internal_number)
                 VALUES('%s', '%s', '%s', %d, %d, %d, '%s', '%s') RETURNING rowid
             """;
     private final String INSERT_INTO_THEME = """
