@@ -163,6 +163,37 @@
                         <div class="card card-primary card-outline mb-4">
                             <div class="card-header">
                                 <div class="card-title">Документы</div>
+                                <button type="button" class="btn btn-create" data-bs-toggle="modal" data-bs-target="#addFileDocument" style="margin-left: 10px; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Добавить</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="addFileDocument" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" style="max-width:1000px">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Добавить документ</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form onsubmit="return false;" action="/files/${appeal.id()}/upload" method="POST" enctype="multipart/form-data" id="fileType">
+                                                <div class="modal-body">
+                                                    <label for="validationCustom04" class="form-label">Категория файла</label>
+                                                    <select class="form-select" id="validationCustom04" required name="fileCategory" id="fileCategory">
+                                                        <option selected disabled value="">Выберите категорию</option>
+                                                        <option value="0">Отправленные</option>
+                                                        <option value="1">Ответы</option>
+                                                    </select>
+                                                    <div class="input-group mb-3" style="margin-top: 10px;">
+                                                        <label class="input-group-text" for="inputGroupFile01">Путь до файла</label>
+                                                        <input type="file" class="form-control" id="inputGroupFile01" name="fileContent">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" id="closeForm_fileType" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                                    <button type="button" class="btn btn-primary" onclick="handleSubmit('fileType')">Загрузить</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="card-body">
                                 <table class="table table-bordered">

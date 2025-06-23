@@ -46,7 +46,7 @@ public class DocumentCreate implements Create<DocumentCreate> {
     private int documentId() throws SQLException {
         int count = 0;
         String sql = "select count(1) c from documents where appeal_id = %d";
-        Query query = new Query(new SqliteDataSource(), String.format(sql, this.appealId));
+        Query query = new Query(new SqliteDataSource(), String.format(sql, this.documentRow.appealId()));
         ResultSet rs = query.exec();
         while(rs.next()){
             count++;
