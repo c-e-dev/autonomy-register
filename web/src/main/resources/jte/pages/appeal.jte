@@ -174,12 +174,15 @@
                                             </div>
                                             <form onsubmit="return false;" action="/files/${appeal.id()}/upload" method="POST" enctype="multipart/form-data" id="fileType">
                                                 <div class="modal-body">
-                                                    <label for="validationCustom04" class="form-label">Категория файла</label>
+                                                    <!--<label for="validationCustom04" class="form-label">Категория файла</label>
                                                     <select class="form-select" id="validationCustom04" required name="fileCategory" id="fileCategory">
                                                         <option selected disabled value="">Выберите категорию</option>
                                                         <option value="0">Отправленные</option>
                                                         <option value="1">Ответы</option>
-                                                    </select>
+                                                    </select>-->
+                                                    <input type="hidden" name="appealId" value="${appeal.id()}">
+                                                    <label for="documentName" class="form-label">Наименование документа</label>
+                                                    <input type="text" class="form-control" id="documentName" name="documentName">
                                                     <div class="input-group mb-3" style="margin-top: 10px;">
                                                         <label class="input-group-text" for="inputGroupFile01">Путь до файла</label>
                                                         <input type="file" class="form-control" id="inputGroupFile01" name="fileContent">
