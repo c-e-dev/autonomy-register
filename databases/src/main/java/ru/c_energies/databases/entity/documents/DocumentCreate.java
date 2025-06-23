@@ -14,17 +14,15 @@ public class DocumentCreate implements Create<DocumentCreate> {
                 VALUES(%d, %d, '%s', '%s', '%s', %d) RETURNING rowid
             """;
     private int id;
-    private final int appealId;
     private final DocumentRow documentRow;
-    public DocumentCreate(int appealId, DocumentRow documentRow){
-        this.appealId = appealId;
+    public DocumentCreate(DocumentRow documentRow){
         this.documentRow = documentRow;
     }
 
     @Override
     public DocumentCreate insert() throws SQLException {
         Query q = new Query(new SqliteDataSource(), String.format(this.INSERT,
-            this.documentId(), this.appealId, this.documentRow.name(),
+            this.documentId(), this.documentRow.appealId(), this.documentRow.name(),
                 this.documentRow.internalNumber(), this.documentRow.internalNumberRule(), this.documentRow.fileId()
                 )
         );
